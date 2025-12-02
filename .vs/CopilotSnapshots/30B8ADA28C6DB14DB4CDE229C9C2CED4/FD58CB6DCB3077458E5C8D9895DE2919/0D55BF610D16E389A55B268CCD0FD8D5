@@ -1,0 +1,202 @@
+﻿# Sistema de Punto de Venta para Restaurante de Mariscos
+
+## Descripción
+Aplicación completa de punto de venta (POS) diseñada específicamente para restaurantes de mariscos con las siguientes características:
+
+## Características Principales
+
+### 📱 Gestión de Mesas
+- **13 mesas disponibles** para el área del restaurante
+- **Modo "Para Llevar"** para pedidos que no ocupan mesa
+- **Indicador visual** de mesas activas (ocupadas) y libres
+- **Persistencia de pedidos** - cada mesa mantiene su pedido hasta que se cierre
+
+### 🍤 Sistema de Categorías y Platillos
+- **Categorías predefinidas:**
+  - Camarones (C. Empanizados, C. Diabla, C. Mojo Ajo)
+  - Filetes (F. Diabla, F. Relleno, F. Empanizado)
+  - Postres
+  - Bebidas
+  - Cervezas
+
+- **Nombres abreviados** para facilitar la lectura en tickets pequeños
+- **Precios configurables** por el administrador
+
+### 🎫 Generación de Tickets
+- **Formato optimizado** para impresoras térmicas de papel pequeño
+- **Información incluida:**
+  - Nombre del restaurante
+  - Dirección y teléfono
+  - Fecha y hora
+  - Número de mesa o "Para Llevar"
+  - Campo para mesero (manual)
+  - Detalle de productos con cantidades
+  - Subtotal y total
+  - Descuentos aplicados
+
+### 💰 Sistema de Descuentos
+- **Descuento por porcentaje** (ejemplo: 10%, 15%)
+- **Descuento por monto fijo** en pesos
+- El ticket muestra el cálculo: Subtotal - Descuento = Total
+
+### 👨‍💼 Panel de Administración
+1. **Configuración del Restaurante**
+   - Cambiar nombre del restaurante
+   - Actualizar dirección
+   - Modificar teléfono
+
+2. **Gestión de Categorías**
+   - Agregar nuevas categorías
+   - Eliminar categorías (si no tienen platillos)
+   - Ver lista de categorías existentes
+
+3. **Gestión de Platillos**
+   - Agregar nuevos platillos con:
+     - Nombre completo
+     - Nombre corto (para tickets)
+     - Precio
+     - Categoría
+   - Modificar precios de platillos existentes
+   - Eliminar platillos
+   - Ver todos los platillos en una tabla
+
+## 🚀 Cómo Usar la Aplicación
+
+### Inicio Rápido
+1. **Ejecutar la aplicación** - se creará automáticamente la base de datos con datos de ejemplo
+2. **Seleccionar una mesa** o "Para Llevar"
+3. **Seleccionar categoría** de platillos
+4. **Agregar platillos** al pedido con las cantidades deseadas
+5. **Aplicar descuentos** si es necesario
+6. **Guardar el pedido** para mantenerlo en la mesa
+7. **Imprimir ticket** cuando el cliente pida la cuenta
+8. **Cerrar mesa** para liberar la mesa
+
+### Flujo de Trabajo Normal
+
+#### Tomar un Pedido
+1. Click en botón "MESAS"
+2. Seleccionar la mesa del cliente
+3. Elegir categoría (Camarones, Filetes, etc.)
+4. Agregar platillos al pedido
+5. Click en "Guardar Pedido" (el pedido queda guardado en la mesa)
+
+#### Atender Otra Mesa
+1. Click en "MESAS" nuevamente
+2. Seleccionar otra mesa
+3. Agregar su pedido
+4. Guardar
+
+#### Imprimir la Cuenta
+1. Seleccionar la mesa del cliente
+2. Verificar el pedido (se carga automáticamente)
+3. Aplicar descuento si corresponde
+4. Click en "IMPRIMIR TICKET"
+5. El ticket se guarda en: Documentos/Tickets/
+
+#### Cerrar Mesa
+1. Con la mesa seleccionada
+2. Click en "Cerrar Mesa"
+3. La mesa queda libre para el siguiente cliente
+
+### Panel de Administración
+
+#### Cambiar Información del Restaurante
+1. Click en botón "ADMIN"
+2. Pestaña "Configuración"
+3. Editar nombre, dirección o teléfono
+4. Click en "Guardar Configuración"
+
+#### Agregar Nueva Categoría
+1. Panel ADMIN → Pestaña "Categorías"
+2. Escribir nombre de la categoría
+3. Click en "Agregar Categoría"
+
+#### Agregar Nuevo Platillo
+1. Panel ADMIN → Pestaña "Platillos"
+2. Llenar los campos:
+   - Nombre completo (ej: "Camarones Empanizados")
+   - Nombre corto (ej: "C. Empanizados")
+   - Precio
+   - Seleccionar categoría
+3. Click en "Agregar Platillo"
+
+#### Modificar Precio de Platillo
+1. Panel ADMIN → Pestaña "Platillos"
+2. Seleccionar el platillo en la tabla
+3. Click en "Modificar Precio"
+4. Ingresar nuevo precio
+5. Aceptar
+
+## 💾 Base de Datos
+- **Tecnología:** SQLite
+- **Archivo:** `restaurante.db` (se crea automáticamente)
+- **Ubicación:** En la carpeta de ejecución de la aplicación
+
+## 🖨️ Impresión de Tickets
+Los tickets se generan en formato de texto optimizado para impresoras térmicas de 40 columnas.
+
+**Nota:** En esta versión, los tickets se guardan como archivos .txt en la carpeta `Documentos/Tickets/`. 
+Para enviar a una impresora real, se necesita integrar con el driver específico de la impresora térmica.
+
+## 📋 Datos de Ejemplo Incluidos
+
+### Categorías
+- Camarones
+- Filetes
+- Postres
+- Bebidas
+- Cervezas
+
+### Platillos de Ejemplo
+**Camarones:**
+- C. Empanizados - $150.00
+- C. Diabla - $160.00
+- C. Mojo Ajo - $155.00
+
+**Filetes:**
+- F. Diabla - $140.00
+- F. Relleno - $165.00
+- F. Empanizado - $135.00
+
+## 🎨 Características de la Interfaz
+- **Diseño intuitivo** con colores diferenciados por función
+- **Mesas activas** en color rojo
+- **Mesas libres** en color verde
+- **Botones grandes** para facilitar el uso en ambientes de trabajo
+- **Tipografía clara** estilo Consolas para los tickets
+- **Indicador visual** de mesa actual seleccionada
+
+## 🔧 Requisitos Técnicos
+- Windows 10 o superior
+- .NET 10.0
+- Espacio en disco: < 50 MB
+
+## 📝 Notas Importantes
+1. Los pedidos se **guardan automáticamente** al cambiar de mesa
+2. Puedes volver a cualquier mesa activa y su pedido estará disponible
+3. Las mesas no se liberan hasta hacer "Cerrar Mesa"
+4. Se puede eliminar un platillo del pedido seleccionándolo y haciendo click en "Eliminar Seleccionado"
+5. El botón "Limpiar" borra el pedido actual sin guardarlo
+
+## 🆘 Solución de Problemas
+
+**La aplicación no inicia:**
+- Verificar que tenga .NET 10.0 instalado
+- Verificar permisos de escritura en la carpeta
+
+**No se guardan los datos:**
+- Verificar que la carpeta no esté en modo de solo lectura
+- Revisar que exista el archivo restaurante.db
+
+**Los tickets no se imprimen:**
+- Los tickets se guardan en Documentos/Tickets/
+- Para impresión real, contactar con soporte técnico para configurar la impresora
+
+## 🔮 Futuras Mejoras Sugeridas
+- Integración directa con impresoras térmicas
+- Reportes de ventas diarias/mensuales
+- Sistema de usuarios y permisos
+- Historial de tickets
+- Propinas y formas de pago
+- Impresión en cocina

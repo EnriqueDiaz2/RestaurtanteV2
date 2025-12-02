@@ -1,0 +1,428 @@
+﻿using restaurante.Data;
+using restaurante.Models;
+using System.Drawing.Printing;
+using System.Text;
+
+namespace restaurante.Forms;
+
+public partial class TicketForm : Form
+{
+    private RestauranteContext db;
+    private Mesa mesa;
+    private List<DetallePedido> detalles;
+    private decimal descuento;
+    private decimal valorDescuento;
+    private string tipoDescuento;
+    private string nombreMesero = "";
+    private string ticketContent = "";
+
+    public TicketForm(RestauranteContext context, Mesa mesa, List<DetallePedido> detalles, 
+        decimal descuento, decimal valorDescuento, string tipoDescuento)
+    {
+        this.db = context;
+        this.mesa = mesa;
+        this.detalles = detalles;
+        this.descuento = descuento;
+        this.valorDescuento = valorDescuento;
+        this.tipoDescuento = tipoDescuento;
+        InitializeComponent();
+        SolicitarNombreMesero();
+        GenerarTicket();
+    }
+
+    private void InitializeComponent()
+    {
+        this.Text = "Ticket de Venta";
+        this.Size = new Size(550, 800);
+        this.StartPosition = FormStartPosition.CenterParent;
+        this.FormBorderStyle = FormBorderStyle.FixedDialog;
+        this.MaximizeBox = false;
+        this.BackColor = Color.FromArgb(236, 240, 241);
+
+        Panel panelHeader = new Panel
+        {
+            Dock = DockStyle.Top,
+            Height = 70,
+            BackColor = Color.FromArgb(52, 73, 94)
+        };
+
+        Label lblTitulo = new Label
+        {
+            Text = "🎫 TICKET DE VENTA",
+            Dock = DockStyle.Fill,
+            Font = new Font("Segoe UI", 16, FontStyle.Bold),
+            ForeColor = Color.White,
+            TextAlign = ContentAlignment.MiddleCenter
+        };
+        panelHeader.Controls.Add(lblTitulo);
+
+        Panel panelContenido = new Panel
+        {
+            Dock = DockStyle.Fill,
+            Padding = new Padding(15),
+            BackColor = Color.White
+        };
+
+        TextBox txtTicket = new TextBox
+        {
+            Name = "txtTicket",
+            Dock = DockStyle.Fill,
+            Multiline = true,
+            ScrollBars = ScrollBars.Vertical,
+            Font = new Font("Courier New", 10),
+            ReadOnly = true,
+            BackColor = Color.White,
+            BorderStyle = BorderStyle.FixedSingle
+        };
+        panelContenido.Controls.Add(txtTicket);
+
+        Panel panelBotones = new Panel
+        {
+            Dock = DockStyle.Bottom,
+            Height = 100,
+            BackColor = Color.White,
+            Padding = new Padding(15)
+        };
+
+        Button btnImprimirFisico = new Button
+        {
+            Text = "🖨️ IMPRIMIR",
+            Location = new Point(15, 15),
+            Size = new Size(155, 50),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(52, 152, 219),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnImprimirFisico.FlatAppearance.BorderSize = 0;
+        btnImprimirFisico.Click += BtnImprimirFisico_Click;
+
+        Button btnGuardarPDF = new Button
+        {
+            Text = "📄 GUARDAR PDF",
+            Location = new Point(180, 15),
+            Size = new Size(155, 50),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(46, 204, 113),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnGuardarPDF.FlatAppearance.BorderSize = 0;
+        btnGuardarPDF.Click += BtnGuardarPDF_Click;
+
+        Button btnCerrar = new Button
+        {
+            Text = "❌ CERRAR",
+            Location = new Point(345, 15),
+            Size = new Size(155, 50),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(149, 165, 166),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnCerrar.FlatAppearance.BorderSize = 0;
+        btnCerrar.Click += (s, e) => this.Close();
+
+        panelBotones.Controls.AddRange(new Control[] { btnImprimirFisico, btnGuardarPDF, btnCerrar });
+
+        this.Controls.Add(panelContenido);
+        this.Controls.Add(panelBotones);
+        this.Controls.Add(panelHeader);
+    }
+
+    private void SolicitarNombreMesero()
+    {
+        using (var form = new Form())
+        {
+            form.Text = "Nombre del Mesero";
+            form.Size = new Size(400, 200);
+            form.StartPosition = FormStartPosition.CenterParent;
+            form.FormBorderStyle = FormBorderStyle.FixedDialog;
+            form.MaximizeBox = false;
+            form.MinimizeBox = false;
+
+            Label lbl = new Label
+            {
+                Text = "Ingrese el nombre del mesero:",
+                Location = new Point(20, 30),
+                Size = new Size(350, 25),
+                Font = new Font("Segoe UI", 11)
+            };
+
+            TextBox txt = new TextBox
+            {
+                Location = new Point(20, 65),
+                Size = new Size(350, 30),
+                Font = new Font("Segoe UI", 11)
+            };
+
+            Button btnOk = new Button
+            {
+                Text = "Aceptar",
+                Location = new Point(120, 110),
+                Size = new Size(150, 40),
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                BackColor = Color.FromArgb(46, 204, 113),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.OK
+            };
+            btnOk.FlatAppearance.BorderSize = 0;
+
+            form.Controls.AddRange(new Control[] { lbl, txt, btnOk });
+            form.AcceptButton = btnOk;
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                nombreMesero = string.IsNullOrWhiteSpace(txt.Text) ? "N/A" : txt.Text.Trim();
+            }
+            else
+            {
+                nombreMesero = "N/A";
+            }
+        }
+    }
+
+    private void GenerarTicket()
+    {
+        var txtTicket = this.Controls.Find("txtTicket", true)[0] as TextBox;
+        if (txtTicket == null) return;
+
+        var config = db.Configuraciones.FirstOrDefault();
+        if (config == null)
+        {
+            config = new Configuracion { Id = 1 };
+        }
+
+        StringBuilder ticket = new StringBuilder();
+
+        // Encabezado - Nombre del restaurante
+        ticket.AppendLine(CentrarTexto(config.NombreRestaurante, 40));
+        ticket.AppendLine(CentrarTexto(config.Direccion, 40));
+        ticket.AppendLine(CentrarTexto($"Tel: {config.Telefono}", 40));
+        ticket.AppendLine();
+        ticket.AppendLine("========================================");
+        
+        // Información de la mesa
+        if (mesa.NumeroMesa == 0)
+            ticket.AppendLine("MESA: PARA LLEVAR");
+        else
+            ticket.AppendLine($"MESA: {mesa.NumeroMesa}");
+
+        ticket.AppendLine($"Mesero: {nombreMesero}");
+        ticket.AppendLine($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}");
+        
+        ticket.AppendLine("----------------------------------------");
+        
+        // Encabezado de productos
+        ticket.AppendLine($"{"ART",-24} {"CANT",4}  {"PRECIO",8}");
+        ticket.AppendLine("----------------------------------------");
+
+        // Detalles de productos
+        decimal subtotal = 0;
+        foreach (var detalle in detalles)
+        {
+            var platillo = detalle.Platillo ?? db.Platillos.Find(detalle.PlatilloId);
+            if (platillo != null)
+            {
+                decimal importe = detalle.Cantidad * detalle.PrecioUnitario;
+                subtotal += importe;
+
+                string nombrePlatillo = platillo.NombreCorto;
+                if (nombrePlatillo.Length > 24)
+                    nombrePlatillo = nombrePlatillo.Substring(0, 24);
+
+                ticket.AppendLine($"{nombrePlatillo,-24} {detalle.Cantidad,4}  ${importe,7:F2}");
+            }
+        }
+
+        ticket.AppendLine("----------------------------------------");
+
+        // Totales
+        ticket.AppendLine($"{"",-24}  Subtotal: ${subtotal,7:F2}");
+
+        // IVA (0.00%)
+        decimal iva = 0;
+        ticket.AppendLine($"{"",-24}  IVA (0.00%): ${iva,7:F2}");
+
+        // Descuento
+        if (descuento > 0)
+        {
+            if (tipoDescuento == "%")
+            {
+                ticket.AppendLine($"{"",-24}  Descuento ({valorDescuento:F2}%): ${descuento,7:F2}");
+            }
+            else
+            {
+                ticket.AppendLine($"{"",-24}  Descuento: ${descuento,7:F2}");
+            }
+        }
+        else
+        {
+            ticket.AppendLine($"{"",-24}  Descuento (0.00%): ${descuento,7:F2}");
+        }
+
+        ticket.AppendLine();
+        ticket.AppendLine("========================================");
+        
+        // Total final
+        decimal total = subtotal + iva - descuento;
+        ticket.AppendLine($"{"",16} TOTAL: ${total,7:F2}");
+        
+        ticket.AppendLine("========================================");
+        ticket.AppendLine();
+        ticket.AppendLine(CentrarTexto("Gracias por su compra", 40));
+        ticket.AppendLine();
+
+        ticketContent = ticket.ToString();
+        txtTicket.Text = ticketContent;
+    }
+
+    private string CentrarTexto(string texto, int ancho)
+    {
+        if (texto.Length >= ancho)
+            return texto;
+
+        int espacios = (ancho - texto.Length) / 2;
+        return new string(' ', espacios) + texto;
+    }
+
+    private void BtnImprimirFisico_Click(object? sender, EventArgs e)
+    {
+        try
+        {
+            PrintDocument pd = new PrintDocument();
+            pd.PrintPage += new PrintPageEventHandler(ImprimirTicket);
+            
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.Document = pd;
+            
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                pd.Print();
+                MessageBox.Show("✅ Ticket enviado a impresora correctamente.", "Éxito",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"❌ Error al imprimir: {ex.Message}", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void ImprimirTicket(object sender, PrintPageEventArgs e)
+    {
+        Font font = new Font("Courier New", 9);
+        float yPos = 20;
+        float leftMargin = 10;
+        
+        string[] lines = ticketContent.Split('\n');
+        
+        foreach (string line in lines)
+        {
+            e.Graphics!.DrawString(line, font, Brushes.Black, leftMargin, yPos);
+            yPos += font.GetHeight(e.Graphics);
+        }
+    }
+
+    private void BtnGuardarPDF_Click(object? sender, EventArgs e)
+    {
+        try
+        {
+            SaveFileDialog saveDialog = new SaveFileDialog
+            {
+                Filter = "PDF Files|*.pdf",
+                Title = "Guardar Ticket como PDF",
+                FileName = $"Ticket_Mesa{(mesa.NumeroMesa == 0 ? "ParaLlevar" : mesa.NumeroMesa.ToString())}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf"
+            };
+
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                GuardarComoPDF(saveDialog.FileName);
+                
+                var resultado = MessageBox.Show(
+                    $"✅ PDF guardado exitosamente en:\n\n{saveDialog.FileName}\n\n¿Desea abrir el archivo?",
+                    "PDF Generado",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information);
+
+                if (resultado == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = saveDialog.FileName,
+                        UseShellExecute = true
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"❌ Error al guardar PDF: {ex.Message}", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void GuardarComoPDF(string rutaArchivo)
+    {
+        // Crear un bitmap para dibujar el ticket
+        int ancho = 300; // Ancho del ticket en pixeles
+        int alturaLinea = 15;
+        string[] lines = ticketContent.Split('\n');
+        int alto = lines.Length * alturaLinea + 40;
+
+        using (Bitmap bmp = new Bitmap(ancho, alto))
+        using (Graphics g = Graphics.FromImage(bmp))
+        {
+            g.Clear(Color.White);
+            Font font = new Font("Courier New", 8);
+            Brush brush = Brushes.Black;
+            
+            float yPos = 10;
+            foreach (string line in lines)
+            {
+                g.DrawString(line, font, brush, 10, yPos);
+                yPos += alturaLinea;
+            }
+
+            // Guardar como imagen temporal
+            string tempImagePath = Path.GetTempFileName() + ".png";
+            bmp.Save(tempImagePath, System.Drawing.Imaging.ImageFormat.Png);
+
+            // Convertir imagen a PDF usando PrintDocument
+            PrintDocument pd = new PrintDocument();
+            pd.DefaultPageSettings.PaperSize = new PaperSize("Ticket", ancho, alto);
+            
+            pd.PrintPage += (sender, e) =>
+            {
+                e.Graphics!.DrawImage(bmp, 0, 0);
+            };
+
+            // Usar Microsoft Print to PDF o similar
+            pd.PrinterSettings.PrinterName = "Microsoft Print to PDF";
+            pd.PrinterSettings.PrintToFile = true;
+            pd.PrinterSettings.PrintFileName = rutaArchivo;
+
+            try
+            {
+                pd.Print();
+            }
+            catch
+            {
+                // Si no está disponible Microsoft Print to PDF, guardar como imagen
+                bmp.Save(rutaArchivo.Replace(".pdf", ".png"), System.Drawing.Imaging.ImageFormat.Png);
+                MessageBox.Show("ℹ️ No se encontró impresora PDF. El ticket se guardó como imagen PNG.", 
+                    "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            finally
+            {
+                if (File.Exists(tempImagePath))
+                    File.Delete(tempImagePath);
+            }
+        }
+    }
+}

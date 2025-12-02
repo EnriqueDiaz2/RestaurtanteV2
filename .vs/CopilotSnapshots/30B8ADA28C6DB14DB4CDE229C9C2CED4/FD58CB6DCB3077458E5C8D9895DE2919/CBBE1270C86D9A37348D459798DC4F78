@@ -1,0 +1,640 @@
+﻿using Microsoft.EntityFrameworkCore;
+using restaurante.Data;
+using restaurante.Models;
+
+namespace restaurante.Forms;
+
+public partial class MainForm : Form
+{
+    private Mesa? mesaActual;
+    private List<DetallePedido> pedidoTemporal = new();
+    private RestauranteContext db;
+
+    public MainForm()
+    {
+        InitializeComponent();
+        db = new RestauranteContext();
+        db.Database.EnsureCreated();
+        CargarCategorias();
+        ActualizarListaPedido();
+        ActualizarEstadoMesas();
+    }
+
+    private void InitializeComponent()
+    {
+        this.Text = "Sistema de Restaurante - POS";
+        this.Size = new Size(1200, 800);
+        this.StartPosition = FormStartPosition.CenterScreen;
+
+        // Panel Superior - Botones de Mesa y Para Llevar
+        Panel panelSuperior = new Panel
+        {
+            Dock = DockStyle.Top,
+            Height = 80,
+            BackColor = Color.FromArgb(41, 128, 185)
+        };
+
+        Button btnSeleccionarMesa = new Button
+        {
+            Text = "MESAS",
+            Location = new Point(10, 15),
+            Size = new Size(150, 50),
+            Font = new Font("Segoe UI", 12, FontStyle.Bold),
+            BackColor = Color.FromArgb(52, 152, 219),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat
+        };
+        btnSeleccionarMesa.Click += BtnSeleccionarMesa_Click;
+
+        Button btnParaLlevar = new Button
+        {
+            Text = "PARA LLEVAR",
+            Location = new Point(170, 15),
+            Size = new Size(150, 50),
+            Font = new Font("Segoe UI", 12, FontStyle.Bold),
+            BackColor = Color.FromArgb(46, 204, 113),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat
+        };
+        btnParaLlevar.Click += BtnParaLlevar_Click;
+
+        Button btnAdministracion = new Button
+        {
+            Text = "ADMIN",
+            Location = new Point(330, 15),
+            Size = new Size(120, 50),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(230, 126, 34),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat
+        };
+        btnAdministracion.Click += BtnAdministracion_Click;
+
+        Label lblMesaActual = new Label
+        {
+            Name = "lblMesaActual",
+            Text = "Seleccione una mesa",
+            Location = new Point(470, 25),
+            Size = new Size(400, 30),
+            Font = new Font("Segoe UI", 14, FontStyle.Bold),
+            ForeColor = Color.White
+        };
+
+        panelSuperior.Controls.AddRange(new Control[] { btnSeleccionarMesa, btnParaLlevar, btnAdministracion, lblMesaActual });
+        this.Controls.Add(panelSuperior);
+
+        // Panel Izquierdo - Categorías y Platillos
+        Panel panelIzquierdo = new Panel
+        {
+            Dock = DockStyle.Left,
+            Width = 700,
+            Padding = new Padding(10)
+        };
+
+        Label lblCategorias = new Label
+        {
+            Text = "CATEGORÍAS",
+            Location = new Point(10, 10),
+            Size = new Size(680, 30),
+            Font = new Font("Segoe UI", 12, FontStyle.Bold)
+        };
+
+        FlowLayoutPanel flowCategorias = new FlowLayoutPanel
+        {
+            Name = "flowCategorias",
+            Location = new Point(10, 45),
+            Size = new Size(680, 80),
+            AutoScroll = true,
+            BorderStyle = BorderStyle.FixedSingle
+        };
+
+        Label lblPlatillos = new Label
+        {
+            Text = "PLATILLOS",
+            Location = new Point(10, 135),
+            Size = new Size(680, 30),
+            Font = new Font("Segoe UI", 12, FontStyle.Bold)
+        };
+
+        FlowLayoutPanel flowPlatillos = new FlowLayoutPanel
+        {
+            Name = "flowPlatillos",
+            Location = new Point(10, 170),
+            Size = new Size(680, 530),
+            AutoScroll = true,
+            BorderStyle = BorderStyle.FixedSingle
+        };
+
+        panelIzquierdo.Controls.AddRange(new Control[] { lblCategorias, flowCategorias, lblPlatillos, flowPlatillos });
+        this.Controls.Add(panelIzquierdo);
+
+        // Panel Derecho - Pedido Actual
+        Panel panelDerecho = new Panel
+        {
+            Dock = DockStyle.Fill,
+            Padding = new Padding(10)
+        };
+
+        Label lblPedido = new Label
+        {
+            Text = "PEDIDO ACTUAL",
+            Location = new Point(10, 10),
+            Size = new Size(460, 30),
+            Font = new Font("Segoe UI", 12, FontStyle.Bold)
+        };
+
+        ListBox lstPedido = new ListBox
+        {
+            Name = "lstPedido",
+            Location = new Point(10, 45),
+            Size = new Size(460, 400),
+            Font = new Font("Consolas", 10)
+        };
+
+        Label lblSubtotal = new Label
+        {
+            Name = "lblSubtotal",
+            Text = "Subtotal: $0.00",
+            Location = new Point(10, 455),
+            Size = new Size(460, 25),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            TextAlign = ContentAlignment.MiddleRight
+        };
+
+        Label lblDescuentoLabel = new Label
+        {
+            Text = "Descuento:",
+            Location = new Point(10, 490),
+            Size = new Size(100, 25),
+            Font = new Font("Segoe UI", 10)
+        };
+
+        TextBox txtDescuento = new TextBox
+        {
+            Name = "txtDescuento",
+            Location = new Point(115, 490),
+            Size = new Size(80, 25),
+            Font = new Font("Segoe UI", 10),
+            Text = "0"
+        };
+        txtDescuento.TextChanged += (s, e) => ActualizarTotales();
+
+        ComboBox cmbTipoDescuento = new ComboBox
+        {
+            Name = "cmbTipoDescuento",
+            Location = new Point(200, 490),
+            Size = new Size(80, 25),
+            DropDownStyle = ComboBoxStyle.DropDownList
+        };
+        cmbTipoDescuento.Items.AddRange(new object[] { "%", "$" });
+        cmbTipoDescuento.SelectedIndex = 0;
+        cmbTipoDescuento.SelectedIndexChanged += (s, e) => ActualizarTotales();
+
+        Label lblTotal = new Label
+        {
+            Name = "lblTotal",
+            Text = "TOTAL: $0.00",
+            Location = new Point(10, 525),
+            Size = new Size(460, 30),
+            Font = new Font("Segoe UI", 14, FontStyle.Bold),
+            TextAlign = ContentAlignment.MiddleRight,
+            ForeColor = Color.FromArgb(231, 76, 60)
+        };
+
+        Button btnLimpiar = new Button
+        {
+            Text = "Limpiar",
+            Location = new Point(10, 570),
+            Size = new Size(100, 40),
+            Font = new Font("Segoe UI", 10),
+            BackColor = Color.FromArgb(149, 165, 166),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat
+        };
+        btnLimpiar.Click += BtnLimpiar_Click;
+
+        Button btnGuardarPedido = new Button
+        {
+            Text = "Guardar Pedido",
+            Location = new Point(120, 570),
+            Size = new Size(130, 40),
+            Font = new Font("Segoe UI", 10),
+            BackColor = Color.FromArgb(41, 128, 185),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat
+        };
+        btnGuardarPedido.Click += BtnGuardarPedido_Click;
+
+        Button btnImprimirTicket = new Button
+        {
+            Text = "IMPRIMIR TICKET",
+            Location = new Point(260, 570),
+            Size = new Size(210, 40),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(46, 204, 113),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat
+        };
+        btnImprimirTicket.Click += BtnImprimirTicket_Click;
+
+        Button btnCerrarMesa = new Button
+        {
+            Text = "Cerrar Mesa",
+            Location = new Point(10, 620),
+            Size = new Size(210, 40),
+            Font = new Font("Segoe UI", 10),
+            BackColor = Color.FromArgb(231, 76, 60),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat
+        };
+        btnCerrarMesa.Click += BtnCerrarMesa_Click;
+
+        Button btnEliminarItem = new Button
+        {
+            Text = "Eliminar Seleccionado",
+            Location = new Point(230, 620),
+            Size = new Size(240, 40),
+            Font = new Font("Segoe UI", 10),
+            BackColor = Color.FromArgb(192, 57, 43),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat
+        };
+        btnEliminarItem.Click += BtnEliminarItem_Click;
+
+        panelDerecho.Controls.AddRange(new Control[] { 
+            lblPedido, lstPedido, lblSubtotal, lblDescuentoLabel, txtDescuento, 
+            cmbTipoDescuento, lblTotal, btnLimpiar, btnGuardarPedido, 
+            btnImprimirTicket, btnCerrarMesa, btnEliminarItem 
+        });
+        this.Controls.Add(panelDerecho);
+    }
+
+    private void CargarCategorias()
+    {
+        var flowCategorias = this.Controls.Find("flowCategorias", true)[0] as FlowLayoutPanel;
+        flowCategorias?.Controls.Clear();
+
+        var categorias = db.Categorias.OrderBy(c => c.Nombre).ToList();
+        foreach (var categoria in categorias)
+        {
+            Button btnCategoria = new Button
+            {
+                Text = categoria.Nombre.ToUpper(),
+                Size = new Size(130, 60),
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                BackColor = Color.FromArgb(52, 73, 94),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Tag = categoria.Id,
+                Margin = new Padding(5)
+            };
+            btnCategoria.Click += (s, e) => CargarPlatillosPorCategoria((int)btnCategoria.Tag);
+            flowCategorias?.Controls.Add(btnCategoria);
+        }
+    }
+
+    private void CargarPlatillosPorCategoria(int categoriaId)
+    {
+        var flowPlatillos = this.Controls.Find("flowPlatillos", true)[0] as FlowLayoutPanel;
+        flowPlatillos?.Controls.Clear();
+
+        var platillos = db.Platillos
+            .Where(p => p.CategoriaId == categoriaId)
+            .OrderBy(p => p.Nombre)
+            .ToList();
+
+        foreach (var platillo in platillos)
+        {
+            Panel panelPlatillo = new Panel
+            {
+                Size = new Size(200, 100),
+                BorderStyle = BorderStyle.FixedSingle,
+                BackColor = Color.White,
+                Margin = new Padding(5),
+                Tag = platillo
+            };
+
+            Label lblNombre = new Label
+            {
+                Text = platillo.NombreCorto,
+                Location = new Point(5, 5),
+                Size = new Size(190, 50),
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+
+            Label lblPrecio = new Label
+            {
+                Text = $"${platillo.Precio:F2}",
+                Location = new Point(5, 55),
+                Size = new Size(190, 20),
+                Font = new Font("Segoe UI", 10),
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.FromArgb(39, 174, 96)
+            };
+
+            NumericUpDown numCantidad = new NumericUpDown
+            {
+                Location = new Point(45, 75),
+                Size = new Size(50, 20),
+                Minimum = 1,
+                Maximum = 99,
+                Value = 1
+            };
+
+            Button btnAgregar = new Button
+            {
+                Text = "+",
+                Location = new Point(100, 75),
+                Size = new Size(50, 20),
+                BackColor = Color.FromArgb(46, 204, 113),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold)
+            };
+            btnAgregar.Click += (s, e) => AgregarPlatilloAPedido(platillo, (int)numCantidad.Value);
+
+            panelPlatillo.Controls.AddRange(new Control[] { lblNombre, lblPrecio, numCantidad, btnAgregar });
+            flowPlatillos?.Controls.Add(panelPlatillo);
+        }
+    }
+
+    private void AgregarPlatilloAPedido(Platillo platillo, int cantidad)
+    {
+        if (mesaActual == null)
+        {
+            MessageBox.Show("Seleccione una mesa o para llevar primero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        var itemExistente = pedidoTemporal.FirstOrDefault(d => d.PlatilloId == platillo.Id);
+        if (itemExistente != null)
+        {
+            itemExistente.Cantidad += cantidad;
+        }
+        else
+        {
+            pedidoTemporal.Add(new DetallePedido
+            {
+                PlatilloId = platillo.Id,
+                Platillo = platillo,
+                Cantidad = cantidad,
+                PrecioUnitario = platillo.Precio,
+                MesaId = mesaActual.Id
+            });
+        }
+
+        ActualizarListaPedido();
+    }
+
+    private void ActualizarListaPedido()
+    {
+        var lstPedido = this.Controls.Find("lstPedido", true)[0] as ListBox;
+        if (lstPedido == null) return;
+
+        lstPedido.Items.Clear();
+        foreach (var detalle in pedidoTemporal)
+        {
+            var platillo = detalle.Platillo ?? db.Platillos.Find(detalle.PlatilloId);
+            if (platillo != null)
+            {
+                string linea = $"{detalle.Cantidad}x {platillo.NombreCorto,-20} ${detalle.PrecioUnitario * detalle.Cantidad,8:F2}";
+                lstPedido.Items.Add(linea);
+            }
+        }
+
+        ActualizarTotales();
+    }
+
+    private void ActualizarTotales()
+    {
+        decimal subtotal = pedidoTemporal.Sum(d => d.PrecioUnitario * d.Cantidad);
+
+        var lblSubtotal = this.Controls.Find("lblSubtotal", true)[0] as Label;
+        if (lblSubtotal != null)
+            lblSubtotal.Text = $"Subtotal: ${subtotal:F2}";
+
+        var txtDescuento = this.Controls.Find("txtDescuento", true)[0] as TextBox;
+        var cmbTipoDescuento = this.Controls.Find("cmbTipoDescuento", true)[0] as ComboBox;
+        var lblTotal = this.Controls.Find("lblTotal", true)[0] as Label;
+
+        decimal descuento = 0;
+        if (decimal.TryParse(txtDescuento?.Text, out decimal valorDescuento))
+        {
+            if (cmbTipoDescuento?.SelectedItem?.ToString() == "%")
+            {
+                descuento = subtotal * (valorDescuento / 100);
+            }
+            else
+            {
+                descuento = valorDescuento;
+            }
+        }
+
+        decimal total = subtotal - descuento;
+        if (lblTotal != null)
+        {
+            if (descuento > 0)
+                lblTotal.Text = $"TOTAL: ${total:F2} (Desc: ${descuento:F2})";
+            else
+                lblTotal.Text = $"TOTAL: ${total:F2}";
+        }
+    }
+
+    private void BtnSeleccionarMesa_Click(object? sender, EventArgs e)
+    {
+        using var mesasForm = new MesasForm(db);
+        if (mesasForm.ShowDialog() == DialogResult.OK && mesasForm.MesaSeleccionada != null)
+        {
+            SeleccionarMesa(mesasForm.MesaSeleccionada);
+        }
+    }
+
+    private void BtnParaLlevar_Click(object? sender, EventArgs e)
+    {
+        var mesaParaLlevar = db.Mesas.FirstOrDefault(m => m.NumeroMesa == 0);
+        if (mesaParaLlevar != null)
+        {
+            SeleccionarMesa(mesaParaLlevar);
+        }
+    }
+
+    private void SeleccionarMesa(Mesa mesa)
+    {
+        mesaActual = mesa;
+
+        var lblMesaActual = this.Controls.Find("lblMesaActual", true)[0] as Label;
+        if (lblMesaActual != null)
+        {
+            if (mesa.NumeroMesa == 0)
+                lblMesaActual.Text = "PARA LLEVAR";
+            else
+                lblMesaActual.Text = $"MESA #{mesa.NumeroMesa}";
+        }
+
+        // Cargar pedido existente si la mesa está activa
+        pedidoTemporal.Clear();
+        if (mesa.EstaActiva)
+        {
+            var detalles = db.DetallesPedidos
+                .Include(d => d.Platillo)
+                .Where(d => d.MesaId == mesa.Id)
+                .ToList();
+            pedidoTemporal.AddRange(detalles);
+        }
+
+        ActualizarListaPedido();
+    }
+
+    private void BtnGuardarPedido_Click(object? sender, EventArgs e)
+    {
+        if (mesaActual == null || pedidoTemporal.Count == 0)
+        {
+            MessageBox.Show("No hay pedido para guardar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        try
+        {
+            // Activar mesa si no está activa
+            if (!mesaActual.EstaActiva)
+            {
+                mesaActual.EstaActiva = true;
+                mesaActual.FechaApertura = DateTime.Now;
+            }
+
+            // Eliminar detalles anteriores de esta mesa
+            var detallesAnteriores = db.DetallesPedidos.Where(d => d.MesaId == mesaActual.Id);
+            db.DetallesPedidos.RemoveRange(detallesAnteriores);
+
+            // Agregar nuevos detalles
+            foreach (var detalle in pedidoTemporal)
+            {
+                detalle.MesaId = mesaActual.Id;
+                db.DetallesPedidos.Add(detalle);
+            }
+
+            db.SaveChanges();
+            MessageBox.Show("Pedido guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ActualizarEstadoMesas();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error al guardar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void BtnImprimirTicket_Click(object? sender, EventArgs e)
+    {
+        if (mesaActual == null || pedidoTemporal.Count == 0)
+        {
+            MessageBox.Show("No hay pedido para imprimir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        var ticketForm = new TicketForm(db, mesaActual, pedidoTemporal, ObtenerDescuento());
+        ticketForm.ShowDialog();
+    }
+
+    private decimal ObtenerDescuento()
+    {
+        decimal subtotal = pedidoTemporal.Sum(d => d.PrecioUnitario * d.Cantidad);
+        var txtDescuento = this.Controls.Find("txtDescuento", true)[0] as TextBox;
+        var cmbTipoDescuento = this.Controls.Find("cmbTipoDescuento", true)[0] as ComboBox;
+
+        decimal descuento = 0;
+        if (decimal.TryParse(txtDescuento?.Text, out decimal valorDescuento))
+        {
+            if (cmbTipoDescuento?.SelectedItem?.ToString() == "%")
+            {
+                descuento = subtotal * (valorDescuento / 100);
+            }
+            else
+            {
+                descuento = valorDescuento;
+            }
+        }
+
+        return descuento;
+    }
+
+    private void BtnCerrarMesa_Click(object? sender, EventArgs e)
+    {
+        if (mesaActual == null)
+        {
+            MessageBox.Show("Seleccione una mesa primero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        var resultado = MessageBox.Show("¿Desea cerrar esta mesa/orden?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        if (resultado == DialogResult.Yes)
+        {
+            try
+            {
+                // Eliminar detalles
+                var detalles = db.DetallesPedidos.Where(d => d.MesaId == mesaActual.Id);
+                db.DetallesPedidos.RemoveRange(detalles);
+
+                // Desactivar mesa
+                mesaActual.EstaActiva = false;
+                mesaActual.FechaApertura = null;
+
+                db.SaveChanges();
+
+                pedidoTemporal.Clear();
+                mesaActual = null;
+
+                var lblMesaActual = this.Controls.Find("lblMesaActual", true)[0] as Label;
+                if (lblMesaActual != null)
+                    lblMesaActual.Text = "Seleccione una mesa";
+
+                ActualizarListaPedido();
+                ActualizarEstadoMesas();
+
+                MessageBox.Show("Mesa cerrada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cerrar mesa: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+
+    private void BtnLimpiar_Click(object? sender, EventArgs e)
+    {
+        var resultado = MessageBox.Show("¿Desea limpiar el pedido actual?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        if (resultado == DialogResult.Yes)
+        {
+            pedidoTemporal.Clear();
+            ActualizarListaPedido();
+        }
+    }
+
+    private void BtnEliminarItem_Click(object? sender, EventArgs e)
+    {
+        var lstPedido = this.Controls.Find("lstPedido", true)[0] as ListBox;
+        if (lstPedido?.SelectedIndex >= 0 && lstPedido.SelectedIndex < pedidoTemporal.Count)
+        {
+            pedidoTemporal.RemoveAt(lstPedido.SelectedIndex);
+            ActualizarListaPedido();
+        }
+    }
+
+    private void BtnAdministracion_Click(object? sender, EventArgs e)
+    {
+        using var adminForm = new AdminForm(db);
+        adminForm.ShowDialog();
+        CargarCategorias();
+    }
+
+    private void ActualizarEstadoMesas()
+    {
+        db = new RestauranteContext();
+    }
+
+    protected override void OnFormClosing(FormClosingEventArgs e)
+    {
+        db?.Dispose();
+        base.OnFormClosing(e);
+    }
+}

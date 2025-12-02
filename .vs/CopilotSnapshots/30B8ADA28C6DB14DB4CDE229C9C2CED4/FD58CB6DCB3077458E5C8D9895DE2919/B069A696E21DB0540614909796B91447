@@ -1,0 +1,172 @@
+﻿using restaurante.Data;
+using restaurante.Models;
+using System.Text;
+
+namespace restaurante.Forms;
+
+public partial class TicketForm : Form
+{
+    private RestauranteContext db;
+    private Mesa mesa;
+    private List<DetallePedido> detalles;
+    private decimal descuento;
+
+    public TicketForm(RestauranteContext context, Mesa mesa, List<DetallePedido> detalles, decimal descuento)
+    {
+        this.db = context;
+        this.mesa = mesa;
+        this.detalles = detalles;
+        this.descuento = descuento;
+        InitializeComponent();
+        GenerarTicket();
+    }
+
+    private void InitializeComponent()
+    {
+        this.Text = "Ticket";
+        this.Size = new Size(450, 700);
+        this.StartPosition = FormStartPosition.CenterParent;
+        this.FormBorderStyle = FormBorderStyle.FixedDialog;
+        this.MaximizeBox = false;
+
+        TextBox txtTicket = new TextBox
+        {
+            Name = "txtTicket",
+            Location = new Point(10, 10),
+            Size = new Size(410, 580),
+            Multiline = true,
+            ScrollBars = ScrollBars.Vertical,
+            Font = new Font("Consolas", 9),
+            ReadOnly = true
+        };
+
+        Button btnImprimir = new Button
+        {
+            Text = "IMPRIMIR",
+            Location = new Point(10, 600),
+            Size = new Size(200, 40),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(46, 204, 113),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat
+        };
+        btnImprimir.Click += BtnImprimir_Click;
+
+        Button btnCerrar = new Button
+        {
+            Text = "CERRAR",
+            Location = new Point(220, 600),
+            Size = new Size(200, 40),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(149, 165, 166),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat
+        };
+        btnCerrar.Click += (s, e) => this.Close();
+
+        this.Controls.AddRange(new Control[] { txtTicket, btnImprimir, btnCerrar });
+    }
+
+    private void GenerarTicket()
+    {
+        var txtTicket = this.Controls.Find("txtTicket", true)[0] as TextBox;
+        if (txtTicket == null) return;
+
+        var config = db.Configuraciones.FirstOrDefault();
+        if (config == null)
+        {
+            config = new Configuracion { Id = 1 };
+        }
+
+        StringBuilder ticket = new StringBuilder();
+
+        // Encabezado
+        ticket.AppendLine(CentrarTexto(config.NombreRestaurante, 40));
+        ticket.AppendLine(CentrarTexto(config.Direccion, 40));
+        ticket.AppendLine(CentrarTexto($"Tel: {config.Telefono}", 40));
+        ticket.AppendLine(new string('=', 40));
+        ticket.AppendLine($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}");
+        
+        if (mesa.NumeroMesa == 0)
+            ticket.AppendLine("Tipo: PARA LLEVAR");
+        else
+            ticket.AppendLine($"Mesa: #{mesa.NumeroMesa}");
+
+        ticket.AppendLine("Mesero: _________________");
+        ticket.AppendLine(new string('=', 40));
+
+        // Detalles
+        ticket.AppendLine("Cant. Descripción         Importe");
+        ticket.AppendLine(new string('-', 40));
+
+        decimal subtotal = 0;
+        foreach (var detalle in detalles)
+        {
+            var platillo = detalle.Platillo ?? db.Platillos.Find(detalle.PlatilloId);
+            if (platillo != null)
+            {
+                decimal importe = detalle.Cantidad * detalle.PrecioUnitario;
+                subtotal += importe;
+
+                string nombreCorto = platillo.NombreCorto;
+                if (nombreCorto.Length > 18)
+                    nombreCorto = nombreCorto.Substring(0, 18);
+
+                ticket.AppendLine($"{detalle.Cantidad,4}x {nombreCorto,-18} ${importe,7:F2}");
+            }
+        }
+
+        ticket.AppendLine(new string('-', 40));
+        ticket.AppendLine($"{"Subtotal:",-28} ${subtotal,9:F2}");
+
+        if (descuento > 0)
+        {
+            ticket.AppendLine($"{"Descuento:",-28} ${descuento,9:F2}");
+            ticket.AppendLine(new string('-', 40));
+        }
+
+        decimal total = subtotal - descuento;
+        ticket.AppendLine($"{"TOTAL:",-28} ${total,9:F2}");
+        ticket.AppendLine(new string('=', 40));
+        ticket.AppendLine();
+        ticket.AppendLine(CentrarTexto("¡Gracias por su preferencia!", 40));
+        ticket.AppendLine(CentrarTexto("Vuelva pronto", 40));
+
+        txtTicket.Text = ticket.ToString();
+    }
+
+    private string CentrarTexto(string texto, int ancho)
+    {
+        if (texto.Length >= ancho)
+            return texto;
+
+        int espacios = (ancho - texto.Length) / 2;
+        return new string(' ', espacios) + texto;
+    }
+
+    private void BtnImprimir_Click(object? sender, EventArgs e)
+    {
+        try
+        {
+            var txtTicket = this.Controls.Find("txtTicket", true)[0] as TextBox;
+            if (txtTicket != null)
+            {
+                // Guardar en archivo de texto como simulación de impresión
+                string directorio = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Tickets");
+                Directory.CreateDirectory(directorio);
+
+                string nombreArchivo = $"Ticket_{DateTime.Now:yyyyMMdd_HHmmss}.txt";
+                string rutaCompleta = Path.Combine(directorio, nombreArchivo);
+
+                File.WriteAllText(rutaCompleta, txtTicket.Text);
+
+                MessageBox.Show($"Ticket guardado en:\n{rutaCompleta}\n\nEn un entorno real, esto se enviaría a la impresora térmica.", 
+                    "Ticket Generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error al guardar ticket: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+}

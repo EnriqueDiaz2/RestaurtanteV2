@@ -1,0 +1,233 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Usuario\\source\\repos\\restaurante\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\models\\detallepedido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\detallepedido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\restaurante\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\models\\configuracion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\configuracion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\models\\mesa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\mesa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\models\\platillo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\platillo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\restaurante.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\restaurante.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\forms\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\forms\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\forms\\ticketform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\forms\\ticketform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\forms\\mesasform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\forms\\mesasform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\data\\restaurantecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\data\\restaurantecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Configuracion.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Configuracion.cs",
+              "RelativeDocumentMoniker": "restaurante\\Models\\Configuracion.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Configuracion.cs",
+              "RelativeToolTip": "restaurante\\Models\\Configuracion.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T15:36:08.61Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DetallePedido.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\DetallePedido.cs",
+              "RelativeDocumentMoniker": "restaurante\\Models\\DetallePedido.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\DetallePedido.cs",
+              "RelativeToolTip": "restaurante\\Models\\DetallePedido.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAgwAgAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T15:36:03.714Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Mesa.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Mesa.cs",
+              "RelativeDocumentMoniker": "restaurante\\Models\\Mesa.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Mesa.cs",
+              "RelativeToolTip": "restaurante\\Models\\Mesa.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T15:35:59.468Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Platillo.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Platillo.cs",
+              "RelativeDocumentMoniker": "restaurante\\Models\\Platillo.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Platillo.cs",
+              "RelativeToolTip": "restaurante\\Models\\Platillo.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T15:35:51.792Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Categoria.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Categoria.cs",
+              "RelativeDocumentMoniker": "restaurante\\Models\\Categoria.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Categoria.cs",
+              "RelativeToolTip": "restaurante\\Models\\Categoria.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T15:35:46.625Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "restaurante.csproj",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\restaurante.csproj",
+              "RelativeDocumentMoniker": "restaurante\\restaurante.csproj",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\restaurante.csproj",
+              "RelativeToolTip": "restaurante\\restaurante.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-02T15:35:37.907Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Program.cs",
+              "RelativeDocumentMoniker": "restaurante\\Program.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Program.cs",
+              "RelativeToolTip": "restaurante\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T15:28:34.218Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\README.md",
+              "RelativeDocumentMoniker": "README.md",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\README.md",
+              "RelativeToolTip": "README.md",
+              "ViewState": "AgIAAGQBAAAAAAAAAIBJwGYBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-02T15:40:18.424Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AdminForm.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\AdminForm.cs",
+              "RelativeDocumentMoniker": "restaurante\\Forms\\AdminForm.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\AdminForm.cs",
+              "RelativeToolTip": "restaurante\\Forms\\AdminForm.cs",
+              "ViewState": "AgIAAEQEAAAAAAAAAIBZwEkEAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T15:39:07.312Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TicketForm.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\TicketForm.cs",
+              "RelativeDocumentMoniker": "restaurante\\Forms\\TicketForm.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\TicketForm.cs",
+              "RelativeToolTip": "restaurante\\Forms\\TicketForm.cs",
+              "ViewState": "AgIAAMABAAAAAAAAAABBwMEBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T15:38:11.602Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "MesasForm.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\MesasForm.cs",
+              "RelativeDocumentMoniker": "restaurante\\Forms\\MesasForm.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\MesasForm.cs",
+              "RelativeToolTip": "restaurante\\Forms\\MesasForm.cs",
+              "ViewState": "AgIAAKMAAAAAAAAAAEBVwKcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T15:37:47.805Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MainForm.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\MainForm.cs",
+              "RelativeDocumentMoniker": "restaurante\\Forms\\MainForm.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\MainForm.cs",
+              "RelativeToolTip": "restaurante\\Forms\\MainForm.cs",
+              "ViewState": "AgIAAIwEAAAAAAAAAIBZwJEEAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T15:37:35.065Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "RestauranteContext.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Data\\RestauranteContext.cs",
+              "RelativeDocumentMoniker": "restaurante\\Data\\RestauranteContext.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Data\\RestauranteContext.cs",
+              "RelativeToolTip": "restaurante\\Data\\RestauranteContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T15:36:23.982Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

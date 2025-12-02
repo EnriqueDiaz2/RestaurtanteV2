@@ -1,0 +1,100 @@
+﻿using Microsoft.EntityFrameworkCore;
+using restaurante.Data;
+using restaurante.Models;
+
+namespace restaurante.Forms;
+
+public partial class MesasForm : Form
+{
+    private RestauranteContext db;
+    public Mesa? MesaSeleccionada { get; private set; }
+
+    public MesasForm(RestauranteContext context)
+    {
+        db = context;
+        InitializeComponent();
+        CargarMesas();
+    }
+
+    private void InitializeComponent()
+    {
+        this.Text = "Seleccionar Mesa";
+        this.Size = new Size(700, 500);
+        this.StartPosition = FormStartPosition.CenterParent;
+        this.FormBorderStyle = FormBorderStyle.FixedDialog;
+        this.MaximizeBox = false;
+        this.MinimizeBox = false;
+
+        Label lblTitulo = new Label
+        {
+            Text = "SELECCIONE UNA MESA",
+            Location = new Point(20, 20),
+            Size = new Size(660, 30),
+            Font = new Font("Segoe UI", 14, FontStyle.Bold),
+            TextAlign = ContentAlignment.MiddleCenter
+        };
+
+        Label lblActivas = new Label
+        {
+            Text = "Mesas Activas (ocupadas)",
+            Location = new Point(20, 60),
+            Size = new Size(660, 20),
+            Font = new Font("Segoe UI", 10, FontStyle.Bold),
+            ForeColor = Color.FromArgb(231, 76, 60)
+        };
+
+        FlowLayoutPanel flowMesas = new FlowLayoutPanel
+        {
+            Name = "flowMesas",
+            Location = new Point(20, 85),
+            Size = new Size(660, 360),
+            AutoScroll = true,
+            BorderStyle = BorderStyle.FixedSingle
+        };
+
+        this.Controls.AddRange(new Control[] { lblTitulo, lblActivas, flowMesas });
+    }
+
+    private void CargarMesas()
+    {
+        var flowMesas = this.Controls.Find("flowMesas", true)[0] as FlowLayoutPanel;
+        flowMesas?.Controls.Clear();
+
+        var mesas = db.Mesas.Where(m => m.NumeroMesa > 0).OrderBy(m => m.NumeroMesa).ToList();
+
+        foreach (var mesa in mesas)
+        {
+            Button btnMesa = new Button
+            {
+                Text = $"MESA {mesa.NumeroMesa}",
+                Size = new Size(150, 80),
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                FlatStyle = FlatStyle.Flat,
+                Margin = new Padding(5),
+                Tag = mesa
+            };
+
+            if (mesa.EstaActiva)
+            {
+                btnMesa.BackColor = Color.FromArgb(231, 76, 60);
+                btnMesa.ForeColor = Color.White;
+                btnMesa.Text += "\n(OCUPADA)";
+            }
+            else
+            {
+                btnMesa.BackColor = Color.FromArgb(46, 204, 113);
+                btnMesa.ForeColor = Color.White;
+                btnMesa.Text += "\n(LIBRE)";
+            }
+
+            btnMesa.Click += (s, e) =>
+            {
+                MesaSeleccionada = mesa;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            };
+
+            flowMesas?.Controls.Add(btnMesa);
+        }
+    }
+}

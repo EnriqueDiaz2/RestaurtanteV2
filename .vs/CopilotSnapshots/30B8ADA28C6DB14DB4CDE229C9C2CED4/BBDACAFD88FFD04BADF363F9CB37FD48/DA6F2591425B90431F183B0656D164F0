@@ -1,0 +1,813 @@
+﻿using Microsoft.EntityFrameworkCore;
+using restaurante.Data;
+using restaurante.Models;
+
+namespace restaurante.Forms;
+
+public partial class AdminForm : Form
+{
+    private RestauranteContext db;
+
+    public AdminForm(RestauranteContext context)
+    {
+        db = context;
+        InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+        this.Text = "Panel de Administración";
+        this.Size = new Size(1000, 700);
+        this.StartPosition = FormStartPosition.CenterParent;
+        this.BackColor = Color.FromArgb(236, 240, 241);
+
+        Panel panelHeader = new Panel
+        {
+            Dock = DockStyle.Top,
+            Height = 80,
+            BackColor = Color.FromArgb(155, 89, 182)
+        };
+
+        Label lblTitulo = new Label
+        {
+            Text = "⚙️ PANEL DE ADMINISTRACIÓN",
+            Dock = DockStyle.Fill,
+            Font = new Font("Segoe UI", 18, FontStyle.Bold),
+            ForeColor = Color.White,
+            TextAlign = ContentAlignment.MiddleCenter
+        };
+        panelHeader.Controls.Add(lblTitulo);
+
+        TabControl tabControl = new TabControl
+        {
+            Dock = DockStyle.Fill,
+            Font = new Font("Segoe UI", 11),
+            Padding = new Point(15, 8)
+        };
+
+        // Tab de Configuración
+        TabPage tabConfiguracion = new TabPage("⚙️ Configuración");
+        tabConfiguracion.BackColor = Color.White;
+        CrearTabConfiguracion(tabConfiguracion);
+
+        // Tab de Categorías
+        TabPage tabCategorias = new TabPage("📋 Categorías");
+        tabCategorias.BackColor = Color.White;
+        CrearTabCategorias(tabCategorias);
+
+        // Tab de Platillos
+        TabPage tabPlatillos = new TabPage("🍴 Platillos");
+        tabPlatillos.BackColor = Color.White;
+        CrearTabPlatillos(tabPlatillos);
+
+        // NUEVA Tab de Artículos por Categoría
+        TabPage tabArticulosPorCategoria = new TabPage("📂 Por Categoría");
+        tabArticulosPorCategoria.BackColor = Color.White;
+        CrearTabArticulosPorCategoria(tabArticulosPorCategoria);
+
+        tabControl.TabPages.AddRange(new TabPage[] { tabConfiguracion, tabCategorias, tabPlatillos, tabArticulosPorCategoria });
+        
+        this.Controls.Add(tabControl);
+        this.Controls.Add(panelHeader);
+    }
+
+    private void CrearTabConfiguracion(TabPage tab)
+    {
+        Panel panel = new Panel
+        {
+            Dock = DockStyle.Fill,
+            Padding = new Padding(30),
+            BackColor = Color.White
+        };
+
+        Label lblTitulo = new Label
+        {
+            Text = "CONFIGURACIÓN DEL RESTAURANTE",
+            Location = new Point(30, 30),
+            Size = new Size(900, 40),
+            Font = new Font("Segoe UI", 16, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        // Nombre del Restaurante
+        Label lblNombre = new Label
+        {
+            Text = "Nombre del Restaurante:",
+            Location = new Point(30, 100),
+            Size = new Size(220, 30),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        TextBox txtNombre = new TextBox
+        {
+            Name = "txtNombreRestaurante",
+            Location = new Point(260, 100),
+            Size = new Size(500, 30),
+            Font = new Font("Segoe UI", 11),
+            BorderStyle = BorderStyle.FixedSingle
+        };
+
+        // Dirección
+        Label lblDireccion = new Label
+        {
+            Text = "Dirección:",
+            Location = new Point(30, 160),
+            Size = new Size(220, 30),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        TextBox txtDireccion = new TextBox
+        {
+            Name = "txtDireccion",
+            Location = new Point(260, 160),
+            Size = new Size(500, 30),
+            Font = new Font("Segoe UI", 11),
+            BorderStyle = BorderStyle.FixedSingle
+        };
+
+        // Teléfono
+        Label lblTelefono = new Label
+        {
+            Text = "Teléfono:",
+            Location = new Point(30, 220),
+            Size = new Size(220, 30),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        TextBox txtTelefono = new TextBox
+        {
+            Name = "txtTelefono",
+            Location = new Point(260, 220),
+            Size = new Size(250, 30),
+            Font = new Font("Segoe UI", 11),
+            BorderStyle = BorderStyle.FixedSingle
+        };
+
+        Button btnGuardarConfig = new Button
+        {
+            Text = "💾 GUARDAR CONFIGURACIÓN",
+            Location = new Point(260, 280),
+            Size = new Size(300, 50),
+            Font = new Font("Segoe UI", 12, FontStyle.Bold),
+            BackColor = Color.FromArgb(46, 204, 113),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnGuardarConfig.FlatAppearance.BorderSize = 0;
+        btnGuardarConfig.Click += BtnGuardarConfig_Click;
+
+        panel.Controls.AddRange(new Control[] { 
+            lblTitulo, lblNombre, txtNombre, lblDireccion, txtDireccion, 
+            lblTelefono, txtTelefono, btnGuardarConfig 
+        });
+
+        tab.Controls.Add(panel);
+
+        // Cargar datos
+        var config = db.Configuraciones.FirstOrDefault();
+        if (config != null)
+        {
+            txtNombre.Text = config.NombreRestaurante;
+            txtDireccion.Text = config.Direccion;
+            txtTelefono.Text = config.Telefono;
+        }
+    }
+
+    private void CrearTabCategorias(TabPage tab)
+    {
+        Panel panel = new Panel
+        {
+            Dock = DockStyle.Fill,
+            Padding = new Padding(30),
+            BackColor = Color.White
+        };
+
+        Label lblTitulo = new Label
+        {
+            Text = "GESTIÓN DE CATEGORÍAS",
+            Location = new Point(30, 30),
+            Size = new Size(900, 40),
+            Font = new Font("Segoe UI", 16, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        Panel panelAgregar = new Panel
+        {
+            Location = new Point(30, 90),
+            Size = new Size(900, 70),
+            BackColor = Color.FromArgb(236, 240, 241),
+            Padding = new Padding(15)
+        };
+
+        Label lblNombre = new Label
+        {
+            Text = "Nueva Categoría:",
+            Location = new Point(15, 22),
+            Size = new Size(150, 30),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold)
+        };
+
+        TextBox txtNombreCategoria = new TextBox
+        {
+            Name = "txtNombreCategoria",
+            Location = new Point(170, 20),
+            Size = new Size(400, 30),
+            Font = new Font("Segoe UI", 11),
+            BorderStyle = BorderStyle.FixedSingle
+        };
+
+        Button btnAgregarCategoria = new Button
+        {
+            Text = "➕ AGREGAR",
+            Location = new Point(580, 18),
+            Size = new Size(180, 35),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(46, 204, 113),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnAgregarCategoria.FlatAppearance.BorderSize = 0;
+        btnAgregarCategoria.Click += BtnAgregarCategoria_Click;
+
+        panelAgregar.Controls.AddRange(new Control[] { lblNombre, txtNombreCategoria, btnAgregarCategoria });
+
+        Label lblLista = new Label
+        {
+            Text = "Categorías Existentes:",
+            Location = new Point(30, 180),
+            Size = new Size(900, 30),
+            Font = new Font("Segoe UI", 12, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        ListBox lstCategorias = new ListBox
+        {
+            Name = "lstCategorias",
+            Location = new Point(30, 220),
+            Size = new Size(900, 300),
+            Font = new Font("Segoe UI", 11),
+            BorderStyle = BorderStyle.FixedSingle,
+            ItemHeight = 30
+        };
+
+        Button btnEliminarCategoria = new Button
+        {
+            Text = "🗑️ ELIMINAR CATEGORÍA SELECCIONADA",
+            Location = new Point(30, 535),
+            Size = new Size(350, 45),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(231, 76, 60),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnEliminarCategoria.FlatAppearance.BorderSize = 0;
+        btnEliminarCategoria.Click += BtnEliminarCategoria_Click;
+
+        panel.Controls.AddRange(new Control[] { 
+            lblTitulo, panelAgregar, lblLista, lstCategorias, btnEliminarCategoria 
+        });
+
+        tab.Controls.Add(panel);
+        CargarCategorias(lstCategorias);
+    }
+
+    private void CrearTabPlatillos(TabPage tab)
+    {
+        Panel panel = new Panel
+        {
+            Dock = DockStyle.Fill,
+            Padding = new Padding(30),
+            BackColor = Color.White
+        };
+
+        Label lblTitulo = new Label
+        {
+            Text = "GESTIÓN DE PLATILLOS",
+            Location = new Point(30, 30),
+            Size = new Size(900, 40),
+            Font = new Font("Segoe UI", 16, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        Panel panelAgregar = new Panel
+        {
+            Location = new Point(30, 90),
+            Size = new Size(900, 120),
+            BackColor = Color.FromArgb(236, 240, 241),
+            Padding = new Padding(15)
+        };
+
+        // Fila 1
+        Label lblNombre = new Label
+        {
+            Text = "Nombre Completo:",
+            Location = new Point(15, 15),
+            Size = new Size(140, 25),
+            Font = new Font("Segoe UI", 10, FontStyle.Bold)
+        };
+
+        TextBox txtNombrePlatillo = new TextBox
+        {
+            Name = "txtNombrePlatillo",
+            Location = new Point(160, 15),
+            Size = new Size(300, 25),
+            Font = new Font("Segoe UI", 10),
+            BorderStyle = BorderStyle.FixedSingle
+        };
+
+        Label lblNombreCorto = new Label
+        {
+            Text = "Nombre Corto:",
+            Location = new Point(480, 15),
+            Size = new Size(110, 25),
+            Font = new Font("Segoe UI", 10, FontStyle.Bold)
+        };
+
+        TextBox txtNombreCorto = new TextBox
+        {
+            Name = "txtNombreCorto",
+            Location = new Point(595, 15),
+            Size = new Size(250, 25),
+            Font = new Font("Segoe UI", 10),
+            BorderStyle = BorderStyle.FixedSingle
+        };
+
+        // Fila 2
+        Label lblPrecio = new Label
+        {
+            Text = "Precio ($):",
+            Location = new Point(15, 55),
+            Size = new Size(140, 25),
+            Font = new Font("Segoe UI", 10, FontStyle.Bold)
+        };
+
+        NumericUpDown numPrecio = new NumericUpDown
+        {
+            Name = "numPrecio",
+            Location = new Point(160, 55),
+            Size = new Size(120, 25),
+            Font = new Font("Segoe UI", 10),
+            DecimalPlaces = 2,
+            Maximum = 9999,
+            Minimum = 0
+        };
+
+        Label lblCategoria = new Label
+        {
+            Text = "Categoría:",
+            Location = new Point(300, 55),
+            Size = new Size(80, 25),
+            Font = new Font("Segoe UI", 10, FontStyle.Bold)
+        };
+
+        ComboBox cmbCategoria = new ComboBox
+        {
+            Name = "cmbCategoria",
+            Location = new Point(385, 55),
+            Size = new Size(200, 25),
+            Font = new Font("Segoe UI", 10),
+            DropDownStyle = ComboBoxStyle.DropDownList
+        };
+
+        Button btnAgregarPlatillo = new Button
+        {
+            Text = "➕ AGREGAR PLATILLO",
+            Location = new Point(605, 50),
+            Size = new Size(240, 35),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(46, 204, 113),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnAgregarPlatillo.FlatAppearance.BorderSize = 0;
+        btnAgregarPlatillo.Click += BtnAgregarPlatillo_Click;
+
+        panelAgregar.Controls.AddRange(new Control[] { 
+            lblNombre, txtNombrePlatillo, lblNombreCorto, txtNombreCorto,
+            lblPrecio, numPrecio, lblCategoria, cmbCategoria, btnAgregarPlatillo
+        });
+
+        Label lblLista = new Label
+        {
+            Text = "Platillos Existentes:",
+            Location = new Point(30, 230),
+            Size = new Size(900, 30),
+            Font = new Font("Segoe UI", 12, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        DataGridView dgvPlatillos = new DataGridView
+        {
+            Name = "dgvPlatillos",
+            Location = new Point(30, 270),
+            Size = new Size(900, 260),
+            Font = new Font("Segoe UI", 10),
+            AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+            SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+            MultiSelect = false,
+            ReadOnly = true,
+            AllowUserToAddRows = false,
+            BackgroundColor = Color.White,
+            BorderStyle = BorderStyle.FixedSingle,
+            RowHeadersVisible = false,
+            AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle 
+            { 
+                BackColor = Color.FromArgb(236, 240, 241) 
+            }
+        };
+
+        Button btnEliminarPlatillo = new Button
+        {
+            Text = "🗑️ ELIMINAR",
+            Location = new Point(30, 545),
+            Size = new Size(180, 45),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(231, 76, 60),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnEliminarPlatillo.FlatAppearance.BorderSize = 0;
+        btnEliminarPlatillo.Click += BtnEliminarPlatillo_Click;
+
+        Button btnModificarPlatillo = new Button
+        {
+            Text = "💰 MODIFICAR PRECIO",
+            Location = new Point(220, 545),
+            Size = new Size(220, 45),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(52, 152, 219),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnModificarPlatillo.FlatAppearance.BorderSize = 0;
+        btnModificarPlatillo.Click += BtnModificarPlatillo_Click;
+
+        panel.Controls.AddRange(new Control[] { 
+            lblTitulo, panelAgregar, lblLista, dgvPlatillos, 
+            btnEliminarPlatillo, btnModificarPlatillo
+        });
+
+        tab.Controls.Add(panel);
+
+        CargarCategoriasCbo(cmbCategoria);
+        CargarPlatillos(dgvPlatillos);
+    }
+
+    private void CrearTabArticulosPorCategoria(TabPage tab)
+    {
+        Panel panel = new Panel
+        {
+            Dock = DockStyle.Fill,
+            Padding = new Padding(30),
+            BackColor = Color.White
+        };
+
+        Label lblTitulo = new Label
+        {
+            Text = "ARTÍCULOS POR CATEGORÍA",
+            Location = new Point(30, 30),
+            Size = new Size(900, 40),
+            Font = new Font("Segoe UI", 16, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        Label lblSeleccione = new Label
+        {
+            Text = "Seleccione una categoría:",
+            Location = new Point(30, 90),
+            Size = new Size(200, 30),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        ComboBox cmbCategoriaFiltro = new ComboBox
+        {
+            Name = "cmbCategoriaFiltro",
+            Location = new Point(240, 90),
+            Size = new Size(300, 30),
+            Font = new Font("Segoe UI", 11),
+            DropDownStyle = ComboBoxStyle.DropDownList
+        };
+
+        Button btnFiltrar = new Button
+        {
+            Text = "🔍 MOSTRAR",
+            Location = new Point(550, 87),
+            Size = new Size(150, 35),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(52, 152, 219),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnFiltrar.FlatAppearance.BorderSize = 0;
+
+        Button btnMostrarTodos = new Button
+        {
+            Text = "📋 TODOS",
+            Location = new Point(710, 87),
+            Size = new Size(150, 35),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(149, 165, 166),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnMostrarTodos.FlatAppearance.BorderSize = 0;
+
+        Label lblResultados = new Label
+        {
+            Name = "lblResultados",
+            Text = "Todos los artículos",
+            Location = new Point(30, 145),
+            Size = new Size(900, 30),
+            Font = new Font("Segoe UI", 12, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        DataGridView dgvPlatillosFiltrados = new DataGridView
+        {
+            Name = "dgvPlatillosFiltrados",
+            Location = new Point(30, 185),
+            Size = new Size(900, 335),
+            Font = new Font("Segoe UI", 10),
+            AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+            SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+            MultiSelect = false,
+            ReadOnly = true,
+            AllowUserToAddRows = false,
+            BackgroundColor = Color.White,
+            BorderStyle = BorderStyle.FixedSingle,
+            RowHeadersVisible = false,
+            AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle 
+            { 
+                BackColor = Color.FromArgb(236, 240, 241) 
+            }
+        };
+
+        Panel panelBotones = new Panel
+        {
+            Location = new Point(30, 535),
+            Size = new Size(900, 50),
+            BackColor = Color.Transparent
+        };
+
+        Button btnEliminarSeleccionado = new Button
+        {
+            Text = "🗑️ ELIMINAR SELECCIONADO",
+            Location = new Point(0, 5),
+            Size = new Size(280, 45),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(231, 76, 60),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnEliminarSeleccionado.FlatAppearance.BorderSize = 0;
+
+        Button btnModificarPrecio = new Button
+        {
+            Text = "💰 MODIFICAR PRECIO",
+            Location = new Point(290, 5),
+            Size = new Size(250, 45),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(52, 152, 219),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnModificarPrecio.FlatAppearance.BorderSize = 0;
+
+        Button btnEditarNombre = new Button
+        {
+            Text = "✏️ EDITAR NOMBRE",
+            Location = new Point(550, 5),
+            Size = new Size(250, 45),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(155, 89, 182),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnEditarNombre.FlatAppearance.BorderSize = 0;
+
+        panelBotones.Controls.AddRange(new Control[] { btnEliminarSeleccionado, btnModificarPrecio, btnEditarNombre });
+
+        panel.Controls.AddRange(new Control[] { 
+            lblTitulo, lblSeleccione, cmbCategoriaFiltro, btnFiltrar, btnMostrarTodos,
+            lblResultados, dgvPlatillosFiltrados, panelBotones
+        });
+
+        tab.Controls.Add(panel);
+
+        // Cargar categorías en el combo
+        CargarCategoriasCombo(cmbCategoriaFiltro);
+        
+        // Cargar todos los platillos inicialmente
+        CargarPlatillosFiltrados(dgvPlatillosFiltrados, null);
+
+        // Eventos
+        btnFiltrar.Click += (s, e) =>
+        {
+            if (cmbCategoriaFiltro.SelectedValue != null)
+            {
+                int categoriaId = (int)cmbCategoriaFiltro.SelectedValue;
+                var categoria = db.Categorias.Find(categoriaId);
+                CargarPlatillosFiltrados(dgvPlatillosFiltrados, categoriaId);
+                
+                var lblRes = panel.Controls["lblResultados"] as Label;
+                if (lblRes != null && categoria != null)
+                    lblRes.Text = $"Artículos en categoría: {categoria.Nombre}";
+            }
+        };
+
+        btnMostrarTodos.Click += (s, e) =>
+        {
+            CargarPlatillosFiltrados(dgvPlatillosFiltrados, null);
+            var lblRes = panel.Controls["lblResultados"] as Label;
+            if (lblRes != null)
+                lblRes.Text = "Todos los artículos";
+        };
+
+        btnEliminarSeleccionado.Click += (s, e) =>
+        {
+            if (dgvPlatillosFiltrados.CurrentRow == null)
+            {
+                MessageBox.Show("⚠️ Seleccione un artículo para eliminar.", "Aviso", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var resultado = MessageBox.Show("¿Está seguro de eliminar este artículo?", "Confirmar", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            
+            if (resultado == DialogResult.Yes)
+            {
+                try
+                {
+                    int platilloId = (int)dgvPlatillosFiltrados.CurrentRow.Cells["Id"].Value;
+                    var platillo = db.Platillos.Find(platilloId);
+                    if (platillo != null)
+                    {
+                        db.Platillos.Remove(platillo);
+                        db.SaveChanges();
+                        
+                        // Recargar con el filtro actual
+                        if (cmbCategoriaFiltro.SelectedValue != null)
+                            CargarPlatillosFiltrados(dgvPlatillosFiltrados, (int)cmbCategoriaFiltro.SelectedValue);
+                        else
+                            CargarPlatillosFiltrados(dgvPlatillosFiltrados, null);
+                        
+                        MessageBox.Show("✅ Artículo eliminado correctamente.", "Éxito", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"❌ Error: {ex.Message}", "Error", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        };
+
+        btnModificarPrecio.Click += (s, e) =>
+        {
+            if (dgvPlatillosFiltrados.CurrentRow == null)
+            {
+                MessageBox.Show("⚠️ Seleccione un artículo para modificar.", "Aviso", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                int platilloId = (int)dgvPlatillosFiltrados.CurrentRow.Cells["Id"].Value;
+                var platillo = db.Platillos.Find(platilloId);
+                if (platillo != null)
+                {
+                    string? nuevoPrecioStr = Microsoft.VisualBasic.Interaction.InputBox(
+                        $"Ingrese el nuevo precio para:\n\n{platillo.Nombre}\n\nPrecio actual: ${platillo.Precio:F2}",
+                        "Modificar Precio",
+                        platillo.Precio.ToString());
+
+                    if (!string.IsNullOrWhiteSpace(nuevoPrecioStr) && decimal.TryParse(nuevoPrecioStr, out decimal nuevoPrecio))
+                    {
+                        platillo.Precio = nuevoPrecio;
+                        db.SaveChanges();
+                        
+                        // Recargar con el filtro actual
+                        if (cmbCategoriaFiltro.SelectedValue != null)
+                            CargarPlatillosFiltrados(dgvPlatillosFiltrados, (int)cmbCategoriaFiltro.SelectedValue);
+                        else
+                            CargarPlatillosFiltrados(dgvPlatillosFiltrados, null);
+                        
+                        MessageBox.Show("✅ Precio modificado correctamente.", "Éxito", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"❌ Error: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        };
+
+        btnEditarNombre.Click += (s, e) =>
+        {
+            if (dgvPlatillosFiltrados.CurrentRow == null)
+            {
+                MessageBox.Show("⚠️ Seleccione un artículo para editar.", "Aviso", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                int platilloId = (int)dgvPlatillosFiltrados.CurrentRow.Cells["Id"].Value;
+                var platillo = db.Platillos.Find(platilloId);
+                if (platillo != null)
+                {
+                    string? nuevoNombre = Microsoft.VisualBasic.Interaction.InputBox(
+                        $"Ingrese el nuevo nombre para:\n\n{platillo.Nombre}",
+                        "Editar Nombre",
+                        platillo.Nombre);
+
+                    if (!string.IsNullOrWhiteSpace(nuevoNombre))
+                    {
+                        platillo.Nombre = nuevoNombre.Trim();
+                        db.SaveChanges();
+                        
+                        // Recargar con el filtro actual
+                        if (cmbCategoriaFiltro.SelectedValue != null)
+                            CargarPlatillosFiltrados(dgvPlatillosFiltrados, (int)cmbCategoriaFiltro.SelectedValue);
+                        else
+                            CargarPlatillosFiltrados(dgvPlatillosFiltrados, null);
+                        
+                        MessageBox.Show("✅ Nombre modificado correctamente.", "Éxito", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"❌ Error: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        };
+    }
+
+    private void CargarCategoriasCombo(ComboBox cmb)
+    {
+        var categorias = db.Categorias.OrderBy(c => c.Nombre).ToList();
+        cmb.DataSource = categorias;
+        cmb.DisplayMember = "Nombre";
+        cmb.ValueMember = "Id";
+    }
+
+    private void CargarPlatillosFiltrados(DataGridView dgv, int? categoriaId)
+    {
+        var query = db.Platillos.Include(p => p.Categoria).AsQueryable();
+        
+        if (categoriaId.HasValue)
+        {
+            query = query.Where(p => p.CategoriaId == categoriaId.Value);
+        }
+
+        var platillos = query
+            .Select(p => new
+            {
+                p.Id,
+                p.Nombre,
+                p.NombreCorto,
+                Precio = p.Precio,
+                Categoria = p.Categoria!.Nombre
+            })
+            .OrderBy(p => p.Categoria)
+            .ThenBy(p => p.Nombre)
+            .ToList();
+
+        dgv.DataSource = platillos;
+        
+        if (dgv.Columns["Id"] != null)
+            dgv.Columns["Id"]!.Visible = false;
+        
+        if (dgv.Columns["Precio"] != null)
+            dgv.Columns["Precio"]!.DefaultCellStyle.Format = "C2";
+        
+        if (dgv.Columns["Nombre"] != null)
+            dgv.Columns["Nombre"]!.HeaderText = "Nombre Completo";
+        
+        if (dgv.Columns["NombreCorto"] != null)
+            dgv.Columns["NombreCorto"]!.HeaderText = "Nombre Corto";
+    }
+}
