@@ -42,7 +42,7 @@ public partial class TicketForm : Form
     private void InitializeComponent()
     {
         this.Text = "Ticket de Venta";
-        this.Size = new DrawingSize(550, 800);
+        this.Size = new DrawingSize(480, 650);  // Reducido de 550x800 a 480x650
         this.StartPosition = FormStartPosition.CenterParent;
         this.FormBorderStyle = FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
@@ -51,7 +51,7 @@ public partial class TicketForm : Form
         Panel panelHeader = new Panel
         {
             Dock = DockStyle.Top,
-            Height = 70,
+            Height = 60,  // Reducido de 70 a 60
             BackColor = DrawingColor.FromArgb(52, 73, 94)
         };
 
@@ -59,7 +59,7 @@ public partial class TicketForm : Form
         {
             Text = "?? TICKET DE VENTA",
             Dock = DockStyle.Fill,
-            Font = new Font("Segoe UI", 16, FontStyle.Bold),
+            Font = new Font("Segoe UI", 14, FontStyle.Bold),  // Reducido de 16 a 14
             ForeColor = DrawingColor.White,
             TextAlign = ContentAlignment.MiddleCenter
         };
@@ -68,7 +68,7 @@ public partial class TicketForm : Form
         Panel panelContenido = new Panel
         {
             Dock = DockStyle.Fill,
-            Padding = new Padding(15),
+            Padding = new Padding(12),  // Reducido de 15 a 12
             BackColor = DrawingColor.White
         };
 
@@ -78,7 +78,7 @@ public partial class TicketForm : Form
             Dock = DockStyle.Fill,
             Multiline = true,
             ScrollBars = ScrollBars.Vertical,
-            Font = new Font("Courier New", 10),
+            Font = new Font("Courier New", 9),  // Reducido de 10 a 9
             ReadOnly = true,
             BackColor = DrawingColor.White,
             BorderStyle = BorderStyle.FixedSingle
@@ -88,17 +88,17 @@ public partial class TicketForm : Form
         Panel panelBotones = new Panel
         {
             Dock = DockStyle.Bottom,
-            Height = 100,
+            Height = 80,  // Reducido de 100 a 80
             BackColor = DrawingColor.White,
-            Padding = new Padding(15)
+            Padding = new Padding(12)  // Reducido de 15 a 12
         };
 
         Button btnImprimirFisico = new Button
         {
             Text = "??? IMPRIMIR",
-            Location = new Point(15, 15),
-            Size = new DrawingSize(155, 50),
-            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            Location = new Point(12, 15),  // Ajustado para nuevo padding
+            Size = new DrawingSize(135, 42),  // Reducido de 155x50 a 135x42
+            Font = new Font("Segoe UI", 10, FontStyle.Bold),  // Reducido de 11 a 10
             BackColor = DrawingColor.FromArgb(52, 152, 219),
             ForeColor = DrawingColor.White,
             FlatStyle = FlatStyle.Flat,
@@ -110,9 +110,9 @@ public partial class TicketForm : Form
         Button btnGuardarPDF = new Button
         {
             Text = "?? GUARDAR PDF",
-            Location = new Point(180, 15),
-            Size = new DrawingSize(155, 50),
-            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            Location = new Point(157, 15),  // Ajustado para nuevo tamaño
+            Size = new DrawingSize(135, 42),  // Reducido de 155x50 a 135x42
+            Font = new Font("Segoe UI", 10, FontStyle.Bold),  // Reducido de 11 a 10
             BackColor = DrawingColor.FromArgb(46, 204, 113),
             ForeColor = DrawingColor.White,
             FlatStyle = FlatStyle.Flat,
@@ -124,9 +124,9 @@ public partial class TicketForm : Form
         Button btnCerrar = new Button
         {
             Text = "? CERRAR",
-            Location = new Point(345, 15),
-            Size = new DrawingSize(155, 50),
-            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            Location = new Point(302, 15),  // Ajustado para nuevo tamaño
+            Size = new DrawingSize(135, 42),  // Reducido de 155x50 a 135x42
+            Font = new Font("Segoe UI", 10, FontStyle.Bold),  // Reducido de 11 a 10
             BackColor = DrawingColor.FromArgb(149, 165, 166),
             ForeColor = DrawingColor.White,
             FlatStyle = FlatStyle.Flat,
