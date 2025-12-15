@@ -48,24 +48,38 @@ public partial class AdminForm : Form
         // Tab de Configuración
         TabPage tabConfiguracion = new TabPage("?? Configuración");
         tabConfiguracion.BackColor = Color.White;
-        CrearTabConfiguracion(tabConfiguracion);
-
+        
         // Tab de Categorías
         TabPage tabCategorias = new TabPage("?? Categorías");
         tabCategorias.BackColor = Color.White;
-        CrearTabCategorias(tabCategorias);
-
+        
         // Tab de Platillos
-        TabPage tabPlatillos = new TabPage("?? Platillos");
+        TabPage tabPlatillos = new TabPage("??? Platillos");
         tabPlatillos.BackColor = Color.White;
-        CrearTabPlatillos(tabPlatillos);
-
-        // NUEVA Tab de Artículos por Categoría
+        
+        // Tab de Artículos por Categoría
         TabPage tabArticulosPorCategoria = new TabPage("?? Por Categoría");
         tabArticulosPorCategoria.BackColor = Color.White;
-        CrearTabArticulosPorCategoria(tabArticulosPorCategoria);
+        
+        // Tab de Mesas
+        TabPage tabMesas = new TabPage("?? Mesas");
+        tabMesas.BackColor = Color.White;
 
-        tabControl.TabPages.AddRange(new TabPage[] { tabConfiguracion, tabCategorias, tabPlatillos, tabArticulosPorCategoria });
+        // Agregar las tabs PRIMERO antes de crear el contenido
+        tabControl.TabPages.AddRange(new TabPage[] { 
+            tabConfiguracion, 
+            tabCategorias, 
+            tabPlatillos, 
+            tabArticulosPorCategoria, 
+            tabMesas 
+        });
+
+        // Ahora crear el contenido de cada tab
+        CrearTabConfiguracion(tabConfiguracion);
+        CrearTabCategorias(tabCategorias);
+        CrearTabPlatillos(tabPlatillos);
+        CrearTabArticulosPorCategoria(tabArticulosPorCategoria);
+        CrearTabMesas(tabMesas);
         
         this.Controls.Add(tabControl);
         this.Controls.Add(panelHeader);
@@ -198,7 +212,7 @@ public partial class AdminForm : Form
         Panel panelAgregar = new Panel
         {
             Location = new Point(30, 90),
-            Size = new Size(900, 70),
+            Size = new Size(900, 110),
             BackColor = Color.FromArgb(236, 240, 241),
             Padding = new Padding(15)
         };
@@ -206,7 +220,7 @@ public partial class AdminForm : Form
         Label lblNombre = new Label
         {
             Text = "Nueva Categoría:",
-            Location = new Point(15, 22),
+            Location = new Point(15, 15),
             Size = new Size(150, 30),
             Font = new Font("Segoe UI", 11, FontStyle.Bold)
         };
@@ -214,17 +228,96 @@ public partial class AdminForm : Form
         TextBox txtNombreCategoria = new TextBox
         {
             Name = "txtNombreCategoria",
-            Location = new Point(170, 20),
-            Size = new Size(400, 30),
+            Location = new Point(170, 15),
+            Size = new Size(350, 30),
             Font = new Font("Segoe UI", 11),
             BorderStyle = BorderStyle.FixedSingle
+        };
+
+        Label lblColor = new Label
+        {
+            Text = "Color:",
+            Location = new Point(15, 55),
+            Size = new Size(150, 30),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold)
+        };
+
+        ComboBox cmbColores = new ComboBox
+        {
+            Name = "cmbColores",
+            Location = new Point(170, 55),
+            Size = new Size(200, 30),
+            Font = new Font("Segoe UI", 11),
+            DropDownStyle = ComboBoxStyle.DropDownList
+        };
+
+        // Agregar colores predefinidos
+        var colores = new Dictionary<string, string>
+        {
+            { "?? Azul", "#3498db" },
+            { "?? Verde", "#2ecc71" },
+            { "?? Rojo", "#e74c3c" },
+            { "?? Amarillo", "#f1c40f" },
+            { "?? Naranja", "#e67e22" },
+            { "?? Morado", "#9b59b6" },
+            { "?? Café", "#8b4513" },
+            { "? Gris Oscuro", "#34495e" },
+            { "?? Naranja Oscuro", "#d35400" },
+            { "?? Verde Esmeralda", "#16a085" },
+            { "?? Azul Claro", "#5dade2" },
+            { "?? Rosa", "#ec7063" },
+            { "?? Naranja Claro", "#f39c12" },
+            { "?? Violeta", "#8e44ad" },
+            { "?? Rosa Claro", "#f1948a" },
+            { "? Gris Medio", "#7f8c8d" },
+            { "?? Rojo Oscuro", "#c0392b" },
+            { "?? Azul Medio", "#2980b9" },
+            { "?? Verde Oscuro", "#27ae60" },
+            { "?? Púrpura", "#7d3c98" },
+            { "?? Coral", "#d64541" },
+            { "?? Verde Agua", "#58b19f" },
+            { "? Dorado", "#f5b041" },
+            { "?? Azul Cielo", "#52b3d9" },
+            { "?? Mandarina", "#ff8c42" },
+            { "?? Uva", "#8b5a99" },
+            { "?? Pino", "#2d5f3e" },
+            { "?? Fresa", "#dc3545" },
+            { "?? Kiwi", "#86c232" },
+            { "?? Limón", "#ffd700" }
+        };
+
+        cmbColores.DisplayMember = "Key";
+        cmbColores.ValueMember = "Value";
+        cmbColores.DataSource = new BindingSource(colores, null);
+        // IMPORTANTE: Establecer SelectedIndex DESPUÉS de asignar el DataSource
+        if (cmbColores.Items.Count > 0)
+        {
+            cmbColores.SelectedIndex = 0;
+        }
+
+        Panel panelVistaPrevia = new Panel
+        {
+            Name = "panelVistaPrevia",
+            Location = new Point(380, 55),
+            Size = new Size(50, 30),
+            BackColor = ColorTranslator.FromHtml("#3498db"),
+            BorderStyle = BorderStyle.FixedSingle
+        };
+
+        cmbColores.SelectedIndexChanged += (s, e) =>
+        {
+            if (cmbColores.SelectedValue != null)
+            {
+                string colorHex = cmbColores.SelectedValue.ToString() ?? "#3498db";
+                panelVistaPrevia.BackColor = ColorTranslator.FromHtml(colorHex);
+            }
         };
 
         Button btnAgregarCategoria = new Button
         {
             Text = "? AGREGAR",
-            Location = new Point(580, 18),
-            Size = new Size(180, 35),
+            Location = new Point(450, 50),
+            Size = new Size(180, 40),
             Font = new Font("Segoe UI", 11, FontStyle.Bold),
             BackColor = Color.FromArgb(46, 204, 113),
             ForeColor = Color.White,
@@ -234,31 +327,42 @@ public partial class AdminForm : Form
         btnAgregarCategoria.FlatAppearance.BorderSize = 0;
         btnAgregarCategoria.Click += BtnAgregarCategoria_Click;
 
-        panelAgregar.Controls.AddRange(new Control[] { lblNombre, txtNombreCategoria, btnAgregarCategoria });
+        panelAgregar.Controls.AddRange(new Control[] { lblNombre, txtNombreCategoria, lblColor, cmbColores, panelVistaPrevia, btnAgregarCategoria });
 
         Label lblLista = new Label
         {
             Text = "Categorías Existentes:",
-            Location = new Point(30, 180),
+            Location = new Point(30, 220),
             Size = new Size(900, 30),
             Font = new Font("Segoe UI", 12, FontStyle.Bold),
             ForeColor = Color.FromArgb(52, 73, 94)
         };
 
-        ListBox lstCategorias = new ListBox
+        DataGridView dgvCategorias = new DataGridView
         {
-            Name = "lstCategorias",
-            Location = new Point(30, 220),
-            Size = new Size(900, 300),
-            Font = new Font("Segoe UI", 11),
+            Name = "dgvCategorias",
+            Location = new Point(30, 260),
+            Size = new Size(900, 240),
+            Font = new Font("Segoe UI", 10),
+            AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+            SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+            MultiSelect = false,
+            ReadOnly = true,
+            AllowUserToAddRows = false,
+            BackgroundColor = Color.White,
             BorderStyle = BorderStyle.FixedSingle,
-            ItemHeight = 30
+            RowHeadersVisible = false,
+            RowTemplate = { Height = 35 },
+            AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle 
+            { 
+                BackColor = Color.FromArgb(236, 240, 241) 
+            }
         };
 
         Button btnEliminarCategoria = new Button
         {
             Text = "??? ELIMINAR CATEGORÍA SELECCIONADA",
-            Location = new Point(30, 535),
+            Location = new Point(30, 515),
             Size = new Size(350, 45),
             Font = new Font("Segoe UI", 11, FontStyle.Bold),
             BackColor = Color.FromArgb(231, 76, 60),
@@ -269,12 +373,26 @@ public partial class AdminForm : Form
         btnEliminarCategoria.FlatAppearance.BorderSize = 0;
         btnEliminarCategoria.Click += BtnEliminarCategoria_Click;
 
+        Button btnCambiarColor = new Button
+        {
+            Text = "?? CAMBIAR COLOR",
+            Location = new Point(390, 515),
+            Size = new Size(250, 45),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(52, 152, 219),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnCambiarColor.FlatAppearance.BorderSize = 0;
+        btnCambiarColor.Click += BtnCambiarColorCategoria_Click;
+
         panel.Controls.AddRange(new Control[] { 
-            lblTitulo, panelAgregar, lblLista, lstCategorias, btnEliminarCategoria 
+            lblTitulo, panelAgregar, lblLista, dgvCategorias, btnEliminarCategoria, btnCambiarColor
         });
 
         tab.Controls.Add(panel);
-        CargarCategorias(lstCategorias);
+        CargarCategoriasGrid(dgvCategorias);
     }
 
     private void CrearTabPlatillos(TabPage tab)
@@ -766,7 +884,345 @@ public partial class AdminForm : Form
         };
     }
 
+    private void CrearTabMesas(TabPage tab)
+    {
+        Panel panel = new Panel
+        {
+            Dock = DockStyle.Fill,
+            Padding = new Padding(30),
+            BackColor = Color.White
+        };
+
+        Label lblTitulo = new Label
+        {
+            Text = "GESTIÓN DE MESAS",
+            Location = new Point(30, 30),
+            Size = new Size(900, 40),
+            Font = new Font("Segoe UI", 16, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        Panel panelAgregar = new Panel
+        {
+            Location = new Point(30, 90),
+            Size = new Size(900, 80),
+            BackColor = Color.FromArgb(236, 240, 241),
+            Padding = new Padding(15)
+        };
+
+        Label lblNumero = new Label
+        {
+            Text = "Número de Mesa:",
+            Location = new Point(15, 25),
+            Size = new Size(150, 30),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold)
+        };
+
+        NumericUpDown numMesa = new NumericUpDown
+        {
+            Name = "numMesa",
+            Location = new Point(170, 25),
+            Size = new Size(120, 30),
+            Font = new Font("Segoe UI", 11),
+            Minimum = 1,
+            Maximum = 999,
+            Value = 1
+        };
+
+        Button btnAgregarMesa = new Button
+        {
+            Text = "? AGREGAR MESA",
+            Location = new Point(310, 20),
+            Size = new Size(200, 40),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(46, 204, 113),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnAgregarMesa.FlatAppearance.BorderSize = 0;
+        btnAgregarMesa.Click += BtnAgregarMesa_Click;
+
+        Button btnAgregarVariasMesas = new Button
+        {
+            Text = "?? AGREGAR VARIAS MESAS",
+            Location = new Point(520, 20),
+            Size = new Size(280, 40),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(52, 152, 219),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnAgregarVariasMesas.FlatAppearance.BorderSize = 0;
+        btnAgregarVariasMesas.Click += BtnAgregarVariasMesas_Click;
+
+        panelAgregar.Controls.AddRange(new Control[] { lblNumero, numMesa, btnAgregarMesa, btnAgregarVariasMesas });
+
+        Label lblLista = new Label
+        {
+            Text = "Mesas Existentes:",
+            Location = new Point(30, 190),
+            Size = new Size(900, 30),
+            Font = new Font("Segoe UI", 12, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        DataGridView dgvMesas = new DataGridView
+        {
+            Name = "dgvMesas",
+            Location = new Point(30, 230),
+            Size = new Size(900, 270),
+            Font = new Font("Segoe UI", 10),
+            AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+            SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+            MultiSelect = false,
+            ReadOnly = true,
+            AllowUserToAddRows = false,
+            BackgroundColor = Color.White,
+            BorderStyle = BorderStyle.FixedSingle,
+            RowHeadersVisible = false,
+            RowTemplate = { Height = 35 },
+            AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle 
+            { 
+                BackColor = Color.FromArgb(236, 240, 241) 
+            }
+        };
+
+        Button btnEliminarMesa = new Button
+        {
+            Text = "??? ELIMINAR MESA SELECCIONADA",
+            Location = new Point(30, 515),
+            Size = new Size(350, 45),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(231, 76, 60),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnEliminarMesa.FlatAppearance.BorderSize = 0;
+        btnEliminarMesa.Click += BtnEliminarMesa_Click;
+
+        panel.Controls.AddRange(new Control[] { 
+            lblTitulo, panelAgregar, lblLista, dgvMesas, btnEliminarMesa
+        });
+
+        tab.Controls.Add(panel);
+        CargarMesasGrid(dgvMesas);
+    }
+
+    private void CargarMesasGrid(DataGridView dgv)
+    {
+        var mesas = db.Mesas
+            .Where(m => m.NumeroMesa > 0)
+            .OrderBy(m => m.NumeroMesa)
+            .Select(m => new
+            {
+                m.Id,
+                NumeroMesa = m.NumeroMesa,
+                Estado = m.EstaActiva ? "?? Ocupada" : "?? Libre",
+                FechaApertura = m.FechaApertura.HasValue ? m.FechaApertura.Value.ToString("dd/MM/yyyy HH:mm") : "-"
+            })
+            .ToList();
+
+        dgv.DataSource = mesas;
+        
+        if (dgv.Columns["Id"] != null)
+            dgv.Columns["Id"]!.Visible = false;
+        
+        if (dgv.Columns["NumeroMesa"] != null)
+            dgv.Columns["NumeroMesa"]!.HeaderText = "Número";
+    }
+
+    private void CargarCategoriasGrid(DataGridView dgv)
+    {
+        var categorias = db.Categorias
+            .OrderBy(c => c.Nombre)
+            .Select(c => new
+            {
+                c.Id,
+                c.Nombre,
+                ColorHex = c.ColorHex,
+                ColorMuestra = "        "
+            })
+            .ToList();
+
+        dgv.DataSource = categorias;
+        
+        if (dgv.Columns["Id"] != null)
+            dgv.Columns["Id"]!.Visible = false;
+
+        if (dgv.Columns["ColorHex"] != null)
+            dgv.Columns["ColorHex"]!.Visible = false;
+        
+        if (dgv.Columns["ColorMuestra"] != null)
+        {
+            dgv.Columns["ColorMuestra"]!.HeaderText = "Color";
+            dgv.Columns["ColorMuestra"]!.Width = 80;
+        }
+
+        dgv.CellPainting += (s, e) =>
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgv.Columns[e.ColumnIndex].Name == "ColorMuestra")
+            {
+                e.PaintBackground(e.CellBounds, true);
+                
+                if (e.RowIndex < categorias.Count)
+                {
+                    string colorHex = categorias[e.RowIndex].ColorHex ?? "#3498db";
+                    Color color = ColorTranslator.FromHtml(colorHex);
+                    
+                    using (SolidBrush brush = new SolidBrush(color))
+                    {
+                        Rectangle rect = new Rectangle(e.CellBounds.X + 5, e.CellBounds.Y + 5, e.CellBounds.Width - 10, e.CellBounds.Height - 10);
+                        e.Graphics.FillRectangle(brush, rect);
+                        e.Graphics.DrawRectangle(Pens.Gray, rect);
+                    }
+                }
+                
+                e.Handled = true;
+            }
+        };
+    }
+
+    private void BtnGuardarConfig_Click(object? sender, EventArgs e)
+    {
+        try
+        {
+            var txtNombre = this.Controls.Find("txtNombreRestaurante", true)[0] as TextBox;
+            var txtDireccion = this.Controls.Find("txtDireccion", true)[0] as TextBox;
+            var txtTelefono = this.Controls.Find("txtTelefono", true)[0] as TextBox;
+
+            if (string.IsNullOrWhiteSpace(txtNombre?.Text))
+            {
+                MessageBox.Show("?? El nombre del restaurante es obligatorio.", "Aviso", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var config = db.Configuraciones.FirstOrDefault();
+            if (config == null)
+            {
+                config = new Configuracion { Id = 1 };
+                db.Configuraciones.Add(config);
+            }
+
+            config.NombreRestaurante = txtNombre?.Text ?? "";
+            config.Direccion = txtDireccion?.Text ?? "";
+            config.Telefono = txtTelefono?.Text ?? "";
+
+            db.SaveChanges();
+            MessageBox.Show("? Configuración guardada correctamente.", "Éxito", 
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"? Error: {ex.Message}", "Error", 
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void BtnAgregarCategoria_Click(object? sender, EventArgs e)
+    {
+        var txtNombre = this.Controls.Find("txtNombreCategoria", true)[0] as TextBox;
+        var cmbColores = this.Controls.Find("cmbColores", true)[0] as ComboBox;
+        
+        if (string.IsNullOrWhiteSpace(txtNombre?.Text))
+        {
+            MessageBox.Show("?? Ingrese un nombre para la categoría.", "Aviso", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        try
+        {
+            string colorHex = "#3498db";
+            if (cmbColores?.SelectedValue != null)
+            {
+                colorHex = cmbColores.SelectedValue.ToString() ?? "#3498db";
+            }
+
+            var categoria = new Categoria
+            {
+                Nombre = txtNombre.Text.Trim(),
+                ColorHex = colorHex
+            };
+
+            db.Categorias.Add(categoria);
+            db.SaveChanges();
+
+            txtNombre.Clear();
+            var dgvCategorias = this.Controls.Find("dgvCategorias", true)[0] as DataGridView;
+            if (dgvCategorias != null)
+            {
+                CargarCategoriasGrid(dgvCategorias);
+            }
+
+            MessageBox.Show("? Categoría agregada correctamente.", "Éxito", 
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"? Error: {ex.Message}", "Error", 
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void BtnEliminarCategoria_Click(object? sender, EventArgs e)
+    {
+        var dgvCategorias = this.Controls.Find("dgvCategorias", true)[0] as DataGridView;
+        if (dgvCategorias?.CurrentRow == null)
+        {
+            MessageBox.Show("?? Seleccione una categoría para eliminar.", "Aviso", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        try
+        {
+            int categoriaId = (int)dgvCategorias.CurrentRow.Cells["Id"].Value;
+            
+            // Verificar si tiene platillos
+            var tienePlatillos = db.Platillos.Any(p => p.CategoriaId == categoriaId);
+            if (tienePlatillos)
+            {
+                MessageBox.Show("?? No se puede eliminar la categoría porque tiene platillos asociados.", 
+                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var resultado = MessageBox.Show("¿Está seguro de eliminar esta categoría?", "Confirmar", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            
+            if (resultado == DialogResult.Yes)
+            {
+                var categoria = db.Categorias.Find(categoriaId);
+                if (categoria != null)
+                {
+                    db.Categorias.Remove(categoria);
+                    db.SaveChanges();
+                    CargarCategoriasGrid(dgvCategorias);
+                    MessageBox.Show("? Categoría eliminada correctamente.", "Éxito", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"? Error: {ex.Message}", "Error", 
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
     private void CargarCategoriasCombo(ComboBox cmb)
+    {
+        var categorias = db.Categorias.OrderBy(c => c.Nombre).ToList();
+        cmb.DataSource = categorias;
+        cmb.DisplayMember = "Nombre";
+        cmb.ValueMember = "Id";
+    }
+
+    private void CargarCategoriasCbo(ComboBox cmb)
     {
         var categorias = db.Categorias.OrderBy(c => c.Nombre).ToList();
         cmb.DataSource = categorias;
@@ -811,122 +1267,27 @@ public partial class AdminForm : Form
             dgv.Columns["NombreCorto"]!.HeaderText = "Nombre Corto";
     }
 
-    private void BtnGuardarConfig_Click(object? sender, EventArgs e)
+    private void CargarPlatillos(DataGridView dgv)
     {
-        try
-        {
-            var txtNombre = this.Controls.Find("txtNombreRestaurante", true)[0] as TextBox;
-            var txtDireccion = this.Controls.Find("txtDireccion", true)[0] as TextBox;
-            var txtTelefono = this.Controls.Find("txtTelefono", true)[0] as TextBox;
-
-            if (string.IsNullOrWhiteSpace(txtNombre?.Text))
+        var platillos = db.Platillos
+            .Include(p => p.Categoria)
+            .Select(p => new
             {
-                MessageBox.Show("?? El nombre del restaurante es obligatorio.", "Aviso", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+                p.Id,
+                p.Nombre,
+                p.NombreCorto,
+                Precio = p.Precio,
+                Categoria = p.Categoria!.Nombre
+            })
+            .ToList();
 
-            var config = db.Configuraciones.FirstOrDefault();
-            if (config == null)
-            {
-                config = new Configuracion { Id = 1 };
-                db.Configuraciones.Add(config);
-            }
-
-            config.NombreRestaurante = txtNombre?.Text ?? "";
-            config.Direccion = txtDireccion?.Text ?? "";
-            config.Telefono = txtTelefono?.Text ?? "";
-
-            db.SaveChanges();
-            MessageBox.Show("? Configuración guardada correctamente.", "Éxito", 
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"? Error: {ex.Message}", "Error", 
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
-
-    private void BtnAgregarCategoria_Click(object? sender, EventArgs e)
-    {
-        var txtNombre = this.Controls.Find("txtNombreCategoria", true)[0] as TextBox;
-        if (string.IsNullOrWhiteSpace(txtNombre?.Text))
-        {
-            MessageBox.Show("?? Ingrese un nombre para la categoría.", "Aviso", 
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            return;
-        }
-
-        try
-        {
-            var categoria = new Categoria
-            {
-                Nombre = txtNombre.Text.Trim()
-            };
-
-            db.Categorias.Add(categoria);
-            db.SaveChanges();
-
-            txtNombre.Clear();
-            var lstCategorias = this.Controls.Find("lstCategorias", true)[0] as ListBox;
-            if (lstCategorias != null)
-                CargarCategorias(lstCategorias);
-
-            MessageBox.Show("? Categoría agregada correctamente.", "Éxito", 
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"? Error: {ex.Message}", "Error", 
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
-
-    private void BtnEliminarCategoria_Click(object? sender, EventArgs e)
-    {
-        var lstCategorias = this.Controls.Find("lstCategorias", true)[0] as ListBox;
-        if (lstCategorias?.SelectedItem == null)
-        {
-            MessageBox.Show("?? Seleccione una categoría para eliminar.", "Aviso", 
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            return;
-        }
-
-        var categoriaItem = lstCategorias.SelectedItem.ToString();
-        var categoriaId = int.Parse(categoriaItem!.Split('-')[0].Trim());
-
-        // Verificar si tiene platillos
-        var tienePlatillos = db.Platillos.Any(p => p.CategoriaId == categoriaId);
-        if (tienePlatillos)
-        {
-            MessageBox.Show("?? No se puede eliminar la categoría porque tiene platillos asociados.", 
-                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            return;
-        }
-
-        var resultado = MessageBox.Show("¿Está seguro de eliminar esta categoría?", "Confirmar", 
-            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-        if (resultado == DialogResult.Yes)
-        {
-            try
-            {
-                var categoria = db.Categorias.Find(categoriaId);
-                if (categoria != null)
-                {
-                    db.Categorias.Remove(categoria);
-                    db.SaveChanges();
-                    CargarCategorias(lstCategorias);
-                    MessageBox.Show("? Categoría eliminada correctamente.", "Éxito", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"? Error: {ex.Message}", "Error", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        dgv.DataSource = platillos;
+        
+        if (dgv.Columns["Id"] != null)
+            dgv.Columns["Id"]!.Visible = false;
+        
+        if (dgv.Columns["Precio"] != null)
+            dgv.Columns["Precio"]!.DefaultCellStyle.Format = "C2";
     }
 
     private void BtnAgregarPlatillo_Click(object? sender, EventArgs e)
@@ -965,7 +1326,8 @@ public partial class AdminForm : Form
 
             txtNombre.Clear();
             txtNombreCorto.Clear();
-            numPrecio.Value = 0;
+            if (numPrecio != null)
+                numPrecio.Value = 0;
 
             var dgvPlatillos = this.Controls.Find("dgvPlatillos", true)[0] as DataGridView;
             if (dgvPlatillos != null)
@@ -1054,44 +1416,323 @@ public partial class AdminForm : Form
         }
     }
 
-    private void CargarCategorias(ListBox lst)
+    private void BtnAgregarMesa_Click(object? sender, EventArgs e)
     {
-        lst.Items.Clear();
-        var categorias = db.Categorias.OrderBy(c => c.Nombre).ToList();
-        foreach (var cat in categorias)
+        var numMesa = this.Controls.Find("numMesa", true)[0] as NumericUpDown;
+        if (numMesa == null) return;
+
+        int numeroMesa = (int)numMesa.Value;
+
+        if (db.Mesas.Any(m => m.NumeroMesa == numeroMesa))
         {
-            lst.Items.Add($"{cat.Id} - {cat.Nombre}");
+            MessageBox.Show($"?? Ya existe una mesa con el número {numeroMesa}.", "Aviso", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        try
+        {
+            var mesa = new Mesa
+            {
+                NumeroMesa = numeroMesa,
+                EstaActiva = false
+            };
+
+            db.Mesas.Add(mesa);
+            db.SaveChanges();
+
+            var dgvMesas = this.Controls.Find("dgvMesas", true)[0] as DataGridView;
+            if (dgvMesas != null)
+                CargarMesasGrid(dgvMesas);
+
+            MessageBox.Show($"? Mesa {numeroMesa} agregada correctamente.", "Éxito", 
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"? Error: {ex.Message}", "Error", 
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
-    private void CargarCategoriasCbo(ComboBox cmb)
+    private void BtnAgregarVariasMesas_Click(object? sender, EventArgs e)
     {
-        var categorias = db.Categorias.OrderBy(c => c.Nombre).ToList();
-        cmb.DataSource = categorias;
-        cmb.DisplayMember = "Nombre";
-        cmb.ValueMember = "Id";
+        string? input = Microsoft.VisualBasic.Interaction.InputBox(
+            "Ingrese el rango de mesas a crear:\n\nFormato: inicio-fin\nEjemplo: 1-20 (creará mesas del 1 al 20)",
+            "Agregar Varias Mesas",
+            "1-10");
+
+        if (string.IsNullOrWhiteSpace(input)) return;
+
+        var partes = input.Split('-');
+        if (partes.Length != 2 || !int.TryParse(partes[0], out int inicio) || !int.TryParse(partes[1], out int fin))
+        {
+            MessageBox.Show("?? Formato inválido. Use: inicio-fin (ejemplo: 1-20)", "Error", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        if (inicio > fin || inicio < 1 || fin > 999)
+        {
+            MessageBox.Show("?? Rango inválido. El inicio debe ser menor al fin y entre 1-999.", "Error", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        try
+        {
+            int agregadas = 0;
+            int existentes = 0;
+
+            for (int i = inicio; i <= fin; i++)
+            {
+                if (!db.Mesas.Any(m => m.NumeroMesa == i))
+                {
+                    db.Mesas.Add(new Mesa { NumeroMesa = i, EstaActiva = false });
+                    agregadas++;
+                }
+                else
+                {
+                    existentes++;
+                }
+            }
+
+            db.SaveChanges();
+
+            var dgvMesas = this.Controls.Find("dgvMesas", true)[0] as DataGridView;
+            if (dgvMesas != null)
+                CargarMesasGrid(dgvMesas);
+
+            string mensaje = $"? Operación completada:\n\n";
+            mensaje += $"• Mesas agregadas: {agregadas}\n";
+            if (existentes > 0)
+                mensaje += $"• Mesas que ya existían: {existentes}";
+
+            MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"? Error: {ex.Message}", "Error", 
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
-    private void CargarPlatillos(DataGridView dgv)
+    private void BtnEliminarMesa_Click(object? sender, EventArgs e)
     {
-        var platillos = db.Platillos
-            .Include(p => p.Categoria)
-            .Select(p => new
-            {
-                p.Id,
-                p.Nombre,
-                p.NombreCorto,
-                Precio = p.Precio,
-                Categoria = p.Categoria!.Nombre
-            })
-            .ToList();
+        var dgvMesas = this.Controls.Find("dgvMesas", true)[0] as DataGridView;
+        if (dgvMesas?.CurrentRow == null)
+        {
+            MessageBox.Show("?? Seleccione una mesa para eliminar.", "Aviso", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
 
-        dgv.DataSource = platillos;
-        
-        if (dgv.Columns["Id"] != null)
-            dgv.Columns["Id"]!.Visible = false;
-        
-        if (dgv.Columns["Precio"] != null)
-            dgv.Columns["Precio"]!.DefaultCellStyle.Format = "C2";
+        try
+        {
+            int mesaId = (int)dgvMesas.CurrentRow.Cells["Id"].Value;
+            var mesa = db.Mesas.Include(m => m.Detalles).FirstOrDefault(m => m.Id == mesaId);
+            
+            if (mesa == null) return;
+
+            if (mesa.EstaActiva || mesa.Detalles.Any())
+            {
+                MessageBox.Show("?? No se puede eliminar esta mesa porque tiene pedidos asociados o está activa.", 
+                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var resultado = MessageBox.Show($"¿Está seguro de eliminar la Mesa {mesa.NumeroMesa}?", "Confirmar", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            
+            if (resultado == DialogResult.Yes)
+            {
+                db.Mesas.Remove(mesa);
+                db.SaveChanges();
+                CargarMesasGrid(dgvMesas);
+                MessageBox.Show("? Mesa eliminada correctamente.", "Éxito", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"? Error: {ex.Message}", "Error", 
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void BtnCambiarColorCategoria_Click(object? sender, EventArgs e)
+    {
+        var dgvCategorias = this.Controls.Find("dgvCategorias", true)[0] as DataGridView;
+        if (dgvCategorias?.CurrentRow == null)
+        {
+            MessageBox.Show("?? Seleccione una categoría para cambiar el color.", "Aviso", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        try
+        {
+            int categoriaId = (int)dgvCategorias.CurrentRow.Cells["Id"].Value;
+            var categoria = db.Categorias.Find(categoriaId);
+            
+            if (categoria == null) return;
+
+            Form formColor = new Form
+            {
+                Text = $"Seleccionar Color - {categoria.Nombre}",
+                Size = new Size(500, 400),
+                StartPosition = FormStartPosition.CenterParent,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                MaximizeBox = false,
+                MinimizeBox = false
+            };
+
+            Label lblTitulo = new Label
+            {
+                Text = "Seleccione un color:",
+                Location = new Point(20, 20),
+                Size = new Size(450, 30),
+                Font = new Font("Segoe UI", 12, FontStyle.Bold)
+            };
+
+            var colores = new Dictionary<string, string>
+            {
+                { "?? Azul", "#3498db" },
+                { "?? Verde", "#2ecc71" },
+                { "?? Rojo", "#e74c3c" },
+                { "?? Amarillo", "#f1c40f" },
+                { "?? Naranja", "#e67e22" },
+                { "?? Morado", "#9b59b6" },
+                { "?? Café", "#8b4513" },
+                { "? Gris Oscuro", "#34495e" },
+                { "?? Naranja Oscuro", "#d35400" },
+                { "?? Verde Esmeralda", "#16a085" },
+                { "?? Azul Claro", "#5dade2" },
+                { "?? Rosa", "#ec7063" },
+                { "?? Naranja Claro", "#f39c12" },
+                { "?? Violeta", "#8e44ad" },
+                { "?? Rosa Claro", "#f1948a" },
+                { "? Gris Medio", "#7f8c8d" },
+                { "?? Rojo Oscuro", "#c0392b" },
+                { "?? Azul Medio", "#2980b9" },
+                { "?? Verde Oscuro", "#27ae60" },
+                { "?? Púrpura", "#7d3c98" },
+                { "?? Coral", "#d64541" },
+                { "?? Verde Agua", "#58b19f" },
+                { "? Dorado", "#f5b041" },
+                { "?? Azul Cielo", "#52b3d9" },
+                { "?? Mandarina", "#ff8c42" },
+                { "?? Uva", "#8b5a99" },
+                { "?? Pino", "#2d5f3e" },
+                { "?? Fresa", "#dc3545" },
+                { "?? Kiwi", "#86c232" },
+                { "?? Limón", "#ffd700" }
+            };
+
+            ListBox lstColores = new ListBox
+            {
+                Location = new Point(20, 60),
+                Size = new Size(250, 250),
+                Font = new Font("Segoe UI", 11),
+                DrawMode = DrawMode.OwnerDrawFixed,
+                ItemHeight = 30
+            };
+
+            foreach (var color in colores)
+            {
+                lstColores.Items.Add(color);
+            }
+
+            lstColores.DrawItem += (s, e) =>
+            {
+                if (e.Index < 0) return;
+                
+                e.DrawBackground();
+                var item = (KeyValuePair<string, string>)lstColores.Items[e.Index];
+                
+                Rectangle colorRect = new Rectangle(e.Bounds.X + 5, e.Bounds.Y + 5, 30, e.Bounds.Height - 10);
+                using (SolidBrush brush = new SolidBrush(ColorTranslator.FromHtml(item.Value)))
+                {
+                    e.Graphics.FillRectangle(brush, colorRect);
+                }
+                e.Graphics.DrawRectangle(Pens.Black, colorRect);
+                
+                using (SolidBrush textBrush = new SolidBrush(e.ForeColor))
+                {
+                    e.Graphics.DrawString(item.Key, e.Font!, textBrush, e.Bounds.X + 45, e.Bounds.Y + 5);
+                }
+                
+                e.DrawFocusRectangle();
+            };
+
+            Panel panelVistaPrevia = new Panel
+            {
+                Location = new Point(290, 60),
+                Size = new Size(180, 180),
+                BackColor = ColorTranslator.FromHtml(categoria.ColorHex ?? "#3498db"),
+                BorderStyle = BorderStyle.FixedSingle
+            };
+
+            Label lblPreview = new Label
+            {
+                Text = "Vista Previa",
+                Location = new Point(290, 250),
+                Size = new Size(180, 30),
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+
+            lstColores.SelectedIndexChanged += (s, e) =>
+            {
+                if (lstColores.SelectedItem != null)
+                {
+                    var item = (KeyValuePair<string, string>)lstColores.SelectedItem;
+                    panelVistaPrevia.BackColor = ColorTranslator.FromHtml(item.Value);
+                }
+            };
+
+            Button btnAceptar = new Button
+            {
+                Text = "?? Aplicar",
+                Location = new Point(150, 320),
+                Size = new Size(120, 35),
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                BackColor = Color.FromArgb(46, 204, 113),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.OK
+            };
+            btnAceptar.FlatAppearance.BorderSize = 0;
+
+            Button btnCancelar = new Button
+            {
+                Text = "?? Cancelar",
+                Location = new Point(280, 320),
+                Size = new Size(120, 35),
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                BackColor = Color.FromArgb(149, 165, 166),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.Cancel
+            };
+            btnCancelar.FlatAppearance.BorderSize = 0;
+
+            formColor.Controls.AddRange(new Control[] { lblTitulo, lstColores, panelVistaPrevia, lblPreview, btnAceptar, btnCancelar });
+
+            if (formColor.ShowDialog() == DialogResult.OK && lstColores.SelectedItem != null)
+            {
+                var selectedColor = (KeyValuePair<string, string>)lstColores.SelectedItem;
+                categoria.ColorHex = selectedColor.Value;
+                db.SaveChanges();
+                CargarCategoriasGrid(dgvCategorias);
+                MessageBox.Show("? Color actualizado correctamente.", "Éxito", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"? Error: {ex.Message}", "Error", 
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 }

@@ -64,21 +64,21 @@ public partial class MainForm : Form
         this.BackColor = Color.FromArgb(236, 240, 241);
         this.MinimumSize = new Size(1024, 768);
 
-        // Panel Superior - Más compacto
+        // Panel Superior - Botones de Mesa y Para Llevar con más altura
         Panel panelSuperior = new Panel
         {
             Dock = DockStyle.Top,
-            Height = 85,  // Reducido de 110 a 85
+            Height = 110,
             BackColor = Color.FromArgb(26, 188, 156),
-            Padding = new Padding(12)  // Reducido de 15 a 12
+            Padding = new Padding(15)
         };
 
         Button btnSeleccionarMesa = new Button
         {
             Text = "??? MESAS",
-            Location = new Point(15, 15),  // Reducido de 20,25 a 15,15
-            Size = new Size(150, 50),  // Reducido de 180x60 a 150x50
-            Font = new Font("Segoe UI", 12, FontStyle.Bold),  // Reducido de 14 a 12
+            Location = new Point(20, 25),
+            Size = new Size(180, 60),
+            Font = new Font("Segoe UI", 14, FontStyle.Bold),
             BackColor = Color.FromArgb(22, 160, 133),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
@@ -91,9 +91,9 @@ public partial class MainForm : Form
         Button btnParaLlevar = new Button
         {
             Text = "?? PARA LLEVAR",
-            Location = new Point(175, 15),  // Ajustado
-            Size = new Size(170, 50),  // Reducido de 200x60 a 170x50
-            Font = new Font("Segoe UI", 12, FontStyle.Bold),  // Reducido de 14 a 12
+            Location = new Point(210, 25),
+            Size = new Size(200, 60),
+            Font = new Font("Segoe UI", 14, FontStyle.Bold),
             BackColor = Color.FromArgb(241, 196, 15),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
@@ -106,9 +106,9 @@ public partial class MainForm : Form
         Button btnAdministracion = new Button
         {
             Text = "?? ADMIN",
-            Location = new Point(355, 15),  // Ajustado
-            Size = new Size(130, 50),  // Reducido de 160x60 a 130x50
-            Font = new Font("Segoe UI", 11, FontStyle.Bold),  // Reducido de 13 a 11
+            Location = new Point(420, 25),
+            Size = new Size(160, 60),
+            Font = new Font("Segoe UI", 13, FontStyle.Bold),
             BackColor = Color.FromArgb(155, 89, 182),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
@@ -124,11 +124,11 @@ public partial class MainForm : Form
             Text = "Seleccione una mesa",
             Anchor = AnchorStyles.Top | AnchorStyles.Right,
             AutoSize = false,
-            Size = new Size(350, 50),  // Reducido de 400x60 a 350x50
-            Font = new Font("Segoe UI", 14, FontStyle.Bold),  // Reducido de 16 a 14
+            Size = new Size(400, 60),
+            Font = new Font("Segoe UI", 16, FontStyle.Bold),
             ForeColor = Color.White,
             TextAlign = ContentAlignment.MiddleRight,
-            Padding = new Padding(0, 15, 15, 0)  // Reducido padding
+            Padding = new Padding(0, 20, 20, 0)
         };
 
         panelSuperior.Controls.AddRange(new Control[] { btnSeleccionarMesa, btnParaLlevar, btnAdministracion, lblMesaActual });
@@ -140,24 +140,24 @@ public partial class MainForm : Form
 
         this.Controls.Add(panelSuperior);
 
-        // TableLayoutPanel más compacto
+        // TableLayoutPanel para hacer la interfaz responsiva con más padding
         TableLayoutPanel mainLayout = new TableLayoutPanel
         {
             Dock = DockStyle.Fill,
             ColumnCount = 2,
             RowCount = 1,
-            Padding = new Padding(12),  // Reducido de 20 a 12
+            Padding = new Padding(20),  // Aumentado de 15 a 20
             BackColor = Color.FromArgb(236, 240, 241)
         };
         mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55F));
         mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45F));
         mainLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 
-        // Panel Izquierdo más compacto
+        // Panel Izquierdo - Categorías y Platillos con más separación
         Panel panelIzquierdo = new Panel
         {
             Dock = DockStyle.Fill,
-            Padding = new Padding(6),  // Reducido de 10 a 6
+            Padding = new Padding(10),  // Aumentado de 8 a 10
             BackColor = Color.Transparent
         };
 
@@ -165,32 +165,32 @@ public partial class MainForm : Form
         {
             Text = "?? CATEGORÍAS",
             Dock = DockStyle.Top,
-            Height = 40,
-            Font = new Font("Segoe UI", 12, FontStyle.Bold),
+            Height = 55,  // Aumentado de 50 a 55
+            Font = new Font("Segoe UI", 14, FontStyle.Bold),
             ForeColor = Color.FromArgb(52, 73, 94),
             TextAlign = ContentAlignment.MiddleLeft,
-            Padding = new Padding(10, 12, 0, 0),
-            BackColor = Color.FromArgb(248, 249, 250),
-            Margin = new Padding(0, 280, 0, 0)  // Aumentado de 200px a 280px para mover mucho más hacia abajo
+            Padding = new Padding(15, 18, 0, 0),  // Más padding para mejor separación
+            BackColor = Color.FromArgb(248, 249, 250)  // Fondo sutil para separar visualmente
         };
 
         FlowLayoutPanel flowCategorias = new FlowLayoutPanel
         {
             Name = "flowCategorias",
             Dock = DockStyle.Top,
-            Height = 160,  // Aumentado de 120 a 160 para hacer mucho más alta la sección
-            AutoScroll = false,
+            Height = 130,  // Aumentado de 120 a 130 para dar más espacio vertical
+            AutoScroll = true,  // Cambiado de false a true para permitir scroll horizontal
             WrapContents = true,
-            Padding = new Padding(5),
+            Padding = new Padding(12),
             BackColor = Color.White,
-            Margin = new Padding(0, 2, 0, 20),
-            FlowDirection = FlowDirection.LeftToRight
+            Margin = new Padding(0, 5, 0, 25),
+            FlowDirection = FlowDirection.LeftToRight  // Asegurar dirección correcta
         };
 
         // Evento mejorado para hacer responsivos los botones de categoría
         flowCategorias.Resize += (s, e) =>
         {
-            var timer = new System.Windows.Forms.Timer { Interval = 30 };
+            // Dar un pequeño delay para asegurar que el FlowLayoutPanel esté completamente renderizado
+            var timer = new System.Windows.Forms.Timer { Interval = 50 };
             timer.Tick += (timerS, timerE) =>
             {
                 timer.Stop();
@@ -198,47 +198,49 @@ public partial class MainForm : Form
                 
                 if (flowCategorias.IsDisposed || flowCategorias.Width <= 0) return;
                 
-                int anchoDisponible = Math.Max(300, flowCategorias.ClientSize.Width - 15);
-                int anchoMinimoPorBoton = 120;  // Reducido de 140 a 120
-                int separacionEntreColumnas = 8;  // Reducido de 12 a 8
+                int anchoDisponible = Math.Max(400, flowCategorias.ClientSize.Width - 30); // Mínimo 400px
+                int anchoMinimoPorBoton = 140; // Ancho mínimo para que el texto sea legible
+                int separacionEntreColumnas = 12;
                 
-                // Calcular número de columnas para que se vean bien distribuidos
-                int numeroColumnas = Math.Max(4, Math.Min(8, anchoDisponible / (anchoMinimoPorBoton + separacionEntreColumnas)));
-                int anchoBotones = Math.Max(anchoMinimoPorBoton, (anchoDisponible - ((numeroColumnas - 1) * separacionEntreColumnas)) / numeroColumnas);
+                // Calcular número de columnas óptimo
+                int numeroColumnas = Math.Max(3, Math.Min(6, (anchoDisponible + separacionEntreColumnas) / (anchoMinimoPorBoton + separacionEntreColumnas)));
+                int anchoBotones = Math.Max(anchoMinimoPorBoton, (anchoDisponible - (numeroColumnas - 1) * separacionEntreColumnas) / numeroColumnas);
                 
+                // Aplicar nuevo ancho a todos los botones
                 foreach (Control control in flowCategorias.Controls)
                 {
                     if (control is Button btn)
                     {
-                        btn.Size = new Size(anchoBotones, 80);  // Aumentado de 65px a 80px de altura
-                        btn.Margin = new Padding(3, 3, 3, 3);
+                        btn.Size = new Size(anchoBotones, 85); // Altura aumentada a 85
+                        btn.Margin = new Padding(6, 6, 6, 6); // Margin uniforme
                     }
                 }
                 
-                flowCategorias.Invalidate();
+                flowCategorias.Invalidate(); // Forzar redibujado
             };
             timer.Start();
         };
 
+        // Evento adicional para asegurar el redimensionamiento cuando se muestra el control
         flowCategorias.VisibleChanged += (s, e) =>
         {
             if (flowCategorias.Visible)
             {
+                // Trigger resize event cuando se hace visible
                 flowCategorias.PerformLayout();
             }
         };
 
         Label lblPlatillos = new Label
         {
-            Text = "PLATILLOS",
+            Text = "?? PLATILLOS",
             Dock = DockStyle.Top,
-            Height = 35,
-            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            Height = 55,  // Aumentado de 50 a 55
+            Font = new Font("Segoe UI", 14, FontStyle.Bold),
             ForeColor = Color.FromArgb(52, 73, 94),
             TextAlign = ContentAlignment.MiddleLeft,
-            Padding = new Padding(10, 8, 0, 0),
-            BackColor = Color.FromArgb(248, 249, 250),
-            Margin = new Padding(0, 15, 0, 0)  // Reducido de 30px a 15px ya que las categorías ahora están más abajo
+            Padding = new Padding(15, 18, 0, 0),  // Más padding para mejor separación
+            BackColor = Color.FromArgb(248, 249, 250)  // Fondo sutil para separar visualmente
         };
 
         FlowLayoutPanel flowPlatillos = new FlowLayoutPanel
@@ -247,7 +249,7 @@ public partial class MainForm : Form
             Dock = DockStyle.Fill,
             AutoScroll = true,
             WrapContents = true,
-            Padding = new Padding(10),  // Reducido de 15 a 10
+            Padding = new Padding(15),  // Aumentado de 12 a 15
             BackColor = Color.White
         };
 
@@ -272,18 +274,18 @@ public partial class MainForm : Form
         panelIzquierdo.Controls.Add(flowCategorias);
         panelIzquierdo.Controls.Add(lblCategorias);
 
-        // Panel Derecho más compacto
+        // Panel Derecho - Pedido Actual con más separación
         Panel panelDerecho = new Panel
         {
             Dock = DockStyle.Fill,
-            Padding = new Padding(6),  // Reducido de 10 a 6
+            Padding = new Padding(10),  // Aumentado de 8 a 10
             BackColor = Color.Transparent
         };
 
         Panel headerPedido = new Panel
         {
             Dock = DockStyle.Top,
-            Height = 45,  // Reducido de 60 a 45
+            Height = 60,  // Aumentado de 55 a 60
             BackColor = Color.FromArgb(52, 73, 94)
         };
 
@@ -291,37 +293,37 @@ public partial class MainForm : Form
         {
             Text = "?? PEDIDO ACTUAL",
             Dock = DockStyle.Fill,
-            Font = new Font("Segoe UI", 12, FontStyle.Bold),  // Reducido de 14 a 12
+            Font = new Font("Segoe UI", 14, FontStyle.Bold),
             ForeColor = Color.White,
             TextAlign = ContentAlignment.MiddleCenter
         };
         headerPedido.Controls.Add(lblPedido);
 
-        // Panel para mesero más compacto
+        // Panel para mesero con más espacio y separación visual
         Panel panelMesero = new Panel
         {
             Dock = DockStyle.Top,
-            Height = 55,  // Reducido de 75 a 55
-            BackColor = Color.FromArgb(240, 243, 244),
-            Padding = new Padding(10),  // Reducido de 15 a 10
-            Margin = new Padding(0, 0, 0, 5)  // Reducido margin
+            Height = 75,  // Aumentado de 65 a 75
+            BackColor = Color.FromArgb(240, 243, 244),  // Color ligeramente diferente para separar
+            Padding = new Padding(15),  // Aumentado de 12 a 15
+            Margin = new Padding(0, 0, 0, 8)  // Margin inferior para separación
         };
 
         Label lblMeseroLabel = new Label
         {
             Text = "?? Mesero:",
-            Location = new Point(10, 18),  // Ajustado para nuevo tamaño
-            Size = new Size(75, 20),  // Reducido
-            Font = new Font("Segoe UI", 9, FontStyle.Bold),  // Reducido de 10 a 9
+            Location = new Point(15, 25),  // Mejor centrado vertical
+            Size = new Size(90, 25),
+            Font = new Font("Segoe UI", 10, FontStyle.Bold),
             ForeColor = Color.FromArgb(52, 73, 94)
         };
 
         TextBox txtMesero = new TextBox
         {
             Name = "txtMesero",
-            Location = new Point(90, 16),  // Ajustado
-            Size = new Size(180, 22),  // Reducido de 220x25 a 180x22
-            Font = new Font("Segoe UI", 9, FontStyle.Bold),  // Reducido de 10 a 9
+            Location = new Point(110, 23),  // Mejor centrado vertical
+            Size = new Size(220, 25),
+            Font = new Font("Segoe UI", 10),
             PlaceholderText = "Ingrese nombre del mesero"
         };
         txtMesero.TextChanged += (s, e) => nombreMesero = txtMesero.Text;
@@ -332,9 +334,9 @@ public partial class MainForm : Form
         Panel separador = new Panel
         {
             Dock = DockStyle.Top,
-            Height = 8,  // Reducido de 12 a 8
+            Height = 12,  // Aumentado de 8 a 12 para más separación visual
             BackColor = Color.FromArgb(200, 205, 210),  // Color más visible pero sutil
-            Margin = new Padding(0, 5, 0, 5)  // Margins superior e inferior
+            Margin = new Padding(0, 8, 0, 8)  // Margins superior e inferior
         };
 
         // Panel contenedor para el ListBox con más padding
@@ -357,11 +359,11 @@ public partial class MainForm : Form
         {
             Name = "lstPedido",
             Dock = DockStyle.Fill,
-            Font = new Font("Consolas", 9, FontStyle.Regular),  // Reducido de 11 a 9
+            Font = new Font("Consolas", 11, FontStyle.Regular),
             BackColor = Color.FromArgb(255, 255, 255),
             ForeColor = Color.FromArgb(52, 73, 94),
             BorderStyle = BorderStyle.None,
-            ItemHeight = 32,  // Reducido de 45 a 32
+            ItemHeight = 45,  // Aumentado de 40 a 45 para más espacio entre items
             DrawMode = DrawMode.OwnerDrawFixed,
             IntegralHeight = false,
             SelectionMode = SelectionMode.One
@@ -374,7 +376,7 @@ public partial class MainForm : Form
             
             Color bgColor = e.Index % 2 == 0 
                 ? Color.White 
-                : Color.FromArgb(248, 250, 252);
+                : Color.FromArgb(248, 250, 252);  // Color alternado más suave
             
             e.Graphics.FillRectangle(new SolidBrush(bgColor), e.Bounds);
             
@@ -386,9 +388,9 @@ public partial class MainForm : Form
             // Línea separadora más sutil
             e.Graphics.DrawLine(
                 new Pen(Color.FromArgb(230, 235, 240)), 
-                e.Bounds.Left + 8, 
+                e.Bounds.Left + 10, 
                 e.Bounds.Bottom - 1, 
-                e.Bounds.Right - 8, 
+                e.Bounds.Right - 10, 
                 e.Bounds.Bottom - 1
             );
             
@@ -398,8 +400,8 @@ public partial class MainForm : Form
                     lstPedido.Items[e.Index].ToString(),
                     e.Font!,
                     brush,
-                    e.Bounds.Left + 10,  // Reducido de 15 a 10
-                    e.Bounds.Top + 8     // Reducido de 15 a 8
+                    e.Bounds.Left + 15,  // Aumentado de 12 a 15
+                    e.Bounds.Top + 15    // Aumentado de 12 a 15 para mejor centrado
                 );
             }
         };
@@ -407,14 +409,14 @@ public partial class MainForm : Form
         panelListBox.Controls.Add(lstPedido);
         panelContenedorPedidos.Controls.Add(panelListBox);
 
-        // Panel de Totales más compacto
+        // Panel de Totales con más espacio y mejor separación
         panelTotales = new Panel
         {
             Dock = DockStyle.Bottom,
-            Height = 160,  // Reducido de 200 a 160
+            Height = 200,  // Aumentado de 185 a 200
             BackColor = Color.FromArgb(52, 73, 94),
-            Padding = new Padding(12),  // Reducido de 18 a 12
-            Margin = new Padding(0, 8, 0, 0)  // Reducido margin
+            Padding = new Padding(18),  // Aumentado de 15 a 18
+            Margin = new Padding(0, 15, 0, 0)  // Más margin superior
         };
 
         Label lblSubtotal = new Label
@@ -422,27 +424,27 @@ public partial class MainForm : Form
             Name = "lblSubtotal",
             Text = "Subtotal: $0.00",
             Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-            Location = new Point(12, 12),  // Ajustado
-            Size = new Size(300, 22),  // Reducido
-            Font = new Font("Segoe UI", 10, FontStyle.Bold),  // Reducido de 12 a 10
+            Location = new Point(18, 18),  // Ajustado para nuevo padding
+            Size = new Size(350, 28),  // Aumentado de 25 a 28
+            Font = new Font("Segoe UI", 12, FontStyle.Bold),
             ForeColor = Color.White,
             TextAlign = ContentAlignment.MiddleRight
         };
 
-        // Panel para descuento más compacto
+        // Panel para descuento con más espacio
         Panel panelDescuento = new Panel
         {
-            Location = new Point(12, 40),  // Ajustado
-            Size = new Size(300, 30),  // Reducido
+            Location = new Point(18, 55),  // Más separación de subtotal
+            Size = new Size(350, 38),  // Aumentado de 35 a 38
             BackColor = Color.Transparent
         };
 
         Label lblDescuentoLabel = new Label
         {
             Text = "Descuento:",
-            Location = new Point(0, 6),  // Ajustado
-            Size = new Size(75, 18),  // Reducido
-            Font = new Font("Segoe UI", 9),  // Reducido de 10 a 9
+            Location = new Point(0, 10),  // Mejor centrado vertical
+            Size = new Size(95, 20),
+            Font = new Font("Segoe UI", 10),
             ForeColor = Color.White,
             TextAlign = ContentAlignment.MiddleLeft
         };
@@ -450,9 +452,9 @@ public partial class MainForm : Form
         TextBox txtDescuento = new TextBox
         {
             Name = "txtDescuento",
-            Location = new Point(80, 4),  // Ajustado
-            Size = new Size(70, 20),  // Reducido de 90x22 a 70x20
-            Font = new Font("Segoe UI", 9),  // Reducido de 10 a 9
+            Location = new Point(100, 8),  // Mejor centrado vertical
+            Size = new Size(90, 22),
+            Font = new Font("Segoe UI", 10),
             Text = "0",
             TextAlign = HorizontalAlignment.Right
         };
@@ -461,9 +463,9 @@ public partial class MainForm : Form
         ComboBox cmbTipoDescuento = new ComboBox
         {
             Name = "cmbTipoDescuento",
-            Location = new Point(155, 4),  // Ajustado
-            Size = new Size(50, 20),  // Reducido de 65x22 a 50x20
-            Font = new Font("Segoe UI", 9),  // Reducido de 10 a 9
+            Location = new Point(195, 8),  // Mejor centrado vertical
+            Size = new Size(65, 22),
+            Font = new Font("Segoe UI", 10),
             DropDownStyle = ComboBoxStyle.DropDownList
         };
         cmbTipoDescuento.Items.AddRange(new object[] { "%", "$" });
@@ -472,13 +474,13 @@ public partial class MainForm : Form
 
         panelDescuento.Controls.AddRange(new Control[] { lblDescuentoLabel, txtDescuento, cmbTipoDescuento });
 
-        // Panel del Total más compacto
+        // Panel del Total con más espacio
         Panel panelTotal = new Panel
         {
             Name = "panelTotal",
             Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
-            Location = new Point(12, 80),  // Ajustado
-            Size = new Size(300, 65),  // Reducido de 350x85 a 300x65
+            Location = new Point(18, 105),  // Más separación del descuento
+            Size = new Size(350, 85),  // Aumentado de 80 a 85
             BackColor = Color.FromArgb(231, 76, 60)
         };
 
@@ -487,7 +489,7 @@ public partial class MainForm : Form
             Name = "lblTotal",
             Text = "TOTAL: $0.00",
             Dock = DockStyle.Fill,
-            Font = new Font("Segoe UI", 16, FontStyle.Bold),  // Reducido de 20 a 16
+            Font = new Font("Segoe UI", 20, FontStyle.Bold),
             ForeColor = Color.White,
             TextAlign = ContentAlignment.MiddleCenter
         };
@@ -495,23 +497,23 @@ public partial class MainForm : Form
 
         panelTotales.Controls.AddRange(new Control[] { lblSubtotal, panelDescuento, panelTotal });
 
-        // Panel de Botones más compacto
+        // Panel de Botones con más espacio entre botones
         panelBotones = new Panel
         {
             Dock = DockStyle.Bottom,
-            Height = 140,  // Reducido de 180 a 140
+            Height = 180,  // Aumentado de 170 a 180
             BackColor = Color.White,
-            Padding = new Padding(12),  // Reducido de 18 a 12
-            Margin = new Padding(0, 8, 0, 0)  // Reducido margin
+            Padding = new Padding(18),  // Aumentado de 15 a 18
+            Margin = new Padding(0, 15, 0, 0)  // Más margin superior
         };
 
         Button btnEliminarItem = new Button
         {
             Name = "btnEliminarItem",
             Text = "??? Eliminar",
-            Location = new Point(12, 12),  // Ajustado
-            Size = new Size(130, 35),  // Reducido de 160x44 a 130x35
-            Font = new Font("Segoe UI", 9, FontStyle.Bold),  // Reducido de 10 a 9
+            Location = new Point(18, 18),  // Ajustado para nuevo padding
+            Size = new Size(160, 44),  // Aumentado de 42 a 44
+            Font = new Font("Segoe UI", 10, FontStyle.Bold),
             BackColor = Color.FromArgb(231, 76, 60),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
@@ -524,9 +526,9 @@ public partial class MainForm : Form
         {
             Name = "btnLimpiar",
             Text = "?? Limpiar",
-            Location = new Point(150, 12),  // Ajustado
-            Size = new Size(130, 35),  // Reducido de 160x44 a 130x35
-            Font = new Font("Segoe UI", 9, FontStyle.Bold),  // Reducido de 10 a 9
+            Location = new Point(188, 18),  // Ajustado para nuevo padding
+            Size = new Size(160, 44),  // Aumentado de 42 a 44
+            Font = new Font("Segoe UI", 10, FontStyle.Bold),
             BackColor = Color.FromArgb(149, 165, 166),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
@@ -539,9 +541,9 @@ public partial class MainForm : Form
         {
             Name = "btnGuardarPedido",
             Text = "?? GUARDAR PEDIDO",
-            Location = new Point(12, 55),  // Ajustado
-            Size = new Size(268, 35),  // Reducido de 330x44 a 268x35
-            Font = new Font("Segoe UI", 10, FontStyle.Bold),  // Reducido de 11 a 10
+            Location = new Point(18, 72),  // Más separación de la fila anterior
+            Size = new Size(330, 44),  // Aumentado de 42 a 44
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
             BackColor = Color.FromArgb(52, 152, 219),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
@@ -554,9 +556,9 @@ public partial class MainForm : Form
         {
             Name = "btnImprimirTicket",
             Text = "??? IMPRIMIR",
-            Location = new Point(12, 98),  // Ajustado
-            Size = new Size(130, 35),  // Reducido de 160x44 a 130x35
-            Font = new Font("Segoe UI", 9, FontStyle.Bold),  // Reducido de 10 a 9
+            Location = new Point(18, 126),  // Más separación de la fila anterior
+            Size = new Size(160, 44),  // Aumentado de 42 a 44
+            Font = new Font("Segoe UI", 10, FontStyle.Bold),
             BackColor = Color.FromArgb(46, 204, 113),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
@@ -569,9 +571,9 @@ public partial class MainForm : Form
         {
             Name = "btnCerrarMesa",
             Text = "? Cerrar Mesa",
-            Location = new Point(150, 98),  // Ajustado
-            Size = new Size(130, 35),  // Reducido de 160x44 a 130x35
-            Font = new Font("Segoe UI", 9, FontStyle.Bold),  // Reducido de 10 a 9
+            Location = new Point(188, 126),  // Más separación de la fila anterior
+            Size = new Size(160, 44),  // Aumentado de 42 a 44
+            Font = new Font("Segoe UI", 10, FontStyle.Bold),
             BackColor = Color.FromArgb(192, 57, 43),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
@@ -605,7 +607,7 @@ public partial class MainForm : Form
     {
         if (panelBotones == null) return;
 
-        int ancho = (panelBotones.Width - 34) / 2;  // Ajustado para nuevo padding (12+12+10)
+        int ancho = (panelBotones.Width - 46) / 2;  // Ajustado para nuevo padding (18+18+10)
         
         var btnEliminarItem = panelBotones.Controls["btnEliminarItem"] as Button;
         var btnLimpiar = panelBotones.Controls["btnLimpiar"] as Button;
@@ -620,13 +622,13 @@ public partial class MainForm : Form
 
         if (btnLimpiar != null)
         {
-            btnLimpiar.Left = 12 + ancho + 10;
+            btnLimpiar.Left = 18 + ancho + 10;
             btnLimpiar.Width = ancho;
         }
 
         if (btnGuardarPedido != null)
         {
-            btnGuardarPedido.Width = panelBotones.Width - 24;
+            btnGuardarPedido.Width = panelBotones.Width - 36;
         }
 
         if (btnImprimirTicket != null)
@@ -636,7 +638,7 @@ public partial class MainForm : Form
 
         if (btnCerrarMesa != null)
         {
-            btnCerrarMesa.Left = 12 + ancho + 10;
+            btnCerrarMesa.Left = 18 + ancho + 10;
             btnCerrarMesa.Width = ancho;
         }
     }
@@ -645,7 +647,7 @@ public partial class MainForm : Form
     {
         if (panelTotales == null) return;
 
-        int anchoDisponible = panelTotales.Width - 24;  // Ajustado para nuevo padding (12+12)
+        int anchoDisponible = panelTotales.Width - 36;  // Ajustado para nuevo padding
 
         var lblSubtotal = this.Controls.Find("lblSubtotal", true).FirstOrDefault() as Label;
         if (lblSubtotal != null)
@@ -674,14 +676,30 @@ public partial class MainForm : Form
         flowCategorias.Controls.Clear();
 
         var colores = new[] {
-            Color.FromArgb(231, 76, 60),   // Rojo - BEBIDAS
-            Color.FromArgb(52, 152, 219),  // Azul - CAMARONES
-            Color.FromArgb(46, 204, 113),  // Verde - CERVEZAS
-            Color.FromArgb(155, 89, 182),  // Morado - FILETES
-            Color.FromArgb(230, 126, 34),  // Naranja - extras
+            Color.FromArgb(231, 76, 60),   // Rojo
+            Color.FromArgb(52, 152, 219),  // Azul
+            Color.FromArgb(46, 204, 113),  // Verde
+            Color.FromArgb(155, 89, 182),  // Morado
+            Color.FromArgb(230, 126, 34),  // Naranja
             Color.FromArgb(26, 188, 156),  // Turquesa
             Color.FromArgb(241, 196, 15),  // Amarillo
-            Color.FromArgb(52, 73, 94)     // Gris oscuro
+            Color.FromArgb(52, 73, 94),    // Gris oscuro
+            Color.FromArgb(211, 84, 0),    // Naranja oscuro
+            Color.FromArgb(22, 160, 133),  // Verde esmeralda
+            Color.FromArgb(93, 173, 226),  // Azul claro
+            Color.FromArgb(236, 112, 99),  // Rosa
+            Color.FromArgb(243, 156, 18),  // Naranja claro
+            Color.FromArgb(142, 68, 173),  // Violeta
+            Color.FromArgb(241, 148, 138), // Rosa claro
+            Color.FromArgb(127, 140, 141), // Gris medio
+            Color.FromArgb(192, 57, 43),   // Rojo oscuro
+            Color.FromArgb(41, 128, 185),  // Azul medio
+            Color.FromArgb(39, 174, 96),   // Verde oscuro
+            Color.FromArgb(125, 60, 152),  // Púrpura
+            Color.FromArgb(214, 69, 65),   // Coral
+            Color.FromArgb(88, 177, 159),  // Verde agua
+            Color.FromArgb(245, 176, 65),  // Dorado
+            Color.FromArgb(82, 179, 217)   // Azul cielo
         };
 
         var categorias = db.Categorias.OrderBy(c => c.Nombre).ToList();
@@ -690,55 +708,58 @@ public partial class MainForm : Form
         int colorIndex = 0;
 
         // Calcular dimensiones basadas en el ancho disponible del FlowLayoutPanel
-        int anchoDisponible = Math.Max(300, flowCategorias.ClientSize.Width > 0 ? flowCategorias.ClientSize.Width - 15 : 500);
-        int anchoMinimoPorBoton = 120;  // Reducido para que quepan más
-        int separacionEntreColumnas = 8;  // Separación más pequeña
+        int anchoDisponible = Math.Max(400, flowCategorias.ClientSize.Width > 0 ? flowCategorias.ClientSize.Width - 30 : 600);
+        int anchoMinimoPorBoton = 140;
+        int separacionEntreColumnas = 12;
         
-        // Determinar número de columnas óptimo - permitir más columnas para botones más pequeños
-        int numeroColumnas = Math.Max(4, Math.Min(8, anchoDisponible / (anchoMinimoPorBoton + separacionEntreColumnas)));
-        int anchoBotones = Math.Max(anchoMinimoPorBoton, (anchoDisponible - ((numeroColumnas - 1) * separacionEntreColumnas)) / numeroColumnas);
+        // Determinar número de columnas óptimo
+        int numeroColumnas = Math.Max(3, Math.Min(categorias.Count, (anchoDisponible + separacionEntreColumnas) / (anchoMinimoPorBoton + separacionEntreColumnas)));
+        int anchoBotones = Math.Max(anchoMinimoPorBoton, (anchoDisponible - (numeroColumnas - 1) * separacionEntreColumnas) / numeroColumnas);
 
         foreach (var categoria in categorias)
         {
+            // Usar el color personalizado de la categoría si existe, sino usar de la paleta
+            Color colorBoton = colores[colorIndex % colores.Length];
+            if (!string.IsNullOrEmpty(categoria.ColorHex))
+            {
+                try
+                {
+                    colorBoton = ColorTranslator.FromHtml(categoria.ColorHex);
+                }
+                catch
+                {
+                    // Si hay error al convertir el color, usar el de la paleta
+                    colorBoton = colores[colorIndex % colores.Length];
+                }
+            }
+
             Button btnCategoria = new Button
             {
                 Text = categoria.Nombre.ToUpper(),
-                Size = new Size(anchoBotones, 80),  // Aumentado de 65px a 80px de altura
-                Font = new Font("Segoe UI", 11, FontStyle.Bold),  // Aumentado de 10 a 11 para mejor proporción
-                BackColor = colores[colorIndex % colores.Length],
+                Size = new Size(anchoBotones, 85),  // Altura consistente
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                BackColor = colorBoton,
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 Tag = categoria.Id,
-                Margin = new Padding(3, 3, 3, 3),
+                Margin = new Padding(6),  // Margin uniforme
                 Cursor = Cursors.Hand,
                 UseVisualStyleBackColor = false,
-                TabStop = false
+                TabStop = false  // Evitar problemas de foco
             };
             
             // Configurar apariencia del botón
             btnCategoria.FlatAppearance.BorderSize = 0;
             btnCategoria.FlatAppearance.MouseOverBackColor = Color.FromArgb(
-                Math.Max(0, btnCategoria.BackColor.R - 15),
-                Math.Max(0, btnCategoria.BackColor.G - 15),
-                Math.Max(0, btnCategoria.BackColor.B - 15)
+                Math.Max(0, btnCategoria.BackColor.R - 20),
+                Math.Max(0, btnCategoria.BackColor.G - 20),
+                Math.Max(0, btnCategoria.BackColor.B - 20)
             );
             
             // Eventos del botón
             btnCategoria.Click += (s, e) => {
                 try 
                 {
-                    // Resetear el estilo de todos los botones de categoría
-                    foreach (Control control in flowCategorias.Controls)
-                    {
-                        if (control is Button otroBtn)
-                        {
-                            otroBtn.Font = new Font("Segoe UI", 11, FontStyle.Bold);
-                        }
-                    }
-                    
-                    // Marcar el botón seleccionado
-                    btnCategoria.Font = new Font("Segoe UI", 11, FontStyle.Bold | FontStyle.Underline);
-                    
                     CargarPlatillosPorCategoria((int)btnCategoria.Tag);
                 } 
                 catch (Exception ex)
@@ -747,19 +768,9 @@ public partial class MainForm : Form
                 }
             };
             
-            // Efectos visuales más sutiles
-            btnCategoria.MouseEnter += (s, e) => {
-                if (btnCategoria.Font.Style != (FontStyle.Bold | FontStyle.Underline))
-                {
-                    btnCategoria.Font = new Font("Segoe UI", 11, FontStyle.Bold | FontStyle.Italic);
-                }
-            };
-            btnCategoria.MouseLeave += (s, e) => {
-                if (btnCategoria.Font.Style != (FontStyle.Bold | FontStyle.Underline))
-                {
-                    btnCategoria.Font = new Font("Segoe UI", 11, FontStyle.Bold);
-                }
-            };
+            // Efectos visuales
+            btnCategoria.MouseEnter += (s, e) => btnCategoria.Font = new Font("Segoe UI", 11, FontStyle.Bold | FontStyle.Underline);
+            btnCategoria.MouseLeave += (s, e) => btnCategoria.Font = new Font("Segoe UI", 11, FontStyle.Bold);
             
             flowCategorias.Controls.Add(btnCategoria);
             colorIndex++;
@@ -768,11 +779,11 @@ public partial class MainForm : Form
         // Forzar un redimensionamiento después de agregar todos los botones
         flowCategorias.PerformLayout();
         
-        // Auto-seleccionar la primera categoría si existe
-        if (flowCategorias.Controls.Count > 0)
+        // Trigger el evento Resize para asegurar que los botones se dimensionen correctamente
+        if (flowCategorias.Width > 0)
         {
-            var primerBoton = flowCategorias.Controls[0] as Button;
-            primerBoton?.PerformClick();
+            var args = new EventArgs();
+            flowCategorias.GetType().GetMethod("OnResize", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.Invoke(flowCategorias, new object[] { args });
         }
     }
 
@@ -795,9 +806,9 @@ public partial class MainForm : Form
         {
             Panel panelPlatillo = new Panel
             {
-                Size = new Size(anchoPlatillos, 130),  // Reducido de 160 a 130
+                Size = new Size(anchoPlatillos, 160),  // Aumentado de 155 a 160
                 BackColor = Color.White,
-                Margin = new Padding(5, 4, 5, 4),  // Reducido margins
+                Margin = new Padding(8, 6, 8, 6),  // Aumentado de 6 a 8 y ajuste en el margen
                 Tag = platillo,
                 BorderStyle = BorderStyle.FixedSingle,
                 Cursor = Cursors.Hand
@@ -806,7 +817,7 @@ public partial class MainForm : Form
             Panel headerPlato = new Panel
             {
                 Location = new Point(0, 0),
-                Size = new Size(anchoPlatillos - 2, 55),  // Reducido de 78 a 55
+                Size = new Size(anchoPlatillos - 2, 78),  // Aumentado de 75 a 78
                 BackColor = Color.FromArgb(52, 73, 94)
             };
 
@@ -814,47 +825,47 @@ public partial class MainForm : Form
             {
                 Text = platillo.NombreCorto,
                 Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 8, FontStyle.Bold),  // Reducido de 9 a 8
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
                 ForeColor = Color.White,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Padding = new Padding(3, 8, 3, 8)  // Reducido padding
+                Padding = new Padding(5, 14, 5, 14)  // Aumentado padding vertical de 12 a 14
             };
             headerPlato.Controls.Add(lblNombre);
 
             Label lblPrecio = new Label
             {
                 Text = $"${platillo.Precio:F2}",
-                Location = new Point(5, 60),  // Ajustado para nueva posición
-                Size = new Size(anchoPlatillos - 10, 25),  // Reducido de 34 a 25
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),  // Reducido de 14 a 12
+                Location = new Point(5, 83),  // Ajustado para nueva posición
+                Size = new Size(anchoPlatillos - 10, 34),  // Aumentado de 32 a 34
+                Font = new Font("Segoe UI", 14, FontStyle.Bold),
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.FromArgb(39, 174, 96)
             };
 
-            int anchoControles = 130;  // Reducido de 150 a 130
+            int anchoControles = 150;
             int inicioControles = (anchoPlatillos - anchoControles) / 2;
             if (inicioControles < 5) inicioControles = 5;
 
             NumericUpDown numCantidad = new NumericUpDown
             {
-                Location = new Point(inicioControles, 92),  // Ajustado para nueva altura
-                Size = new Size(50, 25),  // Reducido de 60x32 a 50x25
+                Location = new Point(inicioControles, 123),  // Ajustado para nueva altura
+                Size = new Size(60, 32),  // Aumentado de 30 a 32
                 Minimum = 1,
                 Maximum = 99,
                 Value = 1,
-                Font = new Font("Segoe UI", 9, FontStyle.Bold),  // Reducido de 11 a 9
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
                 TextAlign = HorizontalAlignment.Center
             };
 
             Button btnAgregar = new Button
             {
                 Text = "? Agregar",
-                Location = new Point(inicioControles + 55, 92),  // Ajustado
-                Size = new Size(75, 25),  // Reducido de 90x32 a 75x25
+                Location = new Point(inicioControles + 65, 123),  // Ajustado para nueva posición
+                Size = new Size(90, 32),  // Aumentado de 30 a 32
                 BackColor = Color.FromArgb(46, 204, 113),
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 8, FontStyle.Bold),  // Reducido de 9 a 8
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
                 Cursor = Cursors.Hand
             };
             btnAgregar.FlatAppearance.BorderSize = 0;

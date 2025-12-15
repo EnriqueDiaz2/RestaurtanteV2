@@ -42,11 +42,11 @@ public class RestauranteContext : DbContext
         );
 
         modelBuilder.Entity<Categoria>().HasData(
-            new Categoria { Id = 1, Nombre = "Camarones" },
-            new Categoria { Id = 2, Nombre = "Filetes" },
-            new Categoria { Id = 3, Nombre = "Postres" },
-            new Categoria { Id = 4, Nombre = "Bebidas" },
-            new Categoria { Id = 5, Nombre = "Cervezas" }
+            new Categoria { Id = 1, Nombre = "Camarones", ColorHex = "#e74c3c" },
+            new Categoria { Id = 2, Nombre = "Filetes", ColorHex = "#3498db" },
+            new Categoria { Id = 3, Nombre = "Postres", ColorHex = "#f1c40f" },
+            new Categoria { Id = 4, Nombre = "Bebidas", ColorHex = "#16a085" },
+            new Categoria { Id = 5, Nombre = "Cervezas", ColorHex = "#e67e22" }
         );
 
         modelBuilder.Entity<Platillo>().HasData(

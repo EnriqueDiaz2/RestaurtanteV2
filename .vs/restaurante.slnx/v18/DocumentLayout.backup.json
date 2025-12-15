@@ -1,58 +1,94 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Usuario\\source\\repos\\restaurante\\",
+  "WorkspaceRootPath": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\models\\detallepedido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\detallepedido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\restaurante\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\models\\configuracion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\configuracion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\models\\mesa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\mesa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\models\\platillo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\platillo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\restaurante.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\restaurante.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\forms\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\forms\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\forms\\ticketform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\forms\\ticketform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\forms\\mesasform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\forms\\mesasform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurante\\restaurante\\data\\restaurantecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\forms\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\forms\\adminform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\restaurante.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\restaurante.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\models\\detallepedido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\detallepedido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\models\\configuracion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\configuracion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\models\\mesa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\mesa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\models\\platillo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\models\\platillo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\forms\\mesasform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\forms\\mesasform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\data\\restaurantecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\data\\restaurantecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\forms\\ticketform_new.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\forms\\ticketform_new.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\NUEVAS_FUNCIONALIDADES.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:NUEVAS_FUNCIONALIDADES.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\COMO_EJECUTAR.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:COMO_EJECUTAR.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\CrearPortable.bat||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CrearPortable.bat||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\PORTABLE_README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PORTABLE_README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\CrearPortableLigera.bat||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CrearPortableLigera.bat||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|c:\\users\\usuario\\source\\repos\\restaurtante2.5\\restaurante\\properties\\publishprofiles\\portableprofile.pubxml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{3ABC3262-BBB2-BC70-D066-9BB917659120}|restaurante\\restaurante.csproj|solutionrelative:restaurante\\properties\\publishprofiles\\portableprofile.pubxml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\GUIA_PUBLICACION_PORTABLE.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GUIA_PUBLICACION_PORTABLE.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\publish\\portable\\LEEME.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:publish\\portable\\LEEME.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\CrearZipPortable.bat||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CrearZipPortable.bat||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\CrearPortableCompleto.bat||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CrearPortableCompleto.bat||{3B902123-F8A7-4915-9F01-361F908088D0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,19 +98,165 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 22,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 21,
+              "Title": "CrearPortableCompleto.bat",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\CrearPortableCompleto.bat",
+              "RelativeDocumentMoniker": "CrearPortableCompleto.bat",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\CrearPortableCompleto.bat",
+              "RelativeToolTip": "CrearPortableCompleto.bat",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAPkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
+              "WhenOpened": "2025-12-15T06:14:24.859Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "CrearZipPortable.bat",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\CrearZipPortable.bat",
+              "RelativeDocumentMoniker": "CrearZipPortable.bat",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\CrearZipPortable.bat",
+              "RelativeToolTip": "CrearZipPortable.bat",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
+              "WhenOpened": "2025-12-15T06:13:42.849Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "LEEME.txt",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\publish\\portable\\LEEME.txt",
+              "RelativeDocumentMoniker": "publish\\portable\\LEEME.txt",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\publish\\portable\\LEEME.txt",
+              "RelativeToolTip": "publish\\portable\\LEEME.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-12-15T06:13:27.04Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "GUIA_PUBLICACION_PORTABLE.md",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\GUIA_PUBLICACION_PORTABLE.md",
+              "RelativeDocumentMoniker": "GUIA_PUBLICACION_PORTABLE.md",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\GUIA_PUBLICACION_PORTABLE.md",
+              "RelativeToolTip": "GUIA_PUBLICACION_PORTABLE.md",
+              "ViewState": "AgIAANwAAAAAAAAAAIBJwN4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-15T06:08:53.249Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "PortableProfile.pubxml",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Properties\\PublishProfiles\\PortableProfile.pubxml",
+              "RelativeDocumentMoniker": "restaurante\\Properties\\PublishProfiles\\PortableProfile.pubxml",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Properties\\PublishProfiles\\PortableProfile.pubxml",
+              "RelativeToolTip": "restaurante\\Properties\\PublishProfiles\\PortableProfile.pubxml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2025-12-15T06:08:14.746Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CrearPortableLigera.bat",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\CrearPortableLigera.bat",
+              "RelativeDocumentMoniker": "CrearPortableLigera.bat",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\CrearPortableLigera.bat",
+              "RelativeToolTip": "CrearPortableLigera.bat",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
+              "WhenOpened": "2025-12-15T06:02:24.94Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "PORTABLE_README.md",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\PORTABLE_README.md",
+              "RelativeDocumentMoniker": "PORTABLE_README.md",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\PORTABLE_README.md",
+              "RelativeToolTip": "PORTABLE_README.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-15T06:02:11.039Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CrearPortable.bat",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\CrearPortable.bat",
+              "RelativeDocumentMoniker": "CrearPortable.bat",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\CrearPortable.bat",
+              "RelativeToolTip": "CrearPortable.bat",
+              "ViewState": "AgIAADkAAAAAAAAAAIBJwDsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
+              "WhenOpened": "2025-12-15T06:01:36.95Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "COMO_EJECUTAR.md",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\COMO_EJECUTAR.md",
+              "RelativeDocumentMoniker": "COMO_EJECUTAR.md",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\COMO_EJECUTAR.md",
+              "RelativeToolTip": "COMO_EJECUTAR.md",
+              "ViewState": "AgIAAKoAAAAAAAAAAIBZwK8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-15T04:57:33.79Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "NUEVAS_FUNCIONALIDADES.md",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\NUEVAS_FUNCIONALIDADES.md",
+              "RelativeDocumentMoniker": "NUEVAS_FUNCIONALIDADES.md",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\NUEVAS_FUNCIONALIDADES.md",
+              "RelativeToolTip": "NUEVAS_FUNCIONALIDADES.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-15T04:46:17.311Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "TicketForm_new.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Forms\\TicketForm_new.cs",
+              "RelativeDocumentMoniker": "restaurante\\Forms\\TicketForm_new.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Forms\\TicketForm_new.cs",
+              "RelativeToolTip": "restaurante\\Forms\\TicketForm_new.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T16:11:55.762Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "Configuracion.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Configuracion.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Models\\Configuracion.cs",
               "RelativeDocumentMoniker": "restaurante\\Models\\Configuracion.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Configuracion.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Models\\Configuracion.cs",
               "RelativeToolTip": "restaurante\\Models\\Configuracion.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -82,24 +264,23 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "DetallePedido.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\DetallePedido.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Models\\DetallePedido.cs",
               "RelativeDocumentMoniker": "restaurante\\Models\\DetallePedido.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\DetallePedido.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Models\\DetallePedido.cs",
               "RelativeToolTip": "restaurante\\Models\\DetallePedido.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAgwAgAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T15:36:03.714Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-02T15:36:03.714Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "Mesa.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Mesa.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Models\\Mesa.cs",
               "RelativeDocumentMoniker": "restaurante\\Models\\Mesa.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Mesa.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Models\\Mesa.cs",
               "RelativeToolTip": "restaurante\\Models\\Mesa.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -107,11 +288,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "Platillo.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Platillo.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Models\\Platillo.cs",
               "RelativeDocumentMoniker": "restaurante\\Models\\Platillo.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Platillo.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Models\\Platillo.cs",
               "RelativeToolTip": "restaurante\\Models\\Platillo.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAxwAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -119,35 +300,36 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "Categoria.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Categoria.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Models\\Categoria.cs",
               "RelativeDocumentMoniker": "restaurante\\Models\\Categoria.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Models\\Categoria.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Models\\Categoria.cs",
               "RelativeToolTip": "restaurante\\Models\\Categoria.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAABfwAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T15:35:46.625Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
               "Title": "restaurante.csproj",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\restaurante.csproj",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\restaurante.csproj",
               "RelativeDocumentMoniker": "restaurante\\restaurante.csproj",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\restaurante.csproj",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\restaurante.csproj",
               "RelativeToolTip": "restaurante\\restaurante.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADEAAAAAAAAAAABBwDIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-12-02T15:35:37.907Z"
+              "WhenOpened": "2025-12-02T15:35:37.907Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Program.cs",
               "RelativeDocumentMoniker": "restaurante\\Program.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Program.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Program.cs",
               "RelativeToolTip": "restaurante\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -156,74 +338,53 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "README.md",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\README.md",
-              "RelativeDocumentMoniker": "README.md",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\README.md",
-              "RelativeToolTip": "README.md",
-              "ViewState": "AgIAAGQBAAAAAAAAAIBJwGYBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-12-02T15:40:18.424Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
               "Title": "AdminForm.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\AdminForm.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Forms\\AdminForm.cs",
               "RelativeDocumentMoniker": "restaurante\\Forms\\AdminForm.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\AdminForm.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Forms\\AdminForm.cs",
               "RelativeToolTip": "restaurante\\Forms\\AdminForm.cs",
-              "ViewState": "AgIAAEQEAAAAAAAAAIBZwEkEAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAMkGAAAAAAAAAABBwEECAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T15:39:07.312Z"
+              "WhenOpened": "2025-12-02T15:39:07.312Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "TicketForm.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\TicketForm.cs",
-              "RelativeDocumentMoniker": "restaurante\\Forms\\TicketForm.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\TicketForm.cs",
-              "RelativeToolTip": "restaurante\\Forms\\TicketForm.cs",
-              "ViewState": "AgIAAMABAAAAAAAAAABBwMEBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T15:38:11.602Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
               "Title": "MesasForm.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\MesasForm.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Forms\\MesasForm.cs",
               "RelativeDocumentMoniker": "restaurante\\Forms\\MesasForm.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\MesasForm.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Forms\\MesasForm.cs",
               "RelativeToolTip": "restaurante\\Forms\\MesasForm.cs",
-              "ViewState": "AgIAAKMAAAAAAAAAAEBVwKcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAxwKcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T15:37:47.805Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 0,
               "Title": "MainForm.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\MainForm.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Forms\\MainForm.cs",
               "RelativeDocumentMoniker": "restaurante\\Forms\\MainForm.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Forms\\MainForm.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Forms\\MainForm.cs",
               "RelativeToolTip": "restaurante\\Forms\\MainForm.cs",
-              "ViewState": "AgIAAIwEAAAAAAAAAIBZwJEEAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAKMCAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T15:37:35.065Z"
+              "WhenOpened": "2025-12-02T15:37:35.065Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 10,
               "Title": "RestauranteContext.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Data\\RestauranteContext.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Data\\RestauranteContext.cs",
               "RelativeDocumentMoniker": "restaurante\\Data\\RestauranteContext.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\restaurante\\restaurante\\Data\\RestauranteContext.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Data\\RestauranteContext.cs",
               "RelativeToolTip": "restaurante\\Data\\RestauranteContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEkAAAAAAAAAAABBwEoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T15:36:23.982Z"
+              "WhenOpened": "2025-12-02T15:36:23.982Z",
+              "EditorCaption": ""
             }
           ]
         }
