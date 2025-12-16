@@ -17,7 +17,7 @@ public partial class MainForm : Form
     {
         InitializeComponent();
         db = new RestauranteContext();
-        db.Database.EnsureCreated();
+        // db.Database.EnsureCreated(); // COMENTADO: La base de datos ya existe con datos reales
         CargarCategorias();
         ActualizarListaPedido();
         ActualizarEstadoMesas();

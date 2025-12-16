@@ -113,6 +113,26 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\README_PUBLICACION.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:README_PUBLICACION.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\PROTECCION_BASE_DATOS.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PROTECCION_BASE_DATOS.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\SOLUCION_BD_ACTUALIZADA.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SOLUCION_BD_ACTUALIZADA.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\RespaldarBaseDatos.bat||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:RespaldarBaseDatos.bat||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\RestaurarBaseDatos.bat||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:RestaurarBaseDatos.bat||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\README_BASE_DATOS.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:README_BASE_DATOS.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
     }
   ],
   "DocumentGroupContainers": [
@@ -122,15 +142,72 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 28,
+          "SelectedChildIndex": 31,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "README_BASE_DATOS.md",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\README_BASE_DATOS.md",
+              "RelativeDocumentMoniker": "README_BASE_DATOS.md",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\README_BASE_DATOS.md",
+              "RelativeToolTip": "README_BASE_DATOS.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-16T00:17:35.404Z",
+              "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "RestaurarBaseDatos.bat",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\RestaurarBaseDatos.bat",
+              "RelativeDocumentMoniker": "RestaurarBaseDatos.bat",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\RestaurarBaseDatos.bat",
+              "RelativeToolTip": "RestaurarBaseDatos.bat",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
+              "WhenOpened": "2025-12-16T00:17:00.033Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "RespaldarBaseDatos.bat",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\RespaldarBaseDatos.bat",
+              "RelativeDocumentMoniker": "RespaldarBaseDatos.bat",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\RespaldarBaseDatos.bat",
+              "RelativeToolTip": "RespaldarBaseDatos.bat",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
+              "WhenOpened": "2025-12-16T00:16:41.929Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "SOLUCION_BD_ACTUALIZADA.md",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\SOLUCION_BD_ACTUALIZADA.md",
+              "RelativeDocumentMoniker": "SOLUCION_BD_ACTUALIZADA.md",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\SOLUCION_BD_ACTUALIZADA.md",
+              "RelativeToolTip": "SOLUCION_BD_ACTUALIZADA.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-16T00:16:19.747Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "PROTECCION_BASE_DATOS.md",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\PROTECCION_BASE_DATOS.md",
+              "RelativeDocumentMoniker": "PROTECCION_BASE_DATOS.md",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\PROTECCION_BASE_DATOS.md",
+              "RelativeToolTip": "PROTECCION_BASE_DATOS.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAM8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-12-16T00:06:56.047Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -142,8 +219,7 @@
               "RelativeToolTip": "README_PUBLICACION.md",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-12-15T06:24:29.686Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:24:29.686Z"
             },
             {
               "$type": "Document",
@@ -155,8 +231,7 @@
               "RelativeToolTip": ".gitignore",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAF8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-12-15T06:24:17.325Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:24:17.325Z"
             },
             {
               "$type": "Document",
@@ -168,8 +243,7 @@
               "RelativeToolTip": "GUIA_PUBLICACION_VERSIONPORTABLE.md",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAOMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-12-15T06:24:05.004Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:24:05.004Z"
             },
             {
               "$type": "Document",
@@ -181,8 +255,7 @@
               "RelativeToolTip": "PublicarPortableZIP.bat",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAPMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
-              "WhenOpened": "2025-12-15T06:23:25.471Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:23:25.471Z"
             },
             {
               "$type": "Document",
@@ -194,8 +267,7 @@
               "RelativeToolTip": "PublicarPortable.bat",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAMwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
-              "WhenOpened": "2025-12-15T06:22:48.13Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:22:48.13Z"
             },
             {
               "$type": "Document",
@@ -207,8 +279,7 @@
               "RelativeToolTip": "RESUMEN_PORTABLE.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-12-15T06:20:57.144Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:20:57.144Z"
             },
             {
               "$type": "Document",
@@ -220,8 +291,7 @@
               "RelativeToolTip": "CrearPortableCompleto.bat",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAPkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
-              "WhenOpened": "2025-12-15T06:14:24.859Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:14:24.859Z"
             },
             {
               "$type": "Document",
@@ -233,8 +303,7 @@
               "RelativeToolTip": "CrearZipPortable.bat",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
-              "WhenOpened": "2025-12-15T06:13:42.849Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:13:42.849Z"
             },
             {
               "$type": "Document",
@@ -246,8 +315,7 @@
               "RelativeToolTip": "publish\\portable\\LEEME.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAFIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-12-15T06:13:27.04Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:13:27.04Z"
             },
             {
               "$type": "Document",
@@ -259,8 +327,7 @@
               "RelativeToolTip": "GUIA_PUBLICACION_PORTABLE.md",
               "ViewState": "AgIAANwAAAAAAAAAAIBJwN4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-12-15T06:08:53.249Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:08:53.249Z"
             },
             {
               "$type": "Document",
@@ -272,8 +339,7 @@
               "RelativeToolTip": "restaurante\\Properties\\PublishProfiles\\PortableProfile.pubxml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
-              "WhenOpened": "2025-12-15T06:08:14.746Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:08:14.746Z"
             },
             {
               "$type": "Document",
@@ -285,8 +351,7 @@
               "RelativeToolTip": "CrearPortableLigera.bat",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
-              "WhenOpened": "2025-12-15T06:02:24.94Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:02:24.94Z"
             },
             {
               "$type": "Document",
@@ -298,8 +363,7 @@
               "RelativeToolTip": "PORTABLE_README.md",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAJQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-12-15T06:02:11.039Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:02:11.039Z"
             },
             {
               "$type": "Document",
@@ -311,8 +375,7 @@
               "RelativeToolTip": "CrearPortable.bat",
               "ViewState": "AgIAADkAAAAAAAAAAIBJwDsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
-              "WhenOpened": "2025-12-15T06:01:36.95Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T06:01:36.95Z"
             },
             {
               "$type": "Document",
@@ -324,8 +387,7 @@
               "RelativeToolTip": "COMO_EJECUTAR.md",
               "ViewState": "AgIAAKoAAAAAAAAAAIBZwK8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-12-15T04:57:33.79Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T04:57:33.79Z"
             },
             {
               "$type": "Document",
@@ -337,8 +399,7 @@
               "RelativeToolTip": "NUEVAS_FUNCIONALIDADES.md",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-12-15T04:46:17.311Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T04:46:17.311Z"
             },
             {
               "$type": "Document",
@@ -422,8 +483,7 @@
               "RelativeToolTip": "restaurante\\restaurante.csproj",
               "ViewState": "AgIAADEAAAAAAAAAAABBwDIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-12-02T15:35:37.907Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-02T15:35:37.907Z"
             },
             {
               "$type": "Document",
@@ -447,8 +507,7 @@
               "RelativeToolTip": "restaurante\\Forms\\AdminForm.cs",
               "ViewState": "AgIAAMkGAAAAAAAAAABBwEECAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T15:39:07.312Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-02T15:39:07.312Z"
             },
             {
               "$type": "Document",
@@ -470,7 +529,7 @@
               "RelativeDocumentMoniker": "restaurante\\Forms\\MainForm.cs",
               "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Forms\\MainForm.cs",
               "RelativeToolTip": "restaurante\\Forms\\MainForm.cs",
-              "ViewState": "AgIAAKMCAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T15:37:35.065Z",
               "EditorCaption": ""
@@ -483,10 +542,22 @@
               "RelativeDocumentMoniker": "restaurante\\Data\\RestauranteContext.cs",
               "ToolTip": "C:\\Users\\Usuario\\source\\repos\\Restaurtante2.5\\restaurante\\Data\\RestauranteContext.cs",
               "RelativeToolTip": "restaurante\\Data\\RestauranteContext.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAABBwEoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFcAAAAAAAAAAEBVwFsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T15:36:23.982Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
             }
           ]
         }

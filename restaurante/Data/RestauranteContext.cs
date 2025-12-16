@@ -13,7 +13,19 @@ public class RestauranteContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=restaurante.db");
+        // Obtener la ruta base de la aplicación (donde está el ejecutable)
+        string appPath = AppDomain.CurrentDomain.BaseDirectory;
+        string dbPath = Path.Combine(appPath, "restaurante.db");
+        
+        // Si la base de datos no existe en la carpeta de ejecución pero existe en la raíz del proyecto,
+        // copiarla automáticamente (útil para la primera ejecución en Debug)
+        string projectRootDbPath = Path.Combine(appPath, @"..\..\..\restaurante.db");
+        if (!File.Exists(dbPath) && File.Exists(projectRootDbPath))
+        {
+            File.Copy(projectRootDbPath, dbPath, overwrite: false);
+        }
+        
+        optionsBuilder.UseSqlite($"Data Source={dbPath}");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,6 +48,10 @@ public class RestauranteContext : DbContext
             .WithMany()
             .HasForeignKey(d => d.PlatilloId);
 
+        // DATOS SEMILLA COMENTADOS: La base de datos real ya contiene todos los datos necesarios
+        // No se necesitan datos iniciales porque ya existe restaurante.db con información completa
+        
+        /*
         // Datos iniciales
         modelBuilder.Entity<Configuracion>().HasData(
             new Configuracion { Id = 1 }
@@ -70,5 +86,6 @@ public class RestauranteContext : DbContext
         modelBuilder.Entity<Mesa>().HasData(
             new Mesa { Id = 14, NumeroMesa = 0, EstaActiva = false }
         );
+        */
     }
 }
