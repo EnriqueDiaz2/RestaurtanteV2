@@ -155,12 +155,15 @@ public partial class TicketForm : Form
 
         StringBuilder ticket = new StringBuilder();
 
+        // ANCHO OPTIMIZADO PARA IMPRESORA TÉRMICA: 32 caracteres
+        int anchoTicket = 32;
+
         // Encabezado - Nombre del restaurante centrado
-        ticket.AppendLine(CentrarTexto(config.NombreRestaurante, 40));
-        ticket.AppendLine(CentrarTexto(config.Direccion, 40));
-        ticket.AppendLine(CentrarTexto($"Tel: {config.Telefono}", 40));
+        ticket.AppendLine(CentrarTexto(config.NombreRestaurante, anchoTicket));
+        ticket.AppendLine(CentrarTexto(config.Direccion, anchoTicket));
+        ticket.AppendLine(CentrarTexto($"Tel: {config.Telefono}", anchoTicket));
         ticket.AppendLine();
-        ticket.AppendLine("========================================");
+        ticket.AppendLine("================================");
         
         // Información de la mesa
         if (mesa.NumeroMesa == 0)
@@ -171,11 +174,11 @@ public partial class TicketForm : Form
         ticket.AppendLine($"Mesero: {nombreMesero}");
         ticket.AppendLine($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}");
         
-        ticket.AppendLine("----------------------------------------");
+        ticket.AppendLine("--------------------------------");
         
-        // Encabezado de productos con espaciado correcto
-        ticket.AppendLine("ART                    CANT    PRECIO");
-        ticket.AppendLine("----------------------------------------");
+        // Encabezado de productos COMPACTO
+        ticket.AppendLine("ART              CANT  PREC");
+        ticket.AppendLine("--------------------------------");
 
         // Detalles de productos
         decimal subtotal = 0;
@@ -187,53 +190,56 @@ public partial class TicketForm : Form
                 decimal importe = detalle.Cantidad * detalle.PrecioUnitario;
                 subtotal += importe;
 
+                // ACORTAR NOMBRE (máximo 17 caracteres para evitar corte)
                 string nombrePlatillo = platillo.NombreCorto;
-                if (nombrePlatillo.Length > 23)
-                    nombrePlatillo = nombrePlatillo.Substring(0, 23);
+                if (nombrePlatillo.Length > 17)
+                    nombrePlatillo = nombrePlatillo.Substring(0, 17);
 
-                // Formato: Nombre (23 chars) + Cant (4 chars) + $ + Precio (7 chars)
-                ticket.AppendLine($"{nombrePlatillo,-23}{detalle.Cantidad,4}  ${importe,7:F2}");
+                // Formato COMPACTO: Nombre(17) + Cant(4) + Precio(8)
+                // Total: 17 + 4 + 8 = 29 caracteres (cabe en 32)
+                ticket.AppendLine($"{nombrePlatillo,-17}{detalle.Cantidad,4} ${importe,6:F2}");
             }
         }
 
-        ticket.AppendLine("----------------------------------------");
+        ticket.AppendLine("--------------------------------");
 
-        // Totales alineados a la derecha
-        ticket.AppendLine($"{"Subtotal:",30} ${subtotal,7:F2}");
+        // Totales alineados (ANCHO REDUCIDO: 24 + 7 = 31)
+        ticket.AppendLine($"{"Subtotal:",24}${subtotal,7:F2}");
 
         // IVA (0.00%)
         decimal iva = 0;
-        ticket.AppendLine($"{"IVA (0.00%):",30} ${iva,7:F2}");
+        ticket.AppendLine($"{"IVA (0.00%):",24}${iva,7:F2}");
 
         // Descuento
         if (descuento > 0)
         {
             if (tipoDescuento == "%")
             {
-                string descText = $"Descuento ({valorDescuento:F2}%):";
-                ticket.AppendLine($"{descText,30} ${descuento,7:F2}");
+                // Acortar "Descuento" a "Desc" para ahorrar espacio
+                string descText = $"Desc ({valorDescuento:F2}%):";
+                ticket.AppendLine($"{descText,24}${descuento,7:F2}");
             }
             else
             {
-                ticket.AppendLine($"{"Descuento:",30} ${descuento,7:F2}");
+                ticket.AppendLine($"{"Descuento:",24}${descuento,7:F2}");
             }
         }
         else
         {
-            ticket.AppendLine($"{"Descuento (0.00%):",30} ${descuento,7:F2}");
+            ticket.AppendLine($"{"Desc (0.00%):",24}${descuento,7:F2}");
         }
 
         ticket.AppendLine();
-        ticket.AppendLine("========================================");
+        ticket.AppendLine("================================");
         
         // Total final centrado
         decimal total = subtotal + iva - descuento;
         string lineaTotal = $"TOTAL: $ {total:F2}";
-        ticket.AppendLine(CentrarTexto(lineaTotal, 40));
+        ticket.AppendLine(CentrarTexto(lineaTotal, anchoTicket));
         
-        ticket.AppendLine("========================================");
+        ticket.AppendLine("================================");
         ticket.AppendLine();
-        ticket.AppendLine(CentrarTexto("Gracias por su compra", 40));
+        ticket.AppendLine(CentrarTexto("Gracias por su compra", anchoTicket));
         ticket.AppendLine();
 
         ticketContent = ticket.ToString();
@@ -242,8 +248,9 @@ public partial class TicketForm : Form
 
     private string CentrarTexto(string texto, int ancho)
     {
+        // Si el texto es muy largo, recortarlo
         if (texto.Length >= ancho)
-            return texto;
+            return texto.Substring(0, ancho);
 
         int espacios = (ancho - texto.Length) / 2;
         return new string(' ', espacios) + texto;
@@ -275,15 +282,19 @@ public partial class TicketForm : Form
 
     private void ImprimirTicket(object sender, PrintPageEventArgs e)
     {
-        Font font = new Font("Courier New", 9);
-        float yPos = 20;
-        float leftMargin = 10;
+        // USAR FUENTE MÁS GRANDE Y NEGRITA para mejor legibilidad
+        Font font = new Font("Courier New", 10, FontStyle.Bold);
+        Brush brush = Brushes.Black; // Color negro sólido
+        
+        float yPos = 10; // Margen superior reducido
+        float leftMargin = 5; // Margen izquierdo MUY REDUCIDO para evitar corte
         
         string[] lines = ticketContent.Split('\n');
         
         foreach (string line in lines)
         {
-            e.Graphics!.DrawString(line, font, Brushes.Black, leftMargin, yPos);
+            // Dibujar texto con fuente negrita y tinta negra sólida
+            e.Graphics!.DrawString(line, font, brush, leftMargin, yPos);
             yPos += font.GetHeight(e.Graphics);
         }
     }
@@ -336,46 +347,47 @@ public partial class TicketForm : Form
         {
             container.Page(page =>
             {
-                page.Size(80, 250, Unit.Millimetre);
-                page.Margin(5, Unit.Millimetre);
+                // Ancho optimizado para ticket térmico
+                page.Size(58, 250, Unit.Millimetre); // 58mm es estándar para tickets
+                page.Margin(2, Unit.Millimetre); // Márgenes mínimos
                 
                 page.Content().Column(col =>
                 {
-                    // Encabezado
+                    // Encabezado con fuente más grande y NEGRITA
                     col.Item().AlignCenter().Text(config.NombreRestaurante)
-                        .FontSize(12).Bold();
+                        .FontSize(11).Bold();
                     
                     col.Item().AlignCenter().Text(config.Direccion)
-                        .FontSize(8);
+                        .FontSize(7);
                     
                     col.Item().AlignCenter().Text($"Tel: {config.Telefono}")
-                        .FontSize(8);
+                        .FontSize(7);
                     
-                    col.Item().PaddingVertical(3).LineHorizontal(1);
+                    col.Item().PaddingVertical(2).LineHorizontal(1);
                     
-                    // Información de la mesa
+                    // Información de la mesa CON NEGRITA
                     col.Item().Text(mesa.NumeroMesa == 0 ? "MESA: PARA LLEVAR" : $"MESA: {mesa.NumeroMesa}")
-                        .FontSize(9).Bold();
+                        .FontSize(8).Bold();
                     
                     col.Item().Text($"Mesero: {nombreMesero}")
-                        .FontSize(8);
+                        .FontSize(7).Bold();
                     
                     col.Item().Text($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}")
-                        .FontSize(8);
-                    
-                    col.Item().PaddingVertical(2).LineHorizontal(0.5f);
-                    
-                    // Encabezado de tabla
-                    col.Item().Row(row =>
-                    {
-                        row.RelativeItem(3).Text("ART").FontSize(8).Bold();
-                        row.RelativeItem(1).AlignRight().Text("CANT").FontSize(8).Bold();
-                        row.RelativeItem(2).AlignRight().Text("PRECIO").FontSize(8).Bold();
-                    });
+                        .FontSize(7).Bold();
                     
                     col.Item().PaddingVertical(1).LineHorizontal(0.5f);
                     
-                    // Productos
+                    // Encabezado de tabla CON NEGRITA
+                    col.Item().Row(row =>
+                    {
+                        row.RelativeItem(3).Text("ART").FontSize(7).Bold();
+                        row.RelativeItem(1).AlignRight().Text("CANT").FontSize(7).Bold();
+                        row.RelativeItem(2).AlignRight().Text("PRECIO").FontSize(7).Bold();
+                    });
+                    
+                    col.Item().PaddingVertical(0.5f).LineHorizontal(0.5f);
+                    
+                    // Productos CON NEGRITA
                     foreach (var detalle in detalles)
                     {
                         var platillo = detalle.Platillo ?? db.Platillos.Find(detalle.PlatilloId);
@@ -383,65 +395,70 @@ public partial class TicketForm : Form
                         {
                             decimal importe = detalle.Cantidad * detalle.PrecioUnitario;
                             
+                            // Acortar nombre si es muy largo
+                            string nombre = platillo.NombreCorto.Length > 15 
+                                ? platillo.NombreCorto.Substring(0, 15) 
+                                : platillo.NombreCorto;
+                            
                             col.Item().Row(row =>
                             {
-                                row.RelativeItem(3).Text(platillo.NombreCorto).FontSize(8);
-                                row.RelativeItem(1).AlignRight().Text(detalle.Cantidad.ToString()).FontSize(8);
-                                row.RelativeItem(2).AlignRight().Text($"${importe:F2}").FontSize(8);
+                                row.RelativeItem(3).Text(nombre).FontSize(7).Bold();
+                                row.RelativeItem(1).AlignRight().Text(detalle.Cantidad.ToString()).FontSize(7).Bold();
+                                row.RelativeItem(2).AlignRight().Text($"${importe:F2}").FontSize(7).Bold();
                             });
                         }
                     }
                     
-                    col.Item().PaddingVertical(2).LineHorizontal(0.5f);
+                    col.Item().PaddingVertical(1).LineHorizontal(0.5f);
                     
-                    // Subtotales
+                    // Subtotales CON NEGRITA
                     col.Item().Row(row =>
                     {
-                        row.RelativeItem().Text("Subtotal:").FontSize(8);
-                        row.RelativeItem().AlignRight().Text($"${subtotal:F2}").FontSize(8);
+                        row.RelativeItem().Text("Subtotal:").FontSize(7).Bold();
+                        row.RelativeItem().AlignRight().Text($"${subtotal:F2}").FontSize(7).Bold();
                     });
                     
                     col.Item().Row(row =>
                     {
-                        row.RelativeItem().Text("IVA (0.00%):").FontSize(8);
-                        row.RelativeItem().AlignRight().Text("$0.00").FontSize(8);
+                        row.RelativeItem().Text("IVA (0.00%):").FontSize(7).Bold();
+                        row.RelativeItem().AlignRight().Text("$0.00").FontSize(7).Bold();
                     });
                     
                     if (descuento > 0)
                     {
                         string textoDesc = tipoDescuento == "%" 
-                            ? $"Descuento ({valorDescuento:F2}%):" 
+                            ? $"Desc ({valorDescuento:F2}%):" 
                             : "Descuento:";
                         
                         col.Item().Row(row =>
                         {
-                            row.RelativeItem().Text(textoDesc).FontSize(8);
-                            row.RelativeItem().AlignRight().Text($"${descuento:F2}").FontSize(8);
+                            row.RelativeItem().Text(textoDesc).FontSize(7).Bold();
+                            row.RelativeItem().AlignRight().Text($"${descuento:F2}").FontSize(7).Bold();
                         });
                     }
                     else
                     {
                         col.Item().Row(row =>
                         {
-                            row.RelativeItem().Text("Descuento (0.00%):").FontSize(8);
-                            row.RelativeItem().AlignRight().Text("$0.00").FontSize(8);
+                            row.RelativeItem().Text("Desc (0.00%):").FontSize(7).Bold();
+                            row.RelativeItem().AlignRight().Text("$0.00").FontSize(7).Bold();
                         });
                     }
                     
-                    col.Item().PaddingVertical(3).LineHorizontal(1);
+                    col.Item().PaddingVertical(2).LineHorizontal(1);
                     
-                    // Total
+                    // Total CON FUENTE MÁS GRANDE Y NEGRITA
                     col.Item().Row(row =>
                     {
-                        row.RelativeItem().Text("TOTAL:").FontSize(11).Bold();
-                        row.RelativeItem().AlignRight().Text($"${total:F2}").FontSize(11).Bold();
+                        row.RelativeItem().Text("TOTAL:").FontSize(10).Bold();
+                        row.RelativeItem().AlignRight().Text($"${total:F2}").FontSize(10).Bold();
                     });
                     
-                    col.Item().PaddingVertical(3).LineHorizontal(1);
+                    col.Item().PaddingVertical(2).LineHorizontal(1);
                     
                     // Mensaje de despedida
-                    col.Item().PaddingTop(5).AlignCenter().Text("Gracias por su compra")
-                        .FontSize(9).Italic();
+                    col.Item().PaddingTop(3).AlignCenter().Text("Gracias por su compra")
+                        .FontSize(8).Bold().Italic();
                 });
             });
         }).GeneratePdf(rutaArchivo);
