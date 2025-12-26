@@ -12,11 +12,16 @@ public partial class MainForm : Form
     private Panel panelTotales = null!;
     private Panel panelBotones = null!;
     private string nombreMesero = "";
+    private string? impresoraSeleccionada = null; // NUEVO: Para recordar impresora seleccionada
 
     public MainForm()
     {
         InitializeComponent();
         db = new RestauranteContext();
+        
+        // Actualizar la base de datos si es necesario
+        db.ActualizarBaseDatos();
+        
         // db.Database.EnsureCreated(); // COMENTADO: La base de datos ya existe con datos reales
         CargarCategorias();
         ActualizarListaPedido();
@@ -118,6 +123,22 @@ public partial class MainForm : Form
         btnAdministracion.FlatAppearance.MouseOverBackColor = Color.FromArgb(142, 68, 173);
         btnAdministracion.Click += BtnAdministracion_Click;
 
+        // NUEVO: Botón Cerrar Día
+        Button btnCerrarDia = new Button
+        {
+            Text = "?? CERRAR DÍA",
+            Location = new Point(590, 25),
+            Size = new Size(180, 60),
+            Font = new Font("Segoe UI", 13, FontStyle.Bold),
+            BackColor = Color.FromArgb(230, 126, 34),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnCerrarDia.FlatAppearance.BorderSize = 0;
+        btnCerrarDia.FlatAppearance.MouseOverBackColor = Color.FromArgb(211, 84, 0);
+        btnCerrarDia.Click += BtnCerrarDia_Click;
+
         Label lblMesaActual = new Label
         {
             Name = "lblMesaActual",
@@ -131,7 +152,7 @@ public partial class MainForm : Form
             Padding = new Padding(0, 20, 20, 0)
         };
 
-        panelSuperior.Controls.AddRange(new Control[] { btnSeleccionarMesa, btnParaLlevar, btnAdministracion, lblMesaActual });
+        panelSuperior.Controls.AddRange(new Control[] { btnSeleccionarMesa, btnParaLlevar, btnAdministracion, btnCerrarDia, lblMesaActual });
         
         panelSuperior.Resize += (s, e) =>
         {
@@ -507,13 +528,29 @@ public partial class MainForm : Form
             Margin = new Padding(0, 15, 0, 0)  // Más margin superior
         };
 
+        // NUEVO: Botón Quitar Cantidad
+        Button btnQuitarCantidad = new Button
+        {
+            Name = "btnQuitarCantidad",
+            Text = "? Quitar 1",
+            Location = new Point(18, 18),
+            Size = new Size(105, 44),
+            Font = new Font("Segoe UI", 9, FontStyle.Bold),
+            BackColor = Color.FromArgb(243, 156, 18),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnQuitarCantidad.FlatAppearance.BorderSize = 0;
+        btnQuitarCantidad.Click += BtnQuitarCantidad_Click;
+
         Button btnEliminarItem = new Button
         {
             Name = "btnEliminarItem",
-            Text = "??? Eliminar",
-            Location = new Point(18, 18),  // Ajustado para nuevo padding
-            Size = new Size(160, 44),  // Aumentado de 42 a 44
-            Font = new Font("Segoe UI", 10, FontStyle.Bold),
+            Text = "? Eliminar",
+            Location = new Point(133, 18),  // Ajustado
+            Size = new Size(105, 44),
+            Font = new Font("Segoe UI", 9, FontStyle.Bold),
             BackColor = Color.FromArgb(231, 76, 60),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
@@ -525,10 +562,10 @@ public partial class MainForm : Form
         Button btnLimpiar = new Button
         {
             Name = "btnLimpiar",
-            Text = "?? Limpiar",
-            Location = new Point(188, 18),  // Ajustado para nuevo padding
-            Size = new Size(160, 44),  // Aumentado de 42 a 44
-            Font = new Font("Segoe UI", 10, FontStyle.Bold),
+            Text = "??? Limpiar",
+            Location = new Point(248, 18),  // Ajustado
+            Size = new Size(100, 44),
+            Font = new Font("Segoe UI", 9, FontStyle.Bold),
             BackColor = Color.FromArgb(149, 165, 166),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
@@ -570,7 +607,7 @@ public partial class MainForm : Form
         Button btnCerrarMesa = new Button
         {
             Name = "btnCerrarMesa",
-            Text = "? Cerrar Mesa",
+            Text = "?? Cerrar Mesa",
             Location = new Point(188, 126),  // Más separación de la fila anterior
             Size = new Size(160, 44),  // Aumentado de 42 a 44
             Font = new Font("Segoe UI", 10, FontStyle.Bold),
@@ -582,15 +619,15 @@ public partial class MainForm : Form
         btnCerrarMesa.FlatAppearance.BorderSize = 0;
         btnCerrarMesa.Click += BtnCerrarMesa_Click;
 
-        panelBotones.Controls.AddRange(new Control[] { btnEliminarItem, btnLimpiar, btnGuardarPedido, btnImprimirTicket, btnCerrarMesa });
+        panelBotones.Controls.AddRange(new Control[] { btnQuitarCantidad, btnEliminarItem, btnLimpiar, btnGuardarPedido, btnImprimirTicket, btnCerrarMesa });
 
-        // Agregar controles al panel derecho en orden correcto
-        panelDerecho.Controls.Add(panelContenedorPedidos);
-        panelDerecho.Controls.Add(panelTotales);
-        panelDerecho.Controls.Add(panelBotones);
-        panelDerecho.Controls.Add(separador);
-        panelDerecho.Controls.Add(panelMesero);
-        panelDerecho.Controls.Add(headerPedido);
+        // Agregar todos los controles al panel derecho en el orden correcto (de abajo hacia arriba por el Dock)
+        panelDerecho.Controls.Add(panelContenedorPedidos);  // Se agrega primero pero se renderiza al medio (DockStyle.Fill)
+        panelDerecho.Controls.Add(panelBotones);            // Bottom
+        panelDerecho.Controls.Add(panelTotales);            // Bottom
+        panelDerecho.Controls.Add(separador);               // Top
+        panelDerecho.Controls.Add(panelMesero);             // Top
+        panelDerecho.Controls.Add(headerPedido);            // Top
 
         // Agregar paneles al layout principal
         mainLayout.Controls.Add(panelIzquierdo, 0, 0);
@@ -609,20 +646,27 @@ public partial class MainForm : Form
 
         int ancho = (panelBotones.Width - 46) / 2;  // Ajustado para nuevo padding (18+18+10)
         
+        var btnQuitarCantidad = panelBotones.Controls["btnQuitarCantidad"] as Button;
         var btnEliminarItem = panelBotones.Controls["btnEliminarItem"] as Button;
         var btnLimpiar = panelBotones.Controls["btnLimpiar"] as Button;
         var btnGuardarPedido = panelBotones.Controls["btnGuardarPedido"] as Button;
         var btnImprimirTicket = panelBotones.Controls["btnImprimirTicket"] as Button;
         var btnCerrarMesa = panelBotones.Controls["btnCerrarMesa"] as Button;
 
+        if (btnQuitarCantidad != null)
+        {
+            btnQuitarCantidad.Width = ancho;
+        }
+
         if (btnEliminarItem != null)
         {
+            btnEliminarItem.Left = 18 + ancho + 10;
             btnEliminarItem.Width = ancho;
         }
 
         if (btnLimpiar != null)
         {
-            btnLimpiar.Left = 18 + ancho + 10;
+            btnLimpiar.Left = 18 + ancho * 2 + 20;
             btnLimpiar.Width = ancho;
         }
 
@@ -649,10 +693,14 @@ public partial class MainForm : Form
 
         int anchoDisponible = panelTotales.Width - 36;  // Ajustado para nuevo padding
 
-        var lblSubtotal = this.Controls.Find("lblSubtotal", true).FirstOrDefault() as Label;
-        if (lblSubtotal != null)
+        var lblSubtotal = this.Controls.Find("lblSubtotal", true);
+        if (lblSubtotal.Length > 0)
         {
-            lblSubtotal.Width = anchoDisponible;
+            var lblSubtotalControl = lblSubtotal[0] as Label;
+            if (lblSubtotalControl != null)
+            {
+                lblSubtotalControl.Width = anchoDisponible;
+            }
         }
 
         var panelDescuento = panelTotales.Controls.OfType<Panel>().FirstOrDefault(p => p.Controls.Count > 2);
@@ -742,7 +790,7 @@ public partial class MainForm : Form
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 Tag = categoria.Id,
-                Margin = new Padding(6),  // Margin uniforme
+                Margin = new Padding(6, 6, 6, 6),  // Margin uniforme
                 Cursor = Cursors.Hand,
                 UseVisualStyleBackColor = false,
                 TabStop = false  // Evitar problemas de foco
@@ -801,7 +849,7 @@ public partial class MainForm : Form
         anchoDisponible -= 35; // Ajustado para nuevo padding
         int numeroColumnas = Math.Max(3, anchoDisponible / 185);
         int anchoPlatillos = Math.Min(180, (anchoDisponible - (numeroColumnas * 12)) / numeroColumnas);
-
+        
         foreach (var platillo in platillos)
         {
             Panel panelPlatillo = new Panel
@@ -908,16 +956,23 @@ public partial class MainForm : Form
 
         ActualizarListaPedido();
         
-        var lstPedido = this.Controls.Find("lstPedido", true)[0] as ListBox;
-        if (lstPedido != null && lstPedido.Items.Count > 0)
+        var lstPedidoArray = this.Controls.Find("lstPedido", true);
+        if (lstPedidoArray.Length > 0)
         {
-            lstPedido.SelectedIndex = lstPedido.Items.Count - 1;
+            var lstPedido = lstPedidoArray[0] as ListBox;
+            if (lstPedido != null && lstPedido.Items.Count > 0)
+            {
+                lstPedido.SelectedIndex = lstPedido.Items.Count - 1;
+            }
         }
     }
 
     private void ActualizarListaPedido()
     {
-        var lstPedido = this.Controls.Find("lstPedido", true)[0] as ListBox;
+        var lstPedidoArray = this.Controls.Find("lstPedido", true);
+        if (lstPedidoArray.Length == 0) return; // Protección contra control no encontrado
+        
+        var lstPedido = lstPedidoArray[0] as ListBox;
         if (lstPedido == null) return;
 
         lstPedido.Items.Clear();
@@ -938,31 +993,45 @@ public partial class MainForm : Form
     {
         decimal subtotal = pedidoTemporal.Sum(d => d.PrecioUnitario * d.Cantidad);
 
-        var lblSubtotal = this.Controls.Find("lblSubtotal", true)[0] as Label;
-        if (lblSubtotal != null)
-            lblSubtotal.Text = $"Subtotal: ${subtotal:F2}";
+        var lblSubtotalArray = this.Controls.Find("lblSubtotal", true);
+        if (lblSubtotalArray.Length > 0)
+        {
+            var lblSubtotal = lblSubtotalArray[0] as Label;
+            if (lblSubtotal != null)
+                lblSubtotal.Text = $"Subtotal: ${subtotal:F2}";
+        }
 
-        var txtDescuento = this.Controls.Find("txtDescuento", true)[0] as TextBox;
-        var cmbTipoDescuento = this.Controls.Find("cmbTipoDescuento", true)[0] as ComboBox;
-        var lblTotal = this.Controls.Find("lblTotal", true)[0] as Label;
+        var txtDescuentoArray = this.Controls.Find("txtDescuento", true);
+        var cmbTipoDescuentoArray = this.Controls.Find("cmbTipoDescuento", true);
+        var lblTotalArray = this.Controls.Find("lblTotal", true);
 
         decimal descuento = 0;
-        if (decimal.TryParse(txtDescuento?.Text, out decimal valorDescuento))
+        if (txtDescuentoArray.Length > 0)
         {
-            if (cmbTipoDescuento?.SelectedItem?.ToString() == "%")
+            var txtDescuento = txtDescuentoArray[0] as TextBox;
+            var cmbTipoDescuento = cmbTipoDescuentoArray.Length > 0 ? cmbTipoDescuentoArray[0] as ComboBox : null;
+            
+            if (decimal.TryParse(txtDescuento?.Text, out decimal valorDescuento))
             {
-                descuento = subtotal * (valorDescuento / 100);
-            }
-            else
-            {
-                descuento = valorDescuento;
+                if (cmbTipoDescuento?.SelectedItem?.ToString() == "%")
+                {
+                    descuento = subtotal * (valorDescuento / 100);
+                }
+                else
+                {
+                    descuento = valorDescuento;
+                }
             }
         }
 
         decimal total = subtotal - descuento;
-        if (lblTotal != null)
+        if (lblTotalArray.Length > 0)
         {
-            lblTotal.Text = $"TOTAL: ${total:F2}";
+            var lblTotal = lblTotalArray[0] as Label;
+            if (lblTotal != null)
+            {
+                lblTotal.Text = $"TOTAL: ${total:F2}";
+            }
         }
     }
 
@@ -1027,30 +1096,45 @@ public partial class MainForm : Form
 
         try
         {
+            // Marcar mesa como activa si no lo está
             if (!mesaActual.EstaActiva)
             {
                 mesaActual.EstaActiva = true;
                 mesaActual.FechaApertura = DateTime.Now;
             }
 
-            var detallesAnteriores = db.DetallesPedidos.Where(d => d.MesaId == mesaActual.Id);
+            // Eliminar detalles anteriores de esta mesa
+            var detallesAnteriores = db.DetallesPedidos.Where(d => d.MesaId == mesaActual.Id).ToList();
             db.DetallesPedidos.RemoveRange(detallesAnteriores);
 
+            // Guardar cambios de la eliminación
+            db.SaveChanges();
+
+            // Agregar los nuevos detalles
             foreach (var detalle in pedidoTemporal)
             {
-                detalle.MesaId = mesaActual.Id;
-                db.DetallesPedidos.Add(detalle);
+                // Crear un nuevo objeto para evitar problemas de seguimiento
+                var nuevoDetalle = new DetallePedido
+                {
+                    MesaId = mesaActual.Id,
+                    PlatilloId = detalle.PlatilloId,
+                    Cantidad = detalle.Cantidad,
+                    PrecioUnitario = detalle.PrecioUnitario
+                };
+                db.DetallesPedidos.Add(nuevoDetalle);
             }
 
             db.SaveChanges();
+            
             MessageBox.Show("? Pedido guardado correctamente.", "Éxito", 
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
             ActualizarEstadoMesas();
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"? Error al guardar: {ex.Message}", "Error", 
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"? Error al guardar: {ex.Message}\n\nDetalle: {ex.InnerException?.Message}", 
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -1065,8 +1149,16 @@ public partial class MainForm : Form
 
         string meseroParaTicket = string.IsNullOrWhiteSpace(nombreMesero) ? "N/A" : nombreMesero;
 
-        var ticketForm = new TicketForm(db, mesaActual, pedidoTemporal, ObtenerDescuento(), ObtenerValorDescuento(), ObtenerTipoDescuento(), meseroParaTicket);
-        ticketForm.ShowDialog();
+        try
+        {
+            var ticketForm = new TicketForm(db, mesaActual, pedidoTemporal, ObtenerDescuento(), ObtenerValorDescuento(), ObtenerTipoDescuento(), meseroParaTicket);
+            ticketForm.ShowDialog();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"? Error al abrir ticket: {ex.Message}", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     private decimal ObtenerDescuento()
@@ -1114,19 +1206,76 @@ public partial class MainForm : Form
             return;
         }
 
+        if (!mesaActual.EstaActiva)
+        {
+            MessageBox.Show("?? Esta mesa no está activa.", "Aviso", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
         var resultado = MessageBox.Show("¿Desea cerrar esta mesa/orden?", "Confirmar", 
             MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         if (resultado == DialogResult.Yes)
         {
             try
             {
-                var detalles = db.DetallesPedidos.Where(d => d.MesaId == mesaActual.Id);
+                // Obtener los detalles antes de eliminarlos
+                var detalles = db.DetallesPedidos
+                    .Include(d => d.Platillo)
+                    .Where(d => d.MesaId == mesaActual.Id)
+                    .ToList();
+
+                System.Diagnostics.Debug.WriteLine($"Cerrando mesa #{mesaActual.NumeroMesa}, detalles encontrados: {detalles.Count}");
+
+                if (detalles.Count > 0)
+                {
+                    // Calcular totales
+                    decimal subtotal = detalles.Sum(d => d.Cantidad * d.PrecioUnitario);
+                    decimal descuento = ObtenerDescuento();
+                    decimal total = subtotal - descuento;
+
+                    System.Diagnostics.Debug.WriteLine($"Subtotal: {subtotal}, Descuento: {descuento}, Total: {total}");
+
+                    // Crear registro de venta cerrada
+                    var ventaCerrada = new VentaCerrada
+                    {
+                        NumeroMesa = mesaActual.NumeroMesa,
+                        FechaApertura = mesaActual.FechaApertura ?? DateTime.Now,
+                        FechaCierre = DateTime.Now,
+                        Mesero = string.IsNullOrWhiteSpace(nombreMesero) ? "N/A" : nombreMesero,
+                        Subtotal = subtotal,
+                        Descuento = descuento,
+                        Total = total
+                    };
+
+                    // Agregar detalles de la venta
+                    foreach (var detalle in detalles)
+                    {
+                        ventaCerrada.Detalles.Add(new DetalleVentaCerrada
+                        {
+                            NombrePlatillo = detalle.Platillo?.NombreCorto ?? "Desconocido",
+                            Cantidad = detalle.Cantidad,
+                            PrecioUnitario = detalle.PrecioUnitario,
+                            Total = detalle.Cantidad * detalle.PrecioUnitario
+                        });
+                    }
+
+                    // Guardar la venta cerrada
+                    db.VentasCerradas.Add(ventaCerrada);
+                    
+                    System.Diagnostics.Debug.WriteLine($"Venta cerrada creada con {ventaCerrada.Detalles.Count} detalles");
+                }
+
+                // Eliminar detalles del pedido
                 db.DetallesPedidos.RemoveRange(detalles);
 
+                // Marcar mesa como inactiva
                 mesaActual.EstaActiva = false;
                 mesaActual.FechaApertura = null;
 
                 db.SaveChanges();
+                
+                System.Diagnostics.Debug.WriteLine("Cambios guardados en la base de datos");
 
                 pedidoTemporal.Clear();
                 mesaActual = null;
@@ -1140,15 +1289,20 @@ public partial class MainForm : Form
                 if (txtMesero != null)
                     txtMesero.Clear();
 
+                var txtDescuento = this.Controls.Find("txtDescuento", true)[0] as TextBox;
+                if (txtDescuento != null)
+                    txtDescuento.Text = "0";
+
                 ActualizarListaPedido();
                 ActualizarEstadoMesas();
 
-                MessageBox.Show("? Mesa cerrada correctamente.", "Éxito", 
+                MessageBox.Show("? Mesa cerrada correctamente.\n\nLa venta ha sido registrada y puede verla en el reporte del día.", "Éxito", 
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"? Error al cerrar mesa: {ex.Message}", "Error", 
+                System.Diagnostics.Debug.WriteLine($"Error al cerrar mesa: {ex.Message}\n{ex.StackTrace}");
+                MessageBox.Show($"? Error al cerrar mesa: {ex.Message}\n\n{ex.InnerException?.Message}", "Error", 
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -1190,6 +1344,58 @@ public partial class MainForm : Form
     private void ActualizarEstadoMesas()
     {
         db = new RestauranteContext();
+    }
+
+    private void BtnCerrarDia_Click(object? sender, EventArgs e)
+    {
+        try
+        {
+            using var cerrarDiaForm = new CerrarDiaForm(db);
+            cerrarDiaForm.ShowDialog();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"? Error al abrir reporte: {ex.Message}", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    // NUEVO: Método para quitar una unidad de un artículo
+    private void BtnQuitarCantidad_Click(object? sender, EventArgs e)
+    {
+        var lstPedido = this.Controls.Find("lstPedido", true)[0] as ListBox;
+        if (lstPedido?.SelectedIndex >= 0 && lstPedido.SelectedIndex < pedidoTemporal.Count)
+        {
+            var detalle = pedidoTemporal[lstPedido.SelectedIndex];
+            if (detalle.Cantidad > 1)
+            {
+                detalle.Cantidad--;
+                ActualizarListaPedido();
+                lstPedido.SelectedIndex = lstPedido.SelectedIndex; // Mantener selección
+            }
+            else
+            {
+                // Si la cantidad es 1, preguntar si desea eliminar
+                var resultado = MessageBox.Show("La cantidad es 1. ¿Desea eliminar este artículo?", 
+                    "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (resultado == DialogResult.Yes)
+                {
+                    int indiceSeleccionado = lstPedido.SelectedIndex;
+                    pedidoTemporal.RemoveAt(indiceSeleccionado);
+                    ActualizarListaPedido();
+                    // Seleccionar el siguiente item si existe
+                    if (lstPedido.Items.Count > 0 && indiceSeleccionado < lstPedido.Items.Count)
+                    {
+                        lstPedido.SelectedIndex = indiceSeleccionado;
+                    }
+                }
+            }
+        }
+        else
+        {
+            MessageBox.Show("?? Seleccione un item primero.", "Aviso", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
     }
 
     protected override void OnFormClosing(FormClosingEventArgs e)

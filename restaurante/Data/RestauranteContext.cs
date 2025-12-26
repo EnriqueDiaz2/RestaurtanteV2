@@ -10,6 +10,8 @@ public class RestauranteContext : DbContext
     public DbSet<Mesa> Mesas { get; set; }
     public DbSet<DetallePedido> DetallesPedidos { get; set; }
     public DbSet<Configuracion> Configuraciones { get; set; }
+    public DbSet<VentaCerrada> VentasCerradas { get; set; }
+    public DbSet<DetalleVentaCerrada> DetallesVentasCerradas { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -47,6 +49,11 @@ public class RestauranteContext : DbContext
             .HasOne(d => d.Platillo)
             .WithMany()
             .HasForeignKey(d => d.PlatilloId);
+
+        modelBuilder.Entity<DetalleVentaCerrada>()
+            .HasOne(d => d.VentaCerrada)
+            .WithMany(v => v.Detalles)
+            .HasForeignKey(d => d.VentaCerradaId);
 
         // DATOS SEMILLA COMENTADOS: La base de datos real ya contiene todos los datos necesarios
         // No se necesitan datos iniciales porque ya existe restaurante.db con información completa
@@ -87,5 +94,62 @@ public class RestauranteContext : DbContext
             new Mesa { Id = 14, NumeroMesa = 0, EstaActiva = false }
         );
         */
+    }
+
+    // Método para actualizar la base de datos automáticamente
+    public void ActualizarBaseDatos()
+    {
+        try
+        {
+            // Verificar si las tablas VentasCerradas y DetallesVentasCerradas existen
+            var connection = Database.GetDbConnection();
+            connection.Open();
+            
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT name FROM sqlite_master WHERE type='table' AND name='VentasCerradas';";
+            var result = command.ExecuteScalar();
+            
+            if (result == null)
+            {
+                // Las tablas no existen, crearlas
+                Database.ExecuteSqlRaw(@"
+                    CREATE TABLE VentasCerradas (
+                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        NumeroMesa INTEGER NOT NULL,
+                        FechaApertura TEXT NOT NULL,
+                        FechaCierre TEXT NOT NULL,
+                        Mesero TEXT NOT NULL,
+                        Subtotal REAL NOT NULL,
+                        Descuento REAL NOT NULL,
+                        Total REAL NOT NULL
+                    );
+                ");
+
+                Database.ExecuteSqlRaw(@"
+                    CREATE TABLE DetallesVentasCerradas (
+                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        VentaCerradaId INTEGER NOT NULL,
+                        NombrePlatillo TEXT NOT NULL,
+                        Cantidad INTEGER NOT NULL,
+                        PrecioUnitario REAL NOT NULL,
+                        Total REAL NOT NULL,
+                        FOREIGN KEY (VentaCerradaId) REFERENCES VentasCerradas(Id) ON DELETE CASCADE
+                    );
+                ");
+                
+                Database.ExecuteSqlRaw("CREATE INDEX IX_DetallesVentasCerradas_VentaCerradaId ON DetallesVentasCerradas(VentaCerradaId);");
+                
+                MessageBox.Show("? Base de datos actualizada correctamente con las nuevas tablas de ventas cerradas.", 
+                    "Actualización", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            
+            connection.Close();
+        }
+        catch (Exception ex)
+        {
+            // Mostrar error si hay problemas
+            MessageBox.Show($"?? Error al actualizar base de datos: {ex.Message}\n\n{ex.InnerException?.Message}", 
+                "Error de Actualización", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
     }
 }
