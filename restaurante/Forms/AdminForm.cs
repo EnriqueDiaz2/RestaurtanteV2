@@ -91,7 +91,8 @@ public partial class AdminForm : Form
         {
             Dock = DockStyle.Fill,
             Padding = new Padding(30),
-            BackColor = Color.White
+            BackColor = Color.White,
+            AutoScroll = true
         };
 
         Label lblTitulo = new Label
@@ -174,9 +175,156 @@ public partial class AdminForm : Form
         btnGuardarConfig.FlatAppearance.BorderSize = 0;
         btnGuardarConfig.Click += BtnGuardarConfig_Click;
 
+        // Línea separadora
+        Panel separador = new Panel
+        {
+            Location = new Point(30, 360),
+            Size = new Size(900, 2),
+            BackColor = Color.FromArgb(189, 195, 199)
+        };
+
+        // Sección de Impresora
+        Label lblTituloImpresora = new Label
+        {
+            Text = "CONFIGURACIÓN DE IMPRESORA",
+            Location = new Point(30, 390),
+            Size = new Size(900, 40),
+            Font = new Font("Segoe UI", 16, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        Label lblInfoImpresora = new Label
+        {
+            Text = "Impresora Actual:",
+            Location = new Point(30, 450),
+            Size = new Size(220, 30),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        Label lblImpresoraNombre = new Label
+        {
+            Name = "lblImpresoraNombre",
+            Text = "No configurada",
+            Location = new Point(260, 450),
+            Size = new Size(500, 30),
+            Font = new Font("Segoe UI", 11),
+            ForeColor = Color.FromArgb(44, 62, 80)
+        };
+
+        CheckBox chkImprimirDirecto = new CheckBox
+        {
+            Name = "chkImprimirDirecto",
+            Text = "Imprimir directamente sin mostrar diálogo",
+            Location = new Point(260, 490),
+            Size = new Size(500, 30),
+            Font = new Font("Segoe UI", 11),
+            ForeColor = Color.FromArgb(52, 73, 94)
+        };
+
+        Button btnResetearImpresora = new Button
+        {
+            Text = "?? RESETEAR CONFIGURACIÓN",
+            Location = new Point(260, 540),
+            Size = new Size(280, 45),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(230, 126, 34),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnResetearImpresora.FlatAppearance.BorderSize = 0;
+        btnResetearImpresora.Click += (s, e) =>
+        {
+            var resultado = MessageBox.Show(
+                "¿Está seguro de resetear la configuración de impresora?\n\n" +
+                "La próxima vez que imprima un ticket, se mostrará\n" +
+                "el diálogo para seleccionar la impresora nuevamente.",
+                "Confirmar Reset",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+            
+            if (resultado == DialogResult.Yes)
+            {
+                try
+                {
+                    var config = db.Configuraciones.FirstOrDefault();
+                    if (config != null)
+                    {
+                        config.ImpresoraSeleccionada = null;
+                        config.ImprimirDirectamente = false;
+                        db.SaveChanges();
+                        
+                        lblImpresoraNombre.Text = "No configurada";
+                        chkImprimirDirecto.Checked = false;
+                        
+                        MessageBox.Show(
+                            "? Configuración de impresora reseteada.\n\n" +
+                            "En la próxima impresión se le pedirá seleccionar una impresora.",
+                            "Éxito",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"? Error: {ex.Message}", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        };
+
+        Button btnGuardarImpresora = new Button
+        {
+            Text = "?? GUARDAR CAMBIOS",
+            Location = new Point(550, 540),
+            Size = new Size(210, 45),
+            Font = new Font("Segoe UI", 11, FontStyle.Bold),
+            BackColor = Color.FromArgb(52, 152, 219),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Cursor = Cursors.Hand
+        };
+        btnGuardarImpresora.FlatAppearance.BorderSize = 0;
+        btnGuardarImpresora.Click += (s, e) =>
+        {
+            try
+            {
+                var config = db.Configuraciones.FirstOrDefault();
+                if (config != null)
+                {
+                    config.ImprimirDirectamente = chkImprimirDirecto.Checked;
+                    db.SaveChanges();
+                    
+                    MessageBox.Show(
+                        "? Configuración guardada correctamente.",
+                        "Éxito",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"? Error: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        };
+
+        Label lblAyuda = new Label
+        {
+            Text = "?? Tip: La impresora se configurará automáticamente la primera vez que imprima un ticket.",
+            Location = new Point(30, 605),
+            Size = new Size(900, 25),
+            Font = new Font("Segoe UI", 9, FontStyle.Italic),
+            ForeColor = Color.FromArgb(127, 140, 141)
+        };
+
         panel.Controls.AddRange(new Control[] { 
             lblTitulo, lblNombre, txtNombre, lblDireccion, txtDireccion, 
-            lblTelefono, txtTelefono, btnGuardarConfig 
+            lblTelefono, txtTelefono, btnGuardarConfig,
+            separador,
+            lblTituloImpresora, lblInfoImpresora, lblImpresoraNombre,
+            chkImprimirDirecto, btnResetearImpresora, btnGuardarImpresora, lblAyuda
         });
 
         tab.Controls.Add(panel);
@@ -188,6 +336,13 @@ public partial class AdminForm : Form
             txtNombre.Text = config.NombreRestaurante;
             txtDireccion.Text = config.Direccion;
             txtTelefono.Text = config.Telefono;
+            
+            // Configuración de impresora
+            if (!string.IsNullOrEmpty(config.ImpresoraSeleccionada))
+            {
+                lblImpresoraNombre.Text = config.ImpresoraSeleccionada;
+            }
+            chkImprimirDirecto.Checked = config.ImprimirDirectamente;
         }
     }
 
