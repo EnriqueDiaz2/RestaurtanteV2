@@ -260,267 +260,153 @@ public class TicketForm : Form
             
             if (tieneImpresoraConfigurada && config != null)
             {
-                // Imprimir directamente sin mostrar diálogo
-                ImprimirDirecto(document, config.ImpresoraSeleccionada!);
+                // Generar PDF y abrirlo para que el usuario pueda imprimir
+                byte[] pdfBytes = document.GeneratePdf();
+                string tempPath = Path.Combine(Path.GetTempPath(), $"ticket_{DateTime.Now:yyyyMMddHHmmss}.pdf");
+                File.WriteAllBytes(tempPath, pdfBytes);
+                
+                // Abrir con el visor predeterminado
+                var psi = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = tempPath,
+                    UseShellExecute = true
+                };
+                System.Diagnostics.Process.Start(psi);
+                
+                MessageBox.Show(
+                    $"? Ticket generado correctamente.\n\n" +
+                    $"Impresora configurada: {config.ImpresoraSeleccionada}\n\n" +
+                    "El PDF se abrirá. Por favor, imprime desde el visor de PDF.",
+                    "Ticket Listo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             else
             {
-                // Primera vez o usuario quiere cambiar - mostrar diálogo
-                var resultado = MostrarDialogoImpresion(document);
+                // Primera vez o usuario quiere cambiar - mostrar PDF y preguntar
+                byte[] pdfBytes = document.GeneratePdf();
+                string tempPath = Path.Combine(Path.GetTempPath(), $"ticket_{DateTime.Now:yyyyMMddHHmmss}.pdf");
+                File.WriteAllBytes(tempPath, pdfBytes);
                 
-                if (resultado.DialogResult == DialogResult.OK && resultado.ImpresoraSeleccionada != null)
+                // Abrir con el visor predeterminado
+                var psi = new System.Diagnostics.ProcessStartInfo
                 {
-                    // Preguntar si quiere recordar esta configuración
-                    var respuesta = MessageBox.Show(
-                        "¿Desea usar siempre esta impresora sin mostrar este diálogo?\n\n" +
-                        $"Impresora seleccionada: {resultado.ImpresoraSeleccionada}\n\n" +
-                        "Puede cambiar esta configuración más tarde en la sección de Administración.",
-                        "Recordar Impresora",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Question);
-                    
-                    if (respuesta == DialogResult.Yes && config != null)
+                    FileName = tempPath,
+                    UseShellExecute = true
+                };
+                System.Diagnostics.Process.Start(psi);
+                
+                // Preguntar si quiere recordar la impresora
+                var formConfig = new Form
+                {
+                    Text = "Configurar Impresora",
+                    Size = new DrawingSize(450, 250),
+                    StartPosition = FormStartPosition.CenterParent,
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    MaximizeBox = false,
+                    MinimizeBox = false
+                };
+                
+                Label lblInfo = new Label
+                {
+                    Text = "El PDF se ha abierto. Seleccione la impresora para futuros tickets:",
+                    Location = new Point(20, 20),
+                    Size = new DrawingSize(400, 40),
+                    Font = new Font("Segoe UI", 10)
+                };
+                
+                ComboBox cmbImpresoras = new ComboBox
+                {
+                    Location = new Point(20, 70),
+                    Size = new DrawingSize(390, 25),
+                    DropDownStyle = ComboBoxStyle.DropDownList,
+                    Font = new Font("Segoe UI", 10)
+                };
+                
+                // Llenar con impresoras disponibles
+                foreach (string printer in PrinterSettings.InstalledPrinters)
+                {
+                    cmbImpresoras.Items.Add(printer);
+                }
+                
+                // Seleccionar impresora predeterminada
+                PrinterSettings ps = new PrinterSettings();
+                cmbImpresoras.SelectedItem = ps.PrinterName;
+                
+                CheckBox chkRecordar = new CheckBox
+                {
+                    Text = "Recordar esta impresora",
+                    Location = new Point(20, 110),
+                    Size = new DrawingSize(400, 25),
+                    Font = new Font("Segoe UI", 9),
+                    Checked = false
+                };
+                
+                Button btnAceptar = new Button
+                {
+                    Text = "Guardar",
+                    Location = new Point(160, 150),
+                    Size = new DrawingSize(120, 40),
+                    DialogResult = DialogResult.OK,
+                    BackColor = DrawingColor.FromArgb(52, 152, 219),
+                    ForeColor = DrawingColor.White,
+                    FlatStyle = FlatStyle.Flat,
+                    Font = new Font("Segoe UI", 10, FontStyle.Bold)
+                };
+                btnAceptar.FlatAppearance.BorderSize = 0;
+                
+                Button btnCancelar = new Button
+                {
+                    Text = "Después",
+                    Location = new Point(290, 150),
+                    Size = new DrawingSize(120, 40),
+                    DialogResult = DialogResult.Cancel,
+                    BackColor = DrawingColor.FromArgb(149, 165, 166),
+                    ForeColor = DrawingColor.White,
+                    FlatStyle = FlatStyle.Flat,
+                    Font = new Font("Segoe UI", 10, FontStyle.Bold)
+                };
+                btnCancelar.FlatAppearance.BorderSize = 0;
+                
+                formConfig.Controls.AddRange(new Control[] { lblInfo, cmbImpresoras, chkRecordar, btnAceptar, btnCancelar });
+                formConfig.AcceptButton = btnAceptar;
+                formConfig.CancelButton = btnCancelar;
+                
+                DialogResult resultado = formConfig.ShowDialog();
+                
+                if (resultado == DialogResult.OK && cmbImpresoras.SelectedItem != null && chkRecordar.Checked && config != null)
+                {
+                    try
                     {
-                        try
-                        {
-                            // Guardar la configuración
-                            config.ImpresoraSeleccionada = resultado.ImpresoraSeleccionada;
-                            config.ImprimirDirectamente = true;
-                            db.SaveChanges();
-                            
-                            MessageBox.Show(
-                                "? Configuración guardada.\n\n" +
-                                "Los próximos tickets se imprimirán automáticamente en esta impresora.",
-                                "Éxito",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information);
-                        }
-                        catch (Exception exSave)
-                        {
-                            MessageBox.Show(
-                                $"? No se pudo guardar la configuración de impresora:\n{exSave.Message}\n\n" +
-                                "La impresión se realizó correctamente, pero deberá seleccionar\n" +
-                                "la impresora nuevamente la próxima vez.",
-                                "Advertencia",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-                        }
+                        string impresoraSeleccionada = cmbImpresoras.SelectedItem.ToString()!;
+                        
+                        // Guardar la configuración
+                        config.ImpresoraSeleccionada = impresoraSeleccionada;
+                        config.ImprimirDirectamente = true;
+                        db.SaveChanges();
+                        
+                        MessageBox.Show(
+                            "? Configuración guardada.\n\n" +
+                            $"Impresora predeterminada: {impresoraSeleccionada}",
+                            "Éxito",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+                    catch (Exception exSave)
+                    {
+                        MessageBox.Show(
+                            $"? No se pudo guardar la configuración:\n{exSave.Message}",
+                            "Advertencia",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
                     }
                 }
             }
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"? Error al imprimir ticket: {ex.Message}", "Error",
+            MessageBox.Show($"? Error al generar ticket: {ex.Message}", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
-
-    private void ImprimirDirecto(Document document, string nombreImpresora)
-    {
-        try
-        {
-            // Generar PDF en memoria
-            byte[] pdfBytes = document.GeneratePdf();
-            
-            // Guardar temporalmente para imprimir
-            string tempPath = Path.Combine(Path.GetTempPath(), $"ticket_{Guid.NewGuid()}.pdf");
-            File.WriteAllBytes(tempPath, pdfBytes);
-            
-            // Configurar e imprimir
-            using (PrintDocument pd = new PrintDocument())
-            {
-                pd.PrinterSettings.PrinterName = nombreImpresora;
-                
-                if (pd.PrinterSettings.IsValid)
-                {
-                    // Abrir el PDF con el visor predeterminado y enviarlo a imprimir
-                    System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo
-                    {
-                        FileName = tempPath,
-                        Verb = "print",
-                        CreateNoWindow = true,
-                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
-                    };
-                    
-                    var process = System.Diagnostics.Process.Start(psi);
-                    
-                    // Esperar un momento y luego cerrar
-                    if (process != null)
-                    {
-                        System.Threading.Thread.Sleep(3000);
-                        process.CloseMainWindow();
-                        process.Close();
-                    }
-                    
-                    MessageBox.Show(
-                        $"? Ticket enviado a impresora: {nombreImpresora}",
-                        "Éxito",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                    
-                    // Limpiar archivo temporal después de un tiempo
-                    Task.Delay(5000).ContinueWith(_ => 
-                    {
-                        try { File.Delete(tempPath); } catch { }
-                    });
-                }
-                else
-                {
-                    throw new Exception($"La impresora '{nombreImpresora}' no está disponible.");
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            // Si falla la impresión directa, ofrecer mostrar el diálogo
-            var respuesta = MessageBox.Show(
-                $"No se pudo imprimir directamente:\n{ex.Message}\n\n" +
-                "¿Desea seleccionar otra impresora?",
-                "Error de Impresión",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
-            
-            if (respuesta == DialogResult.Yes)
-            {
-                // Resetear configuración y mostrar diálogo
-                config!.ImprimirDirectamente = false;
-                db.SaveChanges();
-                MostrarDialogoImpresion(document);
-            }
-        }
-    }
-
-    private (DialogResult DialogResult, string? ImpresoraSeleccionada) MostrarDialogoImpresion(Document document)
-    {
-        try
-        {
-            // Generar PDF y mostrar diálogo de impresión
-            byte[] pdfBytes = document.GeneratePdf();
-            string tempPath = Path.Combine(Path.GetTempPath(), $"ticket_{Guid.NewGuid()}.pdf");
-            File.WriteAllBytes(tempPath, pdfBytes);
-            
-            // Abrir con el visor predeterminado que mostrará el diálogo de impresión
-            var psi = new System.Diagnostics.ProcessStartInfo
-            {
-                FileName = tempPath,
-                UseShellExecute = true
-            };
-            System.Diagnostics.Process.Start(psi);
-            
-            // Preguntar al usuario qué impresora seleccionó
-            var formConfig = new Form
-            {
-                Text = "Configurar Impresora",
-                Size = new DrawingSize(450, 250),
-                StartPosition = FormStartPosition.CenterParent,
-                FormBorderStyle = FormBorderStyle.FixedDialog,
-                MaximizeBox = false,
-                MinimizeBox = false
-            };
-            
-            Label lblInfo = new Label
-            {
-                Text = "Seleccione la impresora que desea usar:",
-                Location = new Point(20, 20),
-                Size = new DrawingSize(400, 25),
-                Font = new Font("Segoe UI", 10)
-            };
-            
-            ComboBox cmbImpresoras = new ComboBox
-            {
-                Location = new Point(20, 50),
-                Size = new DrawingSize(390, 25),
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Font = new Font("Segoe UI", 10)
-            };
-            
-            // Llenar con impresoras disponibles
-            foreach (string printer in PrinterSettings.InstalledPrinters)
-            {
-                cmbImpresoras.Items.Add(printer);
-            }
-            
-            // Seleccionar impresora predeterminada
-            PrinterSettings ps = new PrinterSettings();
-            cmbImpresoras.SelectedItem = ps.PrinterName;
-            
-            CheckBox chkRecordar = new CheckBox
-            {
-                Text = "Recordar esta impresora y no volver a preguntar",
-                Location = new Point(20, 90),
-                Size = new DrawingSize(400, 25),
-                Font = new Font("Segoe UI", 9),
-                Checked = false
-            };
-            
-            Button btnAceptar = new Button
-            {
-                Text = "Aceptar",
-                Location = new Point(160, 140),
-                Size = new DrawingSize(120, 40),
-                DialogResult = DialogResult.OK,
-                BackColor = DrawingColor.FromArgb(52, 152, 219),
-                ForeColor = DrawingColor.White,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold)
-            };
-            btnAceptar.FlatAppearance.BorderSize = 0;
-            
-            Button btnCancelar = new Button
-            {
-                Text = "Cancelar",
-                Location = new Point(290, 140),
-                Size = new DrawingSize(120, 40),
-                DialogResult = DialogResult.Cancel,
-                BackColor = DrawingColor.FromArgb(149, 165, 166),
-                ForeColor = DrawingColor.White,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold)
-            };
-            btnCancelar.FlatAppearance.BorderSize = 0;
-            
-            formConfig.Controls.AddRange(new Control[] { lblInfo, cmbImpresoras, chkRecordar, btnAceptar, btnCancelar });
-            formConfig.AcceptButton = btnAceptar;
-            formConfig.CancelButton = btnCancelar;
-            
-            DialogResult resultado = formConfig.ShowDialog();
-            
-            if (resultado == DialogResult.OK && cmbImpresoras.SelectedItem != null)
-            {
-                string impresoraSeleccionada = cmbImpresoras.SelectedItem.ToString()!;
-                
-                if (chkRecordar.Checked)
-                {
-                    // Guardar configuración
-                    config!.ImpresoraSeleccionada = impresoraSeleccionada;
-                    config.ImprimirDirectamente = true;
-                    db.SaveChanges();
-                    
-                    MessageBox.Show(
-                        "? Configuración guardada.\n\n" +
-                        $"Los próximos tickets se imprimirán automáticamente en: {impresoraSeleccionada}",
-                        "Éxito",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                }
-                
-                return (DialogResult.OK, impresoraSeleccionada);
-            }
-            
-            // Limpiar archivo temporal
-            Task.Delay(5000).ContinueWith(_ => 
-            {
-                try { File.Delete(tempPath); } catch { }
-            });
-            
-            return (DialogResult.Cancel, null);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"? Error al mostrar diálogo de impresión: {ex.Message}", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return (DialogResult.Cancel, null);
         }
     }
 
@@ -558,85 +444,114 @@ public class TicketForm : Form
             container.Page(page =>
             {
                 page.Size(PageSizes.A7);
-                page.Margin(0.5f, Unit.Centimetre);
+                page.Margin(0.3f, Unit.Centimetre);
                 page.PageColor(Colors.White);
-                // Aumentar tamaño base de fuente de 9 a 11 y usar negrita
-                page.DefaultTextStyle(x => x.FontSize(11).FontFamily("Arial").Bold());
+                page.DefaultTextStyle(x => x.FontSize(8).FontFamily("Arial").SemiBold());
 
                 page.Content().Column(column =>
                 {
-                    column.Spacing(6);
+                    column.Spacing(3);
 
-                    // Encabezado - más grande y negrita
+                    // Encabezado centrado
                     column.Item().AlignCenter().Text(config!.NombreRestaurante)
-                        .FontSize(14).Bold();
-                    column.Item().AlignCenter().Text(config.Direccion).FontSize(10).SemiBold();
-                    column.Item().AlignCenter().Text(config.Telefono).FontSize(10).SemiBold();
-                    column.Item().AlignCenter().Text("==============================").FontSize(10).Bold();
-                    column.Item().PaddingVertical(3);
+                        .FontSize(10).Bold();
+                    column.Item().AlignCenter().Text(config.Direccion).FontSize(7).SemiBold();
+                    column.Item().AlignCenter().Text(config.Telefono).FontSize(7).SemiBold();
+                    
+                    column.Item().PaddingVertical(2);
+                    column.Item().BorderBottom(1).BorderColor(Colors.Black);
+                    column.Item().PaddingVertical(2);
 
-                    // Información de la mesa - más grande
+                    // Información de la mesa
                     string mesaTexto = mesa.NumeroMesa == 0 ? "PARA LLEVAR" : $"MESA #{mesa.NumeroMesa}";
-                    column.Item().Text($"MESA: {mesaTexto}").FontSize(12).Bold();
-                    column.Item().Text($"Mesero: {mesero}").FontSize(11).SemiBold();
-                    column.Item().Text($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}").FontSize(11).SemiBold();
-                    column.Item().Text("------------------------------").FontSize(10).Bold();
+                    column.Item().Text($"MESA: {mesaTexto}").FontSize(9).Bold();
+                    column.Item().Text($"Mesero: {mesero}").FontSize(8).SemiBold();
+                    column.Item().Text($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}").FontSize(8).SemiBold();
+                    
+                    column.Item().PaddingVertical(2);
+                    column.Item().BorderBottom(1).BorderColor(Colors.Black);
+                    column.Item().PaddingVertical(1);
 
-                    // Encabezados de tabla - más grande y negrita
-                    column.Item().Text(text =>
-                    {
-                        text.Span($"{"ARTICULO",-15} {"CANT",5} {"PRECIO",8}").Bold().FontSize(11);
-                    });
-                    column.Item().Text("------------------------------").FontSize(10).Bold();
-
+                    // Calcular subtotal primero
                     decimal subtotal = 0;
                     foreach (var detalle in pedido)
                     {
-                        var platillo = detalle.Platillo ?? db.Platillos.Find(detalle.PlatilloId);
-                        if (platillo != null)
-                        {
-                            string nombreCorto = platillo.NombreCorto.Length > 14 ?
-                                platillo.NombreCorto.Substring(0, 12) + ".." :
-                                platillo.NombreCorto;
-
-                            // Productos con letra más grande y negrita
-                            column.Item().Text($"{nombreCorto,-15} {detalle.Cantidad,5} ${detalle.PrecioUnitario,7:F2}")
-                                .FontSize(11).Bold();
-                            subtotal += detalle.Cantidad * detalle.PrecioUnitario;
-                        }
+                        subtotal += detalle.Cantidad * detalle.PrecioUnitario;
                     }
 
-                    column.Item().Text("------------------------------").FontSize(10).Bold();
+                    // Tabla de productos con columnas reales
+                    column.Item().Table(table =>
+                    {
+                        table.ColumnsDefinition(columns =>
+                        {
+                            columns.RelativeColumn(3); // Artículo - 60%
+                            columns.RelativeColumn(1); // Cantidad - 20%
+                            columns.RelativeColumn(1.5f); // Precio - 30%
+                        });
 
-                    // Totales - más grandes y negritas
-                    column.Item().AlignRight().Text($"Subtotal: $ {subtotal,9:F2}")
-                        .FontSize(11).Bold();
-                    column.Item().AlignRight().Text($"IVA (0.00%): $ {0.00,9:F2}")
-                        .FontSize(11).Bold();
+                        // Encabezados
+                        table.Cell().Text("ARTICULO").FontSize(8).Bold();
+                        table.Cell().AlignRight().Text("CNT").FontSize(8).Bold();
+                        table.Cell().AlignRight().Text("PRECIO").FontSize(8).Bold();
+
+                        // Línea separadora después de encabezados
+                        table.Cell().ColumnSpan(3).PaddingVertical(1).BorderBottom(1).BorderColor(Colors.Black);
+
+                        // Productos
+                        foreach (var detalle in pedido)
+                        {
+                            var platillo = detalle.Platillo ?? db.Platillos.Find(detalle.PlatilloId);
+                            if (platillo != null)
+                            {
+                                string nombreCorto = platillo.NombreCorto.Length > 15 ?
+                                    platillo.NombreCorto.Substring(0, 13) + ".." :
+                                    platillo.NombreCorto;
+
+                                table.Cell().Text(nombreCorto).FontSize(8).SemiBold();
+                                table.Cell().AlignRight().Text(detalle.Cantidad.ToString()).FontSize(8).SemiBold();
+                                table.Cell().AlignRight().Text($"$ {detalle.PrecioUnitario:F2}").FontSize(8).SemiBold();
+                            }
+                        }
+                    });
+
+                    column.Item().PaddingVertical(2);
+                    column.Item().BorderBottom(1).BorderColor(Colors.Black);
+                    column.Item().PaddingVertical(2);
+
+                    // Totales alineados a la derecha
+                    column.Item().AlignRight().Text($"Subtotal: $ {subtotal:F2}")
+                        .FontSize(8).SemiBold();
+                    column.Item().AlignRight().Text($"IVA (0.00%): $ {0.00:F2}")
+                        .FontSize(8).SemiBold();
                     
                     if (descuento > 0)
                     {
                         string descTexto = tipoDescuento == "%" ? $"{valorDescuento:F2}%" : $"{valorDescuento:F2}";
-                        column.Item().AlignRight().Text($"Desc ({descTexto}): $ {descuento,9:F2}")
-                            .FontSize(11).Bold();
+                        column.Item().AlignRight().Text($"Desc ({descTexto}): $ {descuento:F2}")
+                            .FontSize(8).SemiBold();
                     }
                     else
                     {
-                        column.Item().AlignRight().Text($"Desc (0.00%): $ {0.00,9:F2}")
-                            .FontSize(11).Bold();
+                        column.Item().AlignRight().Text($"Desc (0.00%): $ {0.00:F2}")
+                            .FontSize(8).SemiBold();
                     }
 
-                    column.Item().Text("==============================").FontSize(10).Bold();
+                    column.Item().PaddingVertical(2);
+                    column.Item().BorderBottom(2).BorderColor(Colors.Black);
+                    column.Item().PaddingVertical(2);
 
+                    // Total destacado
                     decimal total = subtotal - descuento;
-                    // Total aún más grande y muy negrita
-                    column.Item().AlignRight().Text($"TOTAL: $ {total,9:F2}")
-                        .FontSize(14).Bold();
+                    column.Item().AlignCenter().Text($"TOTAL: $ {total:F2}")
+                        .FontSize(12).Bold();
                     
-                    column.Item().Text("==============================").FontSize(10).Bold();
-                    column.Item().PaddingVertical(6);
+                    column.Item().PaddingVertical(2);
+                    column.Item().BorderBottom(2).BorderColor(Colors.Black);
+                    column.Item().PaddingVertical(3);
+                    
+                    // Mensaje final
                     column.Item().AlignCenter().Text("Gracias por su compra")
-                        .FontSize(11).SemiBold().Italic();
+                        .FontSize(8).SemiBold().Italic();
                 });
             });
         });
