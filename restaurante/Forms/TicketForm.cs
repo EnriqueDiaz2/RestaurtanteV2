@@ -236,34 +236,114 @@ public class TicketForm : Form
     {
         try
         {
-            var document = GenerarDocumentoPDF();
-            
-            // Generar PDF temporal
-            byte[] pdfBytes = document.GeneratePdf();
-            string tempPath = Path.Combine(Path.GetTempPath(), $"ticket_{DateTime.Now:yyyyMMddHHmmss}.pdf");
-            File.WriteAllBytes(tempPath, pdfBytes);
-            
-            // Abrir con el visor predeterminado para que muestre el diálogo de impresión
-            var psi = new System.Diagnostics.ProcessStartInfo
+            // Mostrar diálogo de selección de impresora
+            using (PrintDialog printDialog = new PrintDialog())
             {
-                FileName = tempPath,
-                UseShellExecute = true
-            };
-            System.Diagnostics.Process.Start(psi);
-            
-            MessageBox.Show(
-                "? Ticket generado correctamente.\n\n" +
-                "El PDF se ha abierto. Para imprimir:\n" +
-                "1. Presione Ctrl+P (o haga clic en Imprimir)\n" +
-                "2. Seleccione su impresora\n" +
-                "3. Haga clic en Aceptar",
-                "Ticket Listo",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+                printDialog.AllowSomePages = false;
+                printDialog.AllowSelection = false;
+                printDialog.AllowCurrentPage = false;
+                printDialog.UseEXDialog = true;
+                
+                // Si el usuario hace clic en Aceptar
+                if (printDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var document = GenerarDocumentoPDF();
+                    
+                    // Generar PDF en memoria
+                    byte[] pdfBytes = document.GeneratePdf();
+                    
+                    // Guardar temporalmente
+                    string tempPath = Path.Combine(Path.GetTempPath(), $"ticket_{Guid.NewGuid()}.pdf");
+                    File.WriteAllBytes(tempPath, pdfBytes);
+                    
+                    try
+                    {
+                        // Imprimir el PDF usando el comando de impresión del sistema
+                        System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo
+                        {
+                            FileName = tempPath,
+                            Verb = "printto",
+                            Arguments = $"\"{printDialog.PrinterSettings.PrinterName}\"",
+                            CreateNoWindow = true,
+                            WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                            UseShellExecute = true
+                        };
+                        
+                        var process = System.Diagnostics.Process.Start(psi);
+                        
+                        // Esperar un momento para que se envíe a imprimir
+                        System.Threading.Thread.Sleep(2000);
+                        
+                        if (process != null && !process.HasExited)
+                        {
+                            process.CloseMainWindow();
+                            process.Close();
+                        }
+                        
+                        MessageBox.Show(
+                            $"? Ticket enviado a impresora:\n{printDialog.PrinterSettings.PrinterName}",
+                            "Imprimiendo",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                        
+                        // Limpiar archivo temporal después de un tiempo
+                        Task.Delay(10000).ContinueWith(_ => 
+                        {
+                            try { if (File.Exists(tempPath)) File.Delete(tempPath); } catch { }
+                        });
+                    }
+                    catch (Exception exPrint)
+                    {
+                        // Si falla printto, intentar con print
+                        try
+                        {
+                            System.Diagnostics.ProcessStartInfo psi2 = new System.Diagnostics.ProcessStartInfo
+                            {
+                                FileName = tempPath,
+                                Verb = "print",
+                                CreateNoWindow = true,
+                                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                                UseShellExecute = true
+                            };
+                            
+                            System.Diagnostics.Process.Start(psi2);
+                            System.Threading.Thread.Sleep(2000);
+                            
+                            MessageBox.Show(
+                                $"? Ticket enviado a la impresora predeterminada",
+                                "Imprimiendo",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                            
+                            Task.Delay(10000).ContinueWith(_ => 
+                            {
+                                try { if (File.Exists(tempPath)) File.Delete(tempPath); } catch { }
+                            });
+                        }
+                        catch
+                        {
+                            MessageBox.Show(
+                                $"? No se pudo imprimir automáticamente.\n\n" +
+                                $"Error: {exPrint.Message}\n\n" +
+                                "El PDF se abrirá para que puedas imprimirlo manualmente.",
+                                "Advertencia",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                            
+                            // Como último recurso, abrir el PDF
+                            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                            {
+                                FileName = tempPath,
+                                UseShellExecute = true
+                            });
+                        }
+                    }
+                }
+            }
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"? Error al generar ticket: {ex.Message}", "Error",
+            MessageBox.Show($"? Error al imprimir ticket: {ex.Message}", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
